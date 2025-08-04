@@ -40,7 +40,7 @@
                 android:layout_width="@dimen/dp_0"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_16"
-                android:fontFamily="@font/google_sans_code_bold"
+                android:fontFamily="@font/noto_sans_bold"
                 android:text="@string/login_heading_label"
                 android:textSize="@dimen/sp_28"
                 android:textStyle="bold"
@@ -54,7 +54,7 @@
                 android:layout_width="@dimen/dp_0"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_10"
-                android:fontFamily="@font/google_sans_code_light"
+                android:fontFamily="@font/noto_sans_light"
                 android:text="@string/login_subheading_label"
                 android:textSize="@dimen/sp_17"
                 android:textStyle="bold"
@@ -78,7 +78,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:autofillHints="username"
-                    android:fontFamily="@font/google_sans_code_regular"
+                    android:fontFamily="@font/noto_sans"
                     android:hint="@string/username_label"
                     android:inputType="text"
                     android:maxLines="1" />
@@ -116,7 +116,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:autofillHints="password"
-                    android:fontFamily="@font/google_sans_code_regular"
+                    android:fontFamily="@font/noto_sans"
                     android:hint="@string/password_label"
                     android:inputType="textPassword" />
 
@@ -171,7 +171,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/dp_4"
-                android:fontFamily="@font/google_sans_code_regular"
+                android:fontFamily="@font/noto_sans"
                 android:text="@string/dont_have_account_label"
                 android:textSize="@dimen/sp_14" />
 
@@ -179,7 +179,7 @@
                 android:id="@+id/registerHereTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/google_sans_code_extra_bold"
+                android:fontFamily="@font/noto_sans_extrabold"
                 android:gravity="center"
                 android:text="@string/register_here_label"
                 android:textSize="@dimen/sp_14" />

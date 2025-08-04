@@ -42,7 +42,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:fontFamily="@font/google_sans_code_extra_bold"
+                    android:fontFamily="@font/noto_sans_extrabold"
                     android:text="@string/diagnose_heading_label"
                     android:textSize="38sp"
                     android:textStyle="bold"
@@ -56,7 +56,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="7dp"
-                    android:fontFamily="@font/google_sans_code_light"
+                    android:fontFamily="@font/noto_sans_light"
                     android:text="@string/diagnose_subheading_label"
                     android:textSize="17sp"
                     android:textStyle="bold"
@@ -89,7 +89,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="21dp"
-                    android:fontFamily="@font/google_sans_code_bold"
+                    android:fontFamily="@font/noto_sans_bold"
                     android:text="@string/camera_label"
                     android:textSize="18sp" />
             </LinearLayout>
@@ -112,14 +112,14 @@
                     android:layout_height="31dp"
                     android:contentDescription="@string/gallery_label"
                     android:src="@drawable/ic_filter"
-                   
+
                     />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="21dp"
-                    android:fontFamily="@font/google_sans_code_bold"
+                    android:fontFamily="@font/noto_sans_bold"
                     android:text="@string/gallery_label"
                     android:textSize="18sp" />
             </LinearLayout>
@@ -140,7 +140,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:fontFamily="@font/google_sans_code_bold"
+                    android:fontFamily="@font/noto_sans_bold"
                     android:text="@string/preview_label"
                     android:textSize="20sp" />
 

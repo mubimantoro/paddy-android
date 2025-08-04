@@ -37,7 +37,7 @@
                 android:layout_width="@dimen/dp_0"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_16"
-                android:fontFamily="@font/google_sans_code_bold"
+                android:fontFamily="@font/noto_sans_bold"
                 android:text="@string/register_heading_label"
                 android:textSize="@dimen/sp_28"
                 android:textStyle="bold"
@@ -51,7 +51,7 @@
                 android:layout_width="@dimen/dp_0"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_10"
-                android:fontFamily="@font/google_sans_code_light"
+                android:fontFamily="@font/noto_sans_light"
                 android:text="@string/register_subheading_label"
                 android:textSize="@dimen/sp_17"
                 android:textStyle="bold"
@@ -75,7 +75,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:autofillHints="name"
-                    android:fontFamily="@font/google_sans_code_regular"
+                    android:fontFamily="@font/noto_sans"
                     android:hint="@string/fullname_label"
                     android:inputType="textPersonName" />
 
@@ -111,7 +111,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:autofillHints="phone"
-                    android:fontFamily="@font/google_sans_code_regular"
+                    android:fontFamily="@font/noto_sans"
                     android:hint="@string/phone_number_label"
                     android:inputType="phone" />
 
@@ -147,7 +147,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:autofillHints="username"
-                    android:fontFamily="@font/google_sans_code_regular"
+                    android:fontFamily="@font/noto_sans"
                     android:hint="@string/username_label"
                     android:inputType="text"
                     android:maxLines="1" />
@@ -185,7 +185,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:autofillHints="password"
-                    android:fontFamily="@font/google_sans_code_regular"
+                    android:fontFamily="@font/noto_sans"
                     android:hint="@string/password_label"
                     android:inputType="textPassword" />
 

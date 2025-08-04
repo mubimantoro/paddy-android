@@ -12,13 +12,17 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="edit_text_background">@color/edit_text_bg</item>
+        <item name="item_foreground">@color/neutral_600</item>
+        <item name="header_container_background">@color/green_500</item>
     </style>
+
 
     <style name="BackButton" parent="Widget.AppCompat.ImageButton">
         <item name="tint">@color/green_500</item>
         <item name="android:background">#00000000</item>
     </style>
-    
+
     <style name="TextSubHeading" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@color/neutral_500</item>
     </style>
@@ -31,7 +35,7 @@
 
     <style name="PrimaryButton" parent="Widget.Material3.Button">
         <item name="cornerRadius">@dimen/dp_15</item>
-        <item name="fontFamily">@font/google_sans_code_semi_bold</item>
+        <item name="fontFamily">@font/noto_sans_semibold</item>
     </style>
 
 </resources>

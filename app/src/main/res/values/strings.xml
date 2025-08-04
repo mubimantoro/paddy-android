@@ -32,4 +32,12 @@
     <string name="preview_label">Pratinjau</string>
     <string name="preview_image_label">Gambar pratinjau</string>
     <string name="start_diagnose_label">Mulai Diagnosa</string>
+    <string name="my_account_label">Akun Saya</string>
+    <string name="profile_subheading_label">Informasi akun Anda</string>
+    <string name="logout_label">Keluar</string>
+    <string name="settings_label">Pengaturan</string>
+    <string name="data_not_found_label">Data Tidak Ditemukan</string>
+    <string name="history_label">Riwayat</string>
+    <string name="history_subheading_label">Periksa apa yang telah Anda diagnosis sebelumnya pada tanaman Padi Anda</string>
+    <string name="history_image_view_label">Gambar Riwayat</string>
 </resources>
