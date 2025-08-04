@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="window_background" format="color" />
+    <attr name="edit_text_background" format="color" />
+    <attr name="item_foreground" format="color" />
+</resources>

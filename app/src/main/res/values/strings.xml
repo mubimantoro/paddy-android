@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">SI Paddy</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="back_button_label">Tombol kembali</string>
+    <string name="login_heading_label">Mari daftarkan diri Anda.</string>
+    <string name="login_subheading_label">Masuk dengan data yang telah Anda masukkan saat anda mendaftar</string>
+    <string name="email_label">Email</string>
+    <string name="dash">-</string>
+    <string name="password_label">Password</string>
+    <string name="signin_label">Masuk</string>
+    <string name="dont_have_account_label">Belum punya akun?</string>
+    <string name="register_here_label">Daftar disini</string>
+    <string name="register_heading_label">Buat akun Anda.</string>
+    <string name="register_subheading_label">Silakan isi formulir di bawah ini.</string>
+    <string name="fullname_label">Nama Lengkap</string>
+    <string name="phone_number_label">Nomor hp</string>
+    <string name="username_label">Username</string>
+    <string name="register_label">Daftar</string>
+    <string name="title_history">Riwayat</string>
+    <string name="title_profile">Profil</string>
+    <string name="welcome_label">Selamat Datang,</string>
+    <string name="home_card_heading_label">Ada masalah dengan Padi Anda?</string>
+    <string name="diagnose_now_label">Diagnosa Sekarang</string>
+    <string name="diagnose_heading_label">Diagnosa</string>
+    <string name="diagnose_subheading_label">Anda dapat mencoba menggunakan kamera atau memilih foto dari galeri Anda</string>
+    <string name="camera_label">Kamera</string>
+    <string name="gallery_label">Galeri</string>
+    <string name="preview_label">Pratinjau</string>
+    <string name="preview_image_label">Gambar pratinjau</string>
+    <string name="start_diagnose_label">Mulai Diagnosa</string>
+</resources>
