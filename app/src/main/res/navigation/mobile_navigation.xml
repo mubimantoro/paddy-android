@@ -16,15 +16,23 @@
     </fragment>
 
     <fragment
-        android:id="@+id/loginFragment"
+        android:id="@+id/navigation_login"
         android:name="com.example.sipaddy.presentation.login.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" />
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_navigation_home"
+            app:destination="@id/navigation_home" />
+    </fragment>
     <fragment
-        android:id="@+id/registerFragment"
+        android:id="@+id/navigation_register"
         android:name="com.example.sipaddy.presentation.register.RegisterFragment"
         android:label="fragment_register"
-        tools:layout="@layout/fragment_register" />
+        tools:layout="@layout/fragment_register" >
+        <action
+            android:id="@+id/action_registerFragment_to_loginFragment"
+            app:destination="@id/navigation_login" />
+    </fragment>
     <fragment
         android:id="@+id/historyFragment"
         android:name="com.example.sipaddy.presentation.history.HistoryFragment"

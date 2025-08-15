@@ -40,4 +40,5 @@
     <string name="history_label">Riwayat</string>
     <string name="history_subheading_label">Periksa apa yang telah Anda diagnosis sebelumnya pada tanaman Padi Anda</string>
     <string name="history_image_view_label">Gambar Riwayat</string>
+    <string name="image_capture_button_label">Tombol ambil Gambar</string>
 </resources>

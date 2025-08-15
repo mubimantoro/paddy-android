@@ -32,6 +32,13 @@ class HomeFragment : Fragment() {
                 view.findNavController().navigate(R.id.action_navigation_home_to_diagnoseFragment)
             }
         }
+
+        setupObserver()
+
+    }
+
+    private fun setupObserver() {
+
     }
 
 

@@ -2,6 +2,7 @@ package com.example.sipaddy.data.repository
 
 import com.example.sipaddy.data.ResultState
 import com.example.sipaddy.data.network.response.CommonResponse
+import com.example.sipaddy.data.network.response.LoginResponse
 import com.example.sipaddy.data.network.retrofit.PaddyApiService
 import com.example.sipaddy.data.pref.UserPreference
 import kotlinx.coroutines.flow.Flow
@@ -33,7 +34,7 @@ class PaddyRepository(
     fun login(
         username: String,
         password: String
-    ): Flow<ResultState<CommonResponse>> = flow {
+    ): Flow<ResultState<LoginResponse>> = flow {
         emit(ResultState.Loading)
         try {
             val response = apiService.login(username, password)
