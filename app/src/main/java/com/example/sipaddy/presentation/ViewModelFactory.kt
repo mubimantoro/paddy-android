@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.sipaddy.di.Injection
 import com.example.sipaddy.presentation.login.LoginViewModel
+import com.example.sipaddy.presentation.pengaduangangguanpadi.PengaduanGangguanPadiViewModel
 import com.example.sipaddy.presentation.register.RegisterViewModel
 
 class ViewModelFactory(
@@ -20,6 +21,10 @@ class ViewModelFactory(
 
             modelClass.isAssignableFrom(LoginViewModel::class.java) -> {
                 LoginViewModel(Injection.provideRepository(context)) as T
+            }
+
+            modelClass.isAssignableFrom(PengaduanGangguanPadiViewModel::class.java) -> {
+                PengaduanGangguanPadiViewModel(Injection.provideRepository(context)) as T
             }
 
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
