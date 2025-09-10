@@ -19,6 +19,7 @@ navigationUiKtx = "2.8.9"
 retrofit = "2.9.0"
 cameraxVersion = "1.2.3"
 activity = "1.10.1"
+ucrop = "2.2.11"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -43,6 +44,7 @@ androidx-camera-camera2 = { module = "androidx.camera:camera-camera2", version.r
 camera-lifecycle = { module = "androidx.camera:camera-lifecycle", version.ref = "cameraxVersion" }
 camera-view = { module = "androidx.camera:camera-view", version.ref = "cameraxVersion" }
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
+ucrop = { module = "com.github.yalantis:ucrop", version.ref = "ucrop" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

@@ -76,7 +76,7 @@
 
 
             <LinearLayout
-                android:id="@+id/camera_card"
+                android:id="@+id/cameraCardBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
@@ -104,7 +104,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/gallery_card"
+                android:id="@+id/galleryCardBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?android:attr/selectableItemBackground"
@@ -135,17 +135,17 @@
 
 
             <LinearLayout
-                android:id="@+id/preview_container"
+                android:id="@+id/previewContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingHorizontal="24dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/gallery_card">
+                app:layout_constraintTop_toBottomOf="@id/galleryCardBtn">
 
                 <TextView
-                    android:id="@+id/preview_text_view"
+                    android:id="@+id/previewTv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -154,7 +154,7 @@
                     android:textSize="20sp" />
 
                 <ImageView
-                    android:id="@+id/preview_image_view"
+                    android:id="@+id/previewIv"
                     android:layout_width="300dp"
                     android:layout_height="300dp"
                     android:layout_marginTop="10dp"
@@ -165,7 +165,7 @@
     </ScrollView>
 
     <Button
-        android:id="@+id/button_diagnose"
+        android:id="@+id/diagnoseBtn"
         style="@style/PrimaryButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

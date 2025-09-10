@@ -4,4 +4,5 @@
     <attr name="edit_text_background" format="color" />
     <attr name="item_foreground" format="color" />
     <attr name="header_container_background" format="color" />
+    <attr name="sheet_container_background" format="color" />
 </resources>

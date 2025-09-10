@@ -4,6 +4,8 @@ import com.example.sipaddy.data.ResultState
 import com.example.sipaddy.data.model.PengaduanForm
 import com.example.sipaddy.data.network.response.CommonResponse
 import com.example.sipaddy.data.network.response.LoginResponse
+import com.example.sipaddy.data.network.response.PredictResponse
+import com.example.sipaddy.data.network.retrofit.ApiConfig
 import com.example.sipaddy.data.network.retrofit.PaddyApiService
 import com.example.sipaddy.data.pref.UserPreference
 import kotlinx.coroutines.flow.Flow
@@ -77,6 +79,7 @@ class PaddyRepository(
         )
         try {
             val token = runBlocking { userPreference.getSession().first() }
+            val apiService = ApiConfig.getApiService(token)
             val response = apiService.createPengaduan(
                 token,
                 kelompokTani = kelompokTani,
@@ -97,6 +100,18 @@ class PaddyRepository(
             emit(ResultState.Error(e.message.toString()))
         }
 
+    }
+
+    fun predict(photo: MultipartBody.Part): Flow<ResultState<PredictResponse>> = flow {
+        emit(ResultState.Loading)
+        try {
+            val token = runBlocking { userPreference.getSession().first() }
+            val apiService = ApiConfig.getApiService(token)
+            val response = apiService.predict(photo)
+            emit(ResultState.Success(response))
+        } catch (e: Exception) {
+            emit(ResultState.Error(e.message.toString()))
+        }
     }
 
     suspend fun saveSession(username: String, token: String) {
