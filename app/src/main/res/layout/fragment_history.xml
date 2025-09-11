@@ -8,7 +8,7 @@
 
 
     <TextView
-        android:id="@+id/history_heading"
+        android:id="@+id/historyHeadingTv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/noto_sans_extrabold"
@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/history_subheading"
+        android:id="@+id/historySubheadingTv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="7dp"
@@ -29,10 +29,10 @@
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/history_heading" />
+        app:layout_constraintTop_toBottomOf="@id/historyHeadingTv" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/history_recycler_view"
+        android:id="@+id/historyRv"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="12dp"
@@ -40,19 +40,19 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/history_subheading"
+        app:layout_constraintTop_toBottomOf="@id/historySubheadingTv"
         tools:listitem="@layout/item_history" />
 
     <ProgressBar
-        android:id="@+id/pb_history"
+        android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:elevation="10dp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/history_recycler_view"
-        app:layout_constraintStart_toStartOf="@+id/history_recycler_view"
-        app:layout_constraintTop_toBottomOf="@+id/history_subheading" />
+        app:layout_constraintEnd_toEndOf="@+id/historyRv"
+        app:layout_constraintStart_toStartOf="@+id/historyRv"
+        app:layout_constraintTop_toBottomOf="@+id/historySubheadingTv" />
 
     <RelativeLayout
         android:id="@+id/history_empty_view"
@@ -63,7 +63,7 @@
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/history_subheading"
+        app:layout_constraintTop_toBottomOf="@id/historySubheadingTv"
         tools:visibility="visible">
 
         <ImageView

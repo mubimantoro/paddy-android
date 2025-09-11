@@ -62,4 +62,5 @@
     <string name="cause_label">Penyebab</string>
     <string name="solution_label">Solusi</string>
     <string name="lorem_label">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultrices, velit nec scelerisque fringilla, lectus est egestas risus, in vehicula tellus diam eu arcu. Fusce facilisis elit semper, pretium arcu ut, ultrices dolor. Aliquam erat volutpat. Nam egestas leo vitae nunc lobortis sagittis. Phasellus varius iaculis quam at posuere. Integer tempor justo in facilisis tempus.</string>
+    <string name="please_select_image_label">Silakan pilih gambar</string>
 </resources>

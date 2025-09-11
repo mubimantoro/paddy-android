@@ -1,33 +1,29 @@
 package com.example.sipaddy.presentation.history
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sipaddy.R
+import com.example.sipaddy.adapter.HistoryAdapter
+import com.example.sipaddy.data.ResultState
+import com.example.sipaddy.data.network.response.HistoryItem
+import com.example.sipaddy.databinding.FragmentHistoryBinding
+import com.example.sipaddy.presentation.ViewModelFactory
+import com.example.sipaddy.utils.bottomSheetDialog
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [HistoryFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class HistoryFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+    private val binding: FragmentHistoryBinding by lazy {
+        FragmentHistoryBinding.inflate(layoutInflater)
+    }
+
+    private val viewModel: HistoryViewModel by viewModels {
+        ViewModelFactory(requireContext())
     }
 
     override fun onCreateView(
@@ -35,26 +31,61 @@ class HistoryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_history, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment HistoryFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            HistoryFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        viewModel.getHistory()
+        getHistory()
+    }
+
+    private fun getHistory() {
+        viewModel.resultHistory.observe(viewLifecycleOwner) { result ->
+            if (result != null) {
+                when (result) {
+                    is ResultState.Loading -> {
+                        showLoading(true)
+                    }
+
+                    is ResultState.Error -> {
+                        showLoading(false)
+                        bottomSheetDialog(
+                            requireContext(),
+                            getString(R.string.failed_to_get_history),
+                            R.drawable.error_image,
+                            buttonColorResId = R.color.red,
+                            onClick = {}
+
+                        )
+                    }
+
+                    is ResultState.Success -> {
+                        showLoading(false)
+                        setHistoryData(result.data.data)
+                    }
                 }
             }
+        }
     }
+
+    private fun setHistoryData(item: List<HistoryItem>?) {
+        val adapter = HistoryAdapter()
+        adapter.submitList(item)
+
+        with(binding) {
+            historyRv.layoutManager = LinearLayoutManager(requireContext())
+            historyRv.adapter = adapter
+        }
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        with(binding) {
+            progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+            historyRv.visibility = if (isLoading) View.GONE else View.VISIBLE
+        }
+    }
+
+
 }

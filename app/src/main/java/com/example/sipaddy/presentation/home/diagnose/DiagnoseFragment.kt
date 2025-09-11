@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -158,6 +159,8 @@ class DiagnoseFragment : Fragment() {
                     requestPhotoFile
                 )
 
+                viewModel.predict(multipartBody)
+
                 viewModel.resultPredict.observe(viewLifecycleOwner) { result ->
                     if (result != null) {
                         when (result) {
@@ -179,6 +182,12 @@ class DiagnoseFragment : Fragment() {
                             is ResultState.Success -> {
                                 showLoading(false)
                                 val toResultFragment =
+                                    DiagnoseFragmentDirections.actionNavigationDiagnoseToResultFragment(
+                                        currentPhotoUri.toString(),
+                                        result.data.data,
+                                    )
+                                isPickPhoto = false
+                                view.findNavController().navigate(toResultFragment)
                             }
 
 
@@ -187,9 +196,23 @@ class DiagnoseFragment : Fragment() {
 
                 }
             }
+        } else {
+            Toast.makeText(
+                requireContext(),
+                getString(R.string.please_select_image_label),
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 
+    private fun handlePhotoUri(uri: Uri) {
+        currentPhotoUri?.let { deleteFromUri(it) }
+        val photoCompress = uriToFile(uri, requireContext()).reduceFilePhoto()
+        viewModel.setPhotoUri(photoCompress.toUri())
+        tempCropFile?.let { deleteFromUri(it.toUri()) }
+        cameraPhotoUri?.let { deleteFromUri(it) }
+        isPickPhoto = false
+    }
 
     private fun showPreview(uri: Uri?, isShow: Boolean = true) {
         if (uri != null && isShow) {
@@ -203,10 +226,10 @@ class DiagnoseFragment : Fragment() {
 
     }
 
-
     private fun showLoading(isLoading: Boolean) {
         showLoadingDialog(isLoading)
     }
+
 
     private fun showLoadingDialog(state: Boolean) {
         if (state) {
@@ -222,19 +245,5 @@ class DiagnoseFragment : Fragment() {
             loadingDialog = null
         }
     }
-
-
-    private fun handlePhotoUri(uri: Uri) {
-        currentPhotoUri?.let { deleteFromUri(it) }
-        val photoCompress = uriToFile(uri, requireContext()).reduceFilePhoto()
-        tempCropFile?.let { deleteFromUri(it.toUri()) }
-        cameraPhotoUri?.let { deleteFromUri(it) }
-        isPickPhoto = false
-    }
-
-    private fun handleImageUri(it: Uri) {
-
-    }
-
 
 }

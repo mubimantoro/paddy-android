@@ -33,7 +33,7 @@
                 tools:text="Rice Leaf Spot" />
 
             <TextView
-                android:id="@+id/history_date"
+                android:id="@+id/diseaseDateTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/noto_sans_medium"

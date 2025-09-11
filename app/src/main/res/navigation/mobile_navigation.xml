@@ -19,7 +19,7 @@
         android:id="@+id/navigation_login"
         android:name="com.example.sipaddy.presentation.login.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" >
+        tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_navigation_home"
             app:destination="@id/navigation_home" />
@@ -28,18 +28,26 @@
         android:id="@+id/navigation_register"
         android:name="com.example.sipaddy.presentation.register.RegisterFragment"
         android:label="fragment_register"
-        tools:layout="@layout/fragment_register" >
+        tools:layout="@layout/fragment_register">
         <action
             android:id="@+id/action_registerFragment_to_loginFragment"
             app:destination="@id/navigation_login" />
     </fragment>
     <fragment
-        android:id="@+id/historyFragment"
+        android:id="@+id/navigation_history"
         android:name="com.example.sipaddy.presentation.history.HistoryFragment"
         android:label="fragment_history"
-        tools:layout="@layout/fragment_history" />
+        tools:layout="@layout/fragment_history">
+        <action
+            android:id="@+id/action_navigation_history_to_navigation_result"
+            app:destination="@id/navigation_result"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
+    </fragment>
     <fragment
-        android:id="@+id/profileFragment"
+        android:id="@+id/navigation_profile"
         android:name="com.example.sipaddy.presentation.profile.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
@@ -47,19 +55,31 @@
         android:id="@+id/navigation_diagnose"
         android:name="com.example.sipaddy.presentation.home.diagnose.DiagnoseFragment"
         android:label="fragment_diagnose"
-        tools:layout="@layout/fragment_diagnose" >
+        tools:layout="@layout/fragment_diagnose">
         <action
             android:id="@+id/action_navigation_diagnose_to_resultFragment"
-            app:destination="@id/resultFragment" />
+            app:destination="@id/navigation_result"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
     </fragment>
     <fragment
-        android:id="@+id/resultFragment"
+        android:id="@+id/navigation_result"
         android:name="com.example.sipaddy.presentation.home.diagnose.result.ResultFragment"
         android:label="fragment_result"
-        tools:layout="@layout/fragment_result" >
+        tools:layout="@layout/fragment_result">
         <argument
             android:name="photo_uri"
             app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="PredictResult"
+            app:argType="com.example.sipaddy.data.network.response.DataPredict"
+            app:nullable="true" />
+        <argument
+            android:name="History"
+            app:argType="com.example.sipaddy.data.network.response.HistoryItem"
             app:nullable="true" />
     </fragment>
 </navigation>

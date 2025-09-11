@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.sipaddy.di.Injection
+import com.example.sipaddy.presentation.history.HistoryViewModel
 import com.example.sipaddy.presentation.home.diagnose.DiagnoseViewModel
 import com.example.sipaddy.presentation.login.LoginViewModel
 import com.example.sipaddy.presentation.pengaduangangguanpadi.PengaduanGangguanPadiViewModel
@@ -30,6 +31,10 @@ class ViewModelFactory(
 
             modelClass.isAssignableFrom(DiagnoseViewModel::class.java) -> {
                 DiagnoseViewModel(Injection.provideRepository(context)) as T
+            }
+
+            modelClass.isAssignableFrom(HistoryViewModel::class.java) -> {
+                HistoryViewModel(Injection.provideRepository(context)) as T
             }
 
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
