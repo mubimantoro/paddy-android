@@ -47,5 +47,19 @@
         android:id="@+id/navigation_diagnose"
         android:name="com.example.sipaddy.presentation.home.diagnose.DiagnoseFragment"
         android:label="fragment_diagnose"
-        tools:layout="@layout/fragment_diagnose" />
+        tools:layout="@layout/fragment_diagnose" >
+        <action
+            android:id="@+id/action_navigation_diagnose_to_resultFragment"
+            app:destination="@id/resultFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/resultFragment"
+        android:name="com.example.sipaddy.presentation.home.diagnose.result.ResultFragment"
+        android:label="fragment_result"
+        tools:layout="@layout/fragment_result" >
+        <argument
+            android:name="photo_uri"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
 </navigation>

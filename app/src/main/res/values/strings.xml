@@ -51,4 +51,15 @@
     <string name="image_sheet_label">Image Sheet</string>
     <string name="description">Deskripsi</string>
     <string name="okay">Baiklah</string>
+    <string name="failed_to_predict_label">Gagal memprediksi. Silakan coba lagi</string>
+    <string name="failed_to_get_history">Gagal mendapatkan riwayat.</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="result_label">Hasil</string>
+    <string name="result_subheading_label">Hasil analisis Padi Anda</string>
+    <string name="disease_name_label">Nama penyakit</string>
+    <string name="predicted_on">Di prediksi pada</string>
+    <string name="cause_label">Penyebab</string>
+    <string name="solution_label">Solusi</string>
+    <string name="lorem_label">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultrices, velit nec scelerisque fringilla, lectus est egestas risus, in vehicula tellus diam eu arcu. Fusce facilisis elit semper, pretium arcu ut, ultrices dolor. Aliquam erat volutpat. Nam egestas leo vitae nunc lobortis sagittis. Phasellus varius iaculis quam at posuere. Integer tempor justo in facilisis tempus.</string>
 </resources>

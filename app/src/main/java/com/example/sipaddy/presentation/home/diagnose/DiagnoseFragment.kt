@@ -15,10 +15,12 @@ import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
+import com.example.sipaddy.R
 import com.example.sipaddy.data.ResultState
 import com.example.sipaddy.databinding.FragmentDiagnoseBinding
 import com.example.sipaddy.presentation.ViewModelFactory
 import com.example.sipaddy.presentation.home.diagnose.camera.CameraActivity
+import com.example.sipaddy.utils.bottomSheetDialog
 import com.example.sipaddy.utils.createCustomTempFile
 import com.example.sipaddy.utils.deleteFromUri
 import com.example.sipaddy.utils.gone
@@ -160,11 +162,25 @@ class DiagnoseFragment : Fragment() {
                     if (result != null) {
                         when (result) {
                             is ResultState.Loading -> {
-                                showLoading(false)
-                                show
+                                showLoading(true)
                             }
-                            is ResultState.Error -> {}
-                            is ResultState.Success -> {}
+
+                            is ResultState.Error -> {
+                                showLoading(false)
+                                bottomSheetDialog(
+                                    requireContext(),
+                                    getString(R.string.failed_to_predict_label),
+                                    R.drawable.error_image,
+                                    buttonColorResId = R.color.red,
+                                    onClick = {}
+                                )
+                            }
+
+                            is ResultState.Success -> {
+                                showLoading(false)
+                                val toResultFragment =
+                            }
+
 
                         }
                     }
