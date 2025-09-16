@@ -31,6 +31,9 @@ data class HistoryItem(
     @field:SerializedName("description")
     val description: String? = null,
 
+    @field:SerializedName("photo_url")
+    val photoUrl: String? = null,
+
     @field:SerializedName("created_at")
     val createdAt: String? = null,
 

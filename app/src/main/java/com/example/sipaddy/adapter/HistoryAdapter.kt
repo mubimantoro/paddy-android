@@ -6,6 +6,8 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.example.sipaddy.R
 import com.example.sipaddy.data.network.response.HistoryItem
 import com.example.sipaddy.databinding.ItemHistoryBinding
 import com.example.sipaddy.presentation.history.HistoryFragmentDirections
@@ -19,6 +21,11 @@ class HistoryAdapter() : ListAdapter<HistoryItem, HistoryAdapter.HistoryViewHold
             with(binding) {
                 diseaseNameTv.text = item.label
                 diseaseDateTv.text = item.createdAt?.let { DateFormatter.formatIsoDate(it) }
+                Glide.with(itemView.context)
+                    .load(item.photoUrl)
+                    .placeholder(R.drawable.sample_scan)
+                    .error(R.drawable.sample_scan)
+                    .into(historyIv)
             }
         }
     }

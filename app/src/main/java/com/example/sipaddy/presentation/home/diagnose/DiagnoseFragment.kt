@@ -185,6 +185,7 @@ class DiagnoseFragment : Fragment() {
                                     DiagnoseFragmentDirections.actionNavigationDiagnoseToResultFragment(
                                         currentPhotoUri.toString(),
                                         result.data.data,
+                                        null,
                                     )
                                 isPickPhoto = false
                                 view.findNavController().navigate(toResultFragment)

@@ -16,6 +16,7 @@ import java.util.Locale
 private const val FILENAME_FORMAT = "yyyyMMdd_HHmmss"
 private const val DATE_FORMAT = "dd MMM yyyy, HH:mm:ss"
 private val timestamp: String = SimpleDateFormat(FILENAME_FORMAT, Locale("en", "ID")).format(Date())
+val date: String = SimpleDateFormat(DATE_FORMAT, Locale.US).format(Date())
 
 fun createCustomTempFile(context: Context): File {
     val filesDir = context.externalCacheDir

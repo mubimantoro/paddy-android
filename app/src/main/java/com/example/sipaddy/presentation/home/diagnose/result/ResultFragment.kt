@@ -1,60 +1,104 @@
 package com.example.sipaddy.presentation.home.diagnose.result
 
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.net.toUri
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
+import com.bumptech.glide.Glide
 import com.example.sipaddy.R
+import com.example.sipaddy.databinding.FragmentResultBinding
+import com.example.sipaddy.presentation.ViewModelFactory
+import com.example.sipaddy.presentation.home.diagnose.DiagnoseViewModel
+import com.example.sipaddy.utils.DateFormatter
+import com.example.sipaddy.utils.date
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [ResultFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ResultFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+    private val binding: FragmentResultBinding by lazy {
+        FragmentResultBinding.inflate(layoutInflater)
     }
+
+    private val diagnoseViewModel: DiagnoseViewModel by viewModels {
+        ViewModelFactory(requireContext())
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_result, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ResultFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ResultFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val photoUri = ResultFragmentArgs.fromBundle(arguments as Bundle).photoUri
+        val predictResult = ResultFragmentArgs.fromBundle(arguments as Bundle).predictResult
+        val history = ResultFragmentArgs.fromBundle(arguments as Bundle).history
+
+        with(binding) {
+            backBtn.setOnClickListener {
+                view.findNavController().popBackStack()
+            }
+
+            if (history != null) {
+                diseaseNameTextView.text = history.label
+                dateTextView.text = history.createdAt?.let { DateFormatter.formatIsoDate(it) }
+                descriptionText.text = history.description
+                causesText.text = history.causes
+                val solutionText = history.solutions?.let {
+                    setSolutionText(it)
+                }
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    solutionTv.text = Html.fromHtml(solutionText, Html.FROM_HTML_MODE_COMPACT)
+                }
+                Glide.with(requireContext())
+                    .load(history.photoUrl)
+                    .error(R.drawable.sample_scan)
+                    .into(resultIv)
+            } else {
+                if (predictResult != null) {
+                    diseaseNameTextView.text = predictResult.label
+                    dateTextView.text = date
+                    descriptionText.text = predictResult.description
+                    causesText.text = predictResult.causes
+                    val solutionText = predictResult.solutions?.let {
+                        setSolutionText(it)
+                    }
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        solutionTv.text = Html.fromHtml(solutionText, Html.FROM_HTML_MODE_COMPACT)
+                    }
                 }
             }
+            diagnoseViewModel.setPhotoUri(
+                photoUri?.toUri()
+            )
+            diagnoseViewModel.photoUri.observe(viewLifecycleOwner) {
+                showPreview(it)
+            }
+        }
     }
+
+    private fun showPreview(photoUri: Uri?) {
+        binding.resultIv.setImageURI(photoUri)
+
+    }
+
+    private fun setSolutionText(text: String): String {
+        val solution = text.trimIndent()
+        val htmlText =
+            solution.split("\n").joinToString("<br>") { "<li>&nbsp;&nbsp;&nbsp;&nbsp;$it</li>" }
+        val finalHtmlText = "<ul>$htmlText</ul>"
+        return finalHtmlText
+    }
+
 }

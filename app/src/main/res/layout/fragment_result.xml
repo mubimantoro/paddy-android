@@ -210,7 +210,7 @@
                     android:textSize="22sp" />
 
                 <TextView
-                    android:id="@+id/solution_text"
+                    android:id="@+id/solutionTv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
