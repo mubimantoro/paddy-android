@@ -1,7 +1,6 @@
 package com.example.sipaddy.data.repository
 
 import com.example.sipaddy.data.ResultState
-import com.example.sipaddy.data.model.PengaduanForm
 import com.example.sipaddy.data.network.response.CommonResponse
 import com.example.sipaddy.data.network.response.HistoryResponse
 import com.example.sipaddy.data.network.response.LoginResponse
@@ -59,20 +58,26 @@ class PaddyRepository(
         }
     }
 
-    fun createPengaduan(
-        form: PengaduanForm,
+    fun createPengaduanTanaman(
+        kelompokTani: String,
+        alamat: String,
+        kecamatan: String,
+        kabupaten: String,
+        deskripsi: String,
+        latitude: Double,
+        longitude: Double,
         photoFile: File
     ): Flow<ResultState<CommonResponse>> = flow {
         emit(ResultState.Loading)
         val rbText = "text/plain".toMediaType()
         val rPhotoFile = photoFile.asRequestBody("image/jpeg".toMediaType())
-        val kelompokTani = form.kelompokTani.toRequestBody(rbText)
-        val alamat = form.alamat.toRequestBody(rbText)
-        val kecamatan = form.kecamatan.toRequestBody(rbText)
-        val kabupaten = form.kabupaten.toRequestBody(rbText)
-        val deskripsi = form.deskripsi.toRequestBody(rbText)
-        val latitude = form.latitude?.toString()?.toRequestBody(rbText)
-        val longitude = form.longitude?.toString()?.toRequestBody(rbText)
+        val kelompokTaniField = kelompokTani.toRequestBody(rbText)
+        val alamatField = alamat.toRequestBody(rbText)
+        val kecamatanField = kecamatan.toRequestBody(rbText)
+        val kabupatenField = kabupaten.toRequestBody(rbText)
+        val deskripsiField = deskripsi.toRequestBody(rbText)
+        val latitudeField = latitude.toString().toRequestBody(rbText)
+        val longitudeField = longitude.toString().toRequestBody(rbText)
         val multipartBody = MultipartBody.Part.createFormData(
             "photo",
             photoFile.name,
@@ -81,15 +86,15 @@ class PaddyRepository(
         try {
             val token = runBlocking { userPreference.getSession().first() }
             val apiService = ApiConfig.getApiService(token)
-            val response = apiService.createPengaduan(
+            val response = apiService.createPengaduanTanaman(
                 token,
-                kelompokTani = kelompokTani,
-                alamat,
-                kecamatan,
-                kabupaten,
-                deskripsi,
-                latitude,
-                longitude,
+                kelompokTaniField,
+                alamatField,
+                kecamatanField,
+                kabupatenField,
+                deskripsiField,
+                latitudeField,
+                longitudeField,
                 multipartBody
             )
 

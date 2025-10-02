@@ -25,7 +25,7 @@ import com.example.sipaddy.utils.bottomSheetDialog
 import com.example.sipaddy.utils.createCustomTempFile
 import com.example.sipaddy.utils.deleteFromUri
 import com.example.sipaddy.utils.gone
-import com.example.sipaddy.utils.reduceFilePhoto
+import com.example.sipaddy.utils.reduceFileImage
 import com.example.sipaddy.utils.show
 import com.example.sipaddy.utils.uriToFile
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -208,7 +208,7 @@ class DiagnoseFragment : Fragment() {
 
     private fun handlePhotoUri(uri: Uri) {
         currentPhotoUri?.let { deleteFromUri(it) }
-        val photoCompress = uriToFile(uri, requireContext()).reduceFilePhoto()
+        val photoCompress = uriToFile(uri, requireContext()).reduceFileImage()
         viewModel.setPhotoUri(photoCompress.toUri())
         tempCropFile?.let { deleteFromUri(it.toUri()) }
         cameraPhotoUri?.let { deleteFromUri(it) }

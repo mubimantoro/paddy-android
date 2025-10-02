@@ -1,6 +1,6 @@
 package com.example.sipaddy.data.model
 
-class PengaduanForm(
+class PengaduanTanamanModel(
     val kelompokTani: String,
     val alamat: String,
     val kecamatan: String,

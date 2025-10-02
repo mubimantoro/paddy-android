@@ -38,7 +38,8 @@ interface PaddyApiService {
     ): CommonResponse
 
     @Multipart
-    suspend fun createPengaduan(
+    @POST("pengaduan-tanaman")
+    suspend fun createPengaduanTanaman(
         @Header("Authorization") token: String,
         @Part("kelompokTani") kelompokTani: RequestBody,
         @Part("alamat") alamat: RequestBody,

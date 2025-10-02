@@ -31,6 +31,10 @@ class HomeFragment : Fragment() {
             diagnoseBtn.setOnClickListener {
                 view.findNavController().navigate(R.id.action_navigation_home_to_diagnoseFragment)
             }
+
+            pengaduanTanamanBtn.setOnClickListener {
+                view.findNavController().navigate(R.id.action_navigation_home_to_pengaduanTanamanFragment)
+            }
         }
 
         setupObserver()

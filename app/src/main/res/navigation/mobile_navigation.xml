@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_navigation_home_to_diagnoseFragment"
             app:destination="@id/navigation_diagnose" />
+        <action
+            android:id="@+id/action_navigation_home_to_pengaduanTanamanFragment"
+            app:destination="@id/navigation_pengaduan_tanaman" />
     </fragment>
 
     <fragment
@@ -82,4 +85,9 @@
             app:argType="com.example.sipaddy.data.network.response.HistoryItem"
             app:nullable="true" />
     </fragment>
+    <fragment
+        android:id="@+id/navigation_pengaduan_tanaman"
+        android:name="com.example.sipaddy.presentation.pengaduantanaman.PengaduanTanamanFragment"
+        android:label="fragment_pengaduan_tanaman"
+        tools:layout="@layout/fragment_pengaduan_tanaman" />
 </navigation>

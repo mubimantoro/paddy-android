@@ -63,4 +63,13 @@
     <string name="solution_label">Solusi</string>
     <string name="lorem_label">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultrices, velit nec scelerisque fringilla, lectus est egestas risus, in vehicula tellus diam eu arcu. Fusce facilisis elit semper, pretium arcu ut, ultrices dolor. Aliquam erat volutpat. Nam egestas leo vitae nunc lobortis sagittis. Phasellus varius iaculis quam at posuere. Integer tempor justo in facilisis tempus.</string>
     <string name="please_select_image_label">Silakan pilih gambar</string>
+    <string name="pengaduan_tanaman_heading_label">Pengaduan Tanaman</string>
+    <string name="pengaduan_tanaman_subheading_label">Lapor masalah tanaman Anda ke petugas</string>
+    <string name="image_home_label">Image Home</string>
+    <string name="lapor_now_label">Lapor sekarang</string>
+    <string name="history_diagnose_heading_label">Riwayat diagnosa tanaman</string>
+    <string name="history_diagnose_subheading_label">Lihat riwayat diagnosa Tanaman Anda</string>
+    <string name="history_btn_label">Lihat Riwayat</string>
+    <string name="location_not_found_label">Tidak dapat mengambil lokasi. Pastikan GPS aktif</string>
+    <string name="take_my_location_label">Ambil Lokasi Saya</string>
 </resources>
