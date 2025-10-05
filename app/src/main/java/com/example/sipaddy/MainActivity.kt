@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
 
         bottomNavView.setOnItemSelectedListener { item ->
             val navOptions = androidx.navigation.navOptions {
-                popUpTo(R.id.mobile_navigation) {
+                popUpTo(R.id.main_navigation) {
                     inclusive = false
                 }
                 launchSingleTop = true

@@ -60,7 +60,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/registerHeadingTv" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/fullnameEdtLayout"
+                android:id="@+id/namaLengkapEdtLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_50"
@@ -70,7 +70,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/registerSubheadingTv">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/fullnameEdt"
+                    android:id="@+id/namaLengkapEdt"
                     style="@style/EditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -83,7 +83,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
-                android:id="@+id/fullnameErrorTv"
+                android:id="@+id/namaLengkapErrorTv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_4"
@@ -91,22 +91,22 @@
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/fullnameEdtLayout"
+                app:layout_constraintTop_toBottomOf="@+id/namaLengkapEdtLayout"
                 tools:text="Error"
                 tools:visibility="visible" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/phoneNumberEdtLayout"
+                android:id="@+id/nomorHpEdtLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_8"
                 app:hintEnabled="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/fullnameErrorTv">
+                app:layout_constraintTop_toBottomOf="@+id/namaLengkapErrorTv">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/phoneNumberEdt"
+                    android:id="@+id/nomorHpEdt"
                     style="@style/EditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -119,7 +119,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
-                android:id="@+id/phoneNumberErrorTv"
+                android:id="@+id/nomorHpErrorTv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_4"
@@ -127,7 +127,7 @@
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/phoneNumberEdtLayout"
+                app:layout_constraintTop_toBottomOf="@+id/nomorHpEdtLayout"
                 tools:text="Error"
                 tools:visibility="visible" />
 
@@ -139,7 +139,7 @@
                 app:hintEnabled="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/phoneNumberErrorTv">
+                app:layout_constraintTop_toBottomOf="@+id/nomorHpErrorTv">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/usernameEdt"

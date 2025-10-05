@@ -8,6 +8,7 @@ import com.example.sipaddy.data.network.response.PredictResponse
 import com.example.sipaddy.data.network.retrofit.ApiConfig
 import com.example.sipaddy.data.network.retrofit.PaddyApiService
 import com.example.sipaddy.data.pref.UserPreference
+import com.google.gson.Gson
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
@@ -16,6 +17,7 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
+import retrofit2.HttpException
 import java.io.File
 
 class PaddyRepository(
@@ -23,19 +25,23 @@ class PaddyRepository(
     private val userPreference: UserPreference
 ) {
     fun register(
+        username: String,
+        password: String,
         namaLengkap: String,
         nomorHp: String,
-        username: String,
-        password: String
     ): Flow<ResultState<CommonResponse>> = flow {
         emit(ResultState.Loading)
         try {
-            val response = apiService.register(namaLengkap, nomorHp, username, password)
+            val response = apiService.register(username, password, namaLengkap, nomorHp)
 
             if (response.status == "success") {
                 emit(ResultState.Success(response))
             }
 
+        } catch (e: HttpException) {
+            val errorBody = e.response()?.errorBody()?.string()
+            val errorResponse = Gson().fromJson(errorBody, CommonResponse::class.java)
+            emit(ResultState.Error(errorResponse.message))
         } catch (e: Exception) {
             emit(ResultState.Error(e.message.toString()))
         }

@@ -5,9 +5,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.sipaddy.di.Injection
 import com.example.sipaddy.presentation.history.HistoryViewModel
+import com.example.sipaddy.presentation.home.HomeViewModel
 import com.example.sipaddy.presentation.home.diagnose.DiagnoseViewModel
 import com.example.sipaddy.presentation.login.LoginViewModel
 import com.example.sipaddy.presentation.pengaduantanaman.PengaduanTanamanViewModel
+import com.example.sipaddy.presentation.profile.ProfilViewModel
 import com.example.sipaddy.presentation.register.RegisterViewModel
 
 class ViewModelFactory(
@@ -25,12 +27,20 @@ class ViewModelFactory(
                 LoginViewModel(Injection.provideRepository(context)) as T
             }
 
+            modelClass.isAssignableFrom(HomeViewModel::class.java) -> {
+                HomeViewModel(Injection.provideRepository(context)) as T
+            }
+
             modelClass.isAssignableFrom(DiagnoseViewModel::class.java) -> {
                 DiagnoseViewModel(Injection.provideRepository(context)) as T
             }
 
             modelClass.isAssignableFrom(HistoryViewModel::class.java) -> {
                 HistoryViewModel(Injection.provideRepository(context)) as T
+            }
+
+            modelClass.isAssignableFrom(ProfilViewModel::class.java) -> {
+                ProfilViewModel(Injection.provideRepository(context)) as T
             }
 
             modelClass.isAssignableFrom(PengaduanTanamanViewModel::class.java) -> {

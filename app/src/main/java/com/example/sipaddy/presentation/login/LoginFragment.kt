@@ -7,6 +7,9 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavOptions
+import androidx.navigation.findNavController
+import com.example.sipaddy.R
 import com.example.sipaddy.data.ResultState
 import com.example.sipaddy.databinding.FragmentLoginBinding
 import com.example.sipaddy.presentation.ViewModelFactory
@@ -15,58 +18,95 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class LoginFragment : Fragment() {
 
-    private val binding: FragmentLoginBinding by lazy {
-        FragmentLoginBinding.inflate(layoutInflater)
-    }
+    private var loadingDialog: AlertDialog? = null
+
+    private var _binding: FragmentLoginBinding? = null
+    private val binding get() = _binding!!
 
     private val viewModel: LoginViewModel by viewModels {
         ViewModelFactory(requireContext())
     }
 
-    private var loadingDialog: AlertDialog? = null
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
+        _binding = FragmentLoginBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        with(binding) {
+            backBtn.setOnClickListener {
+                view.findNavController().popBackStack()
+            }
 
-        setupObserver()
+            registerHereTv.setOnClickListener {
+                view.findNavController()
+                    .navigate(R.id.action_navigation_login_to_navigation_register)
+            }
+
+
+        }
+
+
+        setupObserverSession()
+        setupObserverLogin()
     }
 
-    private fun setupObserver() {
+    private fun setupObserverSession() {
+        viewModel.getSession().observe(viewLifecycleOwner) {
+            if (it.isNotEmpty()) {
+                view?.findNavController()?.navigate(R.id.action_loginFragment_to_navigation_home)
+            }
+        }
+    }
+
+    private fun setupObserverLogin() {
         with(binding) {
             loginBtn.setOnClickListener {
-                val username = usernameEdt.text.toString().trim()
-                val password = passwordEdt.text.toString().trim()
+                val usernameEdt = usernameEdt.text.toString().trim()
+                val passwordEdt = passwordEdt.text.toString().trim()
 
-                viewModel.login(username, password)
+                viewModel.login(usernameEdt, passwordEdt)
+
                 viewModel.loginResult.observe(viewLifecycleOwner) { result ->
                     when (result) {
-                        is ResultState.Loading -> {}
+                        is ResultState.Loading -> {
+                            showLoading(true)
+                        }
+
                         is ResultState.Success -> {
                             showLoading(false)
                             val username = result.data.loginResult?.username
                             val token = result.data.loginResult?.token
 
                             if (token != null && username != null) {
-                                viewModel.saveSession(username, token)
+                                viewModel.saveSession(username, token) {
+                                    toHome(view)
+                                }
                             }
                         }
 
-                        is ResultState.Error -> {}
+                        is ResultState.Error -> {
+                            showLoading(false)
+                        }
                     }
                 }
             }
         }
 
+    }
+
+    private fun toHome(view: View?) {
+        view?.findNavController()?.navigate(
+            R.id.action_loginFragment_to_navigation_home,
+            null,
+            navOptions = NavOptions.Builder().setPopUpTo(R.id.main_navigation, true).build()
+        )
     }
 
     private fun showLoading(isLoading: Boolean) {
@@ -87,5 +127,10 @@ class LoginFragment : Fragment() {
             loadingDialog = null
         }
 
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

@@ -20,8 +20,8 @@ interface PaddyApiService {
     suspend fun register(
         @Field("username") username: String,
         @Field("password") password: String,
-        @Field("nama_lengkap") namaLengkap: String,
-        @Field("nomor_hp") nomorHp: String
+        @Field("namaLengkap") namaLengkap: String,
+        @Field("nomorHp") nomorHp: String
     ): CommonResponse
 
     @FormUrlEncoded
@@ -31,15 +31,9 @@ interface PaddyApiService {
         @Field("password") password: String
     ): LoginResponse
 
-    @FormUrlEncoded
-    @POST("pengaduan")
-    suspend fun addNewPengaduan(
-        @Header("Authorization") token: String
-    ): CommonResponse
-
     @Multipart
     @POST("pengaduan-tanaman")
-    suspend fun createPengaduanTanaman(
+    suspend fun createPengaduanTanaman  (
         @Header("Authorization") token: String,
         @Part("kelompokTani") kelompokTani: RequestBody,
         @Part("alamat") alamat: RequestBody,

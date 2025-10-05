@@ -53,8 +53,6 @@
     <string name="okay">Baiklah</string>
     <string name="failed_to_predict_label">Gagal memprediksi. Silakan coba lagi</string>
     <string name="failed_to_get_history">Gagal mendapatkan riwayat.</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="result_label">Hasil</string>
     <string name="result_subheading_label">Hasil analisis Padi Anda</string>
     <string name="disease_name_label">Nama penyakit</string>
@@ -72,4 +70,17 @@
     <string name="history_btn_label">Lihat Riwayat</string>
     <string name="location_not_found_label">Tidak dapat mengambil lokasi. Pastikan GPS aktif</string>
     <string name="take_my_location_label">Ambil Lokasi Saya</string>
+
+    <string name="username_empty_label">Username tidak boleh kosong</string>
+    <string name="password_empty_label">Password tidak boleh kosong</string>
+    <string name="namalengkap_empty_label">Nama lengkap tidak boleh kosong</string>
+    <string name="nomor_hp_empty_label">Nomor Hp tidak boleh kosong</string>
+    <string name="username_length_label">Username minimal 4 karakter</string>
+    <string name="password_length_label">Password minimal 8 karakter</string>
+    <string name="nomor_hp_length_label">Nomor Hp minimal 10 digit</string>
+
+
+    <string name="please_wait_label">Mohon menunggu...</string>
+    <string name="success_register_label">Akun Anda berhasil terdaftar</string>
+    <string name="error_register_label">Gagal mendaftarkan akun Anda</string>
 </resources>

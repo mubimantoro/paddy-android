@@ -15,6 +15,7 @@
         <item name="edit_text_background">@color/edit_text_bg</item>
         <item name="item_foreground">@color/neutral_600</item>
         <item name="header_container_background">@color/green_500</item>
+        <item name="window_background">@color/background</item>
     </style>
 
 
@@ -44,6 +45,26 @@
 
     <style name="BottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@android:color/transparent</item>
+    </style>
+    
+    <style name="ThemeOverlay.App.MaterialAlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="colorOnPrimary">
+            @color/neutral_900
+        </item>
+        <item name="android:background">@color/white</item>
+        <item name="colorSurfaceContainerHigh">@color/green_50</item>
+        <item name="colorOnSurface">@color/neutral_900</item>
+        <item name="materialAlertDialogTitleTextStyle">@style/MaterialAlertDialog.App.Title.Text</item>
+        <item name="buttonBarPositiveButtonStyle">@style/Widget.App.Button</item>
+        <item name="buttonBarNegativeButtonStyle">@style/Widget.App.Button</item>
+    </style>
+    
+    <style name="MaterialAlertDialog.App.Title.Text" parent="MaterialAlertDialog.Material3.Title.Text">
+        <item name="android:textColor">@color/neutral_900</item>
+    </style>
+
+    <style name="Widget.App.Button" parent="Widget.Material3.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/neutral_900</item>
     </style>
 
 </resources>

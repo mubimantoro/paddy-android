@@ -5,14 +5,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.example.sipaddy.R
 import com.example.sipaddy.databinding.FragmentHomeBinding
+import com.example.sipaddy.presentation.ViewModelFactory
 
 class HomeFragment : Fragment() {
 
     private val binding: FragmentHomeBinding by lazy {
         FragmentHomeBinding.inflate(layoutInflater)
+    }
+
+    private val viewModel: HomeViewModel by viewModels {
+        ViewModelFactory(requireContext())
     }
 
 
@@ -33,7 +39,8 @@ class HomeFragment : Fragment() {
             }
 
             pengaduanTanamanBtn.setOnClickListener {
-                view.findNavController().navigate(R.id.action_navigation_home_to_pengaduanTanamanFragment)
+                view.findNavController()
+                    .navigate(R.id.action_navigation_home_to_pengaduanTanamanFragment)
             }
         }
 
@@ -42,7 +49,11 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupObserver() {
-
+        viewModel.getSession().observe(viewLifecycleOwner) {
+            if (it.isEmpty()) {
+                view?.findNavController()?.navigate(R.id.action_navigation_home_to_navigation_login)
+            }
+        }
     }
 
 
