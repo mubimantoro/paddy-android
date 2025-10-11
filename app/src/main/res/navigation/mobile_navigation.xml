@@ -32,6 +32,7 @@
             app:enterAnim="@anim/from_right"
             app:exitAnim="@anim/to_left"
             app:popEnterAnim="@anim/from_left"
+            app:launchSingleTop="true"
             app:popExitAnim="@anim/to_right"
             app:popUpTo="@id/navigation_login" />
         <action

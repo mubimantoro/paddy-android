@@ -1,6 +1,7 @@
 package com.example.sipaddy.presentation.login
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,6 +40,12 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.getSession().observe(viewLifecycleOwner) {
+            if (it.isNotEmpty()) {
+                view.findNavController().navigate(R.id.action_loginFragment_to_navigation_home)
+            }
+        }
+
         with(binding) {
             backBtn.setOnClickListener {
                 view.findNavController().popBackStack()
@@ -49,59 +56,48 @@ class LoginFragment : Fragment() {
                     .navigate(R.id.action_navigation_login_to_navigation_register)
             }
 
+            viewModel.loginResult.observe(viewLifecycleOwner) { result ->
+                Log.d("LoginFragment", "Login result: $result")
+                when (result) {
+                    is ResultState.Loading -> {
+                        showLoading(true)
+                    }
 
-        }
+                    is ResultState.Success -> {
+                        showLoading(false)
+                        val username = result.data.loginResult?.user?.username
+                        val token = result.data.loginResult?.token
 
 
-        setupObserverSession()
-        setupObserverLogin()
-    }
 
-    private fun setupObserverSession() {
-        viewModel.getSession().observe(viewLifecycleOwner) {
-            if (it.isNotEmpty()) {
-                view?.findNavController()?.navigate(R.id.action_loginFragment_to_navigation_home)
+                        if (token != null && username != null) {
+                            viewModel.saveSession(username, token) {
+                                toHome(view)
+                            }
+                        }
+                    }
+
+                    is ResultState.Error -> {
+                        showLoading(false)
+                    }
+                }
             }
-        }
-    }
 
-    private fun setupObserverLogin() {
-        with(binding) {
             loginBtn.setOnClickListener {
                 val usernameEdt = usernameEdt.text.toString().trim()
                 val passwordEdt = passwordEdt.text.toString().trim()
 
                 viewModel.login(usernameEdt, passwordEdt)
 
-                viewModel.loginResult.observe(viewLifecycleOwner) { result ->
-                    when (result) {
-                        is ResultState.Loading -> {
-                            showLoading(true)
-                        }
 
-                        is ResultState.Success -> {
-                            showLoading(false)
-                            val username = result.data.loginResult?.username
-                            val token = result.data.loginResult?.token
-
-                            if (token != null && username != null) {
-                                viewModel.saveSession(username, token) {
-                                    toHome(view)
-                                }
-                            }
-                        }
-
-                        is ResultState.Error -> {
-                            showLoading(false)
-                        }
-                    }
-                }
             }
         }
 
     }
 
+
     private fun toHome(view: View?) {
+
         view?.findNavController()?.navigate(
             R.id.action_loginFragment_to_navigation_home,
             null,

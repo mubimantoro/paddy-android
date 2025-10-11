@@ -101,6 +101,8 @@ class PengaduanTanamanFragment : Fragment() {
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
 
+        setupObserver()
+
         with(binding) {
             backBtn.setOnClickListener {
                 view.findNavController().popBackStack()
@@ -121,6 +123,28 @@ class PengaduanTanamanFragment : Fragment() {
             locationBtn.setOnClickListener {
                 getMyLocation()
             }
+        }
+    }
+
+    private fun setupObserver() {
+        viewModel.result.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is ResultState.Loading -> {
+                    binding.progressBar.visibility = View.VISIBLE
+                }
+
+                is ResultState.Error -> {
+                    binding.progressBar.visibility = View.GONE
+                }
+
+                is ResultState.Success -> {
+                    binding.progressBar.visibility = View.GONE
+                    showToast(result.data.message)
+
+                    view?.findNavController()?.popBackStack()
+                }
+            }
+
         }
     }
 
@@ -167,23 +191,7 @@ class PengaduanTanamanFragment : Fragment() {
                 imageFile
             )
 
-            viewModel.result.observe(viewLifecycleOwner) { result ->
-                when (result) {
-                    is ResultState.Loading -> {
-                        binding.progressBar.visibility = View.VISIBLE
-                    }
 
-                    is ResultState.Error -> {
-                        binding.progressBar.visibility = View.GONE
-                    }
-
-                    is ResultState.Success -> {
-                        binding.progressBar.visibility = View.GONE
-                        showToast(result.data.message)
-                    }
-                }
-
-            }
         }
     }
 
