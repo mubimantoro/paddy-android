@@ -177,8 +177,8 @@ class PengaduanTanamanFragment : Fragment() {
             val deskripsi = deskripsiEdt.text.toString().trim()
             val latitude = latitudeEdt.text.toString().trim()
             val longitude = longitudeEdt.text.toString().trim()
-            val imageFile = uriToFile(currentImageUri!!, requireContext())
-            imageFile.reduceFileImage()
+            val image = uriToFile(currentImageUri!!, requireContext())
+            image.reduceFileImage()
 
             viewModel.createPengaduanTanaman(
                 kelompokTani,
@@ -188,7 +188,7 @@ class PengaduanTanamanFragment : Fragment() {
                 deskripsi,
                 latitude,
                 longitude,
-                imageFile
+                image
             )
 
 

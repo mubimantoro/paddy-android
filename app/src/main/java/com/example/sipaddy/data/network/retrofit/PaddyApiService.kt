@@ -34,7 +34,6 @@ interface PaddyApiService {
     @Multipart
     @POST("pengaduan-tanaman")
     suspend fun createPengaduanTanaman  (
-        @Header("Authorization") token: String,
         @Part("kelompokTani") kelompokTani: RequestBody,
         @Part("alamat") alamat: RequestBody,
         @Part("kecamatan") kecamatan: RequestBody,
@@ -42,13 +41,13 @@ interface PaddyApiService {
         @Part("deskripsi") deskripsi: RequestBody,
         @Part("latitude") latitude: RequestBody? = null,
         @Part("longitude") longitude: RequestBody? = null,
-        @Part photo: MultipartBody.Part
+        @Part image: MultipartBody.Part
     ): CommonResponse
 
     @Multipart
     @POST("predict")
     suspend fun predict(
-        @Part photo: MultipartBody.Part
+        @Part image: MultipartBody.Part
     ): PredictResponse
 
     @GET("histories")

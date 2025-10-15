@@ -1,6 +1,5 @@
 package com.example.sipaddy.presentation.home.diagnose.result
 
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
@@ -41,7 +40,7 @@ class ResultFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val photoUri = ResultFragmentArgs.fromBundle(arguments as Bundle).photoUri
+        val imageUri = ResultFragmentArgs.fromBundle(arguments as Bundle).imageUri
         val predictResult = ResultFragmentArgs.fromBundle(arguments as Bundle).predictResult
         val history = ResultFragmentArgs.fromBundle(arguments as Bundle).history
 
@@ -51,10 +50,10 @@ class ResultFragment : Fragment() {
             }
 
             if (history != null) {
-                diseaseNameTextView.text = history.label
-                dateTextView.text = history.createdAt?.let { DateFormatter.formatIsoDate(it) }
-                descriptionText.text = history.description
-                causesText.text = history.causes
+                diseaseLabelTv.text = history.label
+                dateTv.text = history.createdAt?.let { DateFormatter.formatIsoDate(it) }
+                descTv.text = history.description
+                causesTv.text = history.causes
                 val solutionText = history.solutions?.let {
                     setSolutionText(it)
                 }
@@ -65,12 +64,13 @@ class ResultFragment : Fragment() {
                     .load(history.photoUrl)
                     .error(R.drawable.sample_scan)
                     .into(resultIv)
+
             } else {
                 if (predictResult != null) {
-                    diseaseNameTextView.text = predictResult.label
-                    dateTextView.text = date
-                    descriptionText.text = predictResult.description
-                    causesText.text = predictResult.causes
+                    diseaseLabelTv.text = predictResult.label
+                    dateTv.text = date
+                    descTv.text = predictResult.description
+                    causesTv.text = predictResult.causes
                     val solutionText = predictResult.solutions?.let {
                         setSolutionText(it)
                     }
@@ -78,20 +78,13 @@ class ResultFragment : Fragment() {
                         solutionTv.text = Html.fromHtml(solutionText, Html.FROM_HTML_MODE_COMPACT)
                     }
                 }
-            }
-            diagnoseViewModel.setPhotoUri(
-                photoUri?.toUri()
-            )
-            diagnoseViewModel.photoUri.observe(viewLifecycleOwner) {
-                showPreview(it)
+                imageUri?.let {
+                    resultIv.setImageURI(it.toUri())
+                }
             }
         }
     }
 
-    private fun showPreview(photoUri: Uri?) {
-        binding.resultIv.setImageURI(photoUri)
-
-    }
 
     private fun setSolutionText(text: String): String {
         val solution = text.trimIndent()

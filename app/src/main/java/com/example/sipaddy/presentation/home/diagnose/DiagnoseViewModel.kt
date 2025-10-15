@@ -8,24 +8,27 @@ import androidx.lifecycle.viewModelScope
 import com.example.sipaddy.data.ResultState
 import com.example.sipaddy.data.network.response.PredictResponse
 import com.example.sipaddy.data.repository.PaddyRepository
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
 
 class DiagnoseViewModel(private val repository: PaddyRepository) : ViewModel() {
-    private val _resultPredict = MutableLiveData<ResultState<PredictResponse>>()
-    val resultPredict: LiveData<ResultState<PredictResponse>> = _resultPredict
+    private val _resultPredict = MutableSharedFlow<ResultState<PredictResponse>>()
+    val resultPredict: SharedFlow<ResultState<PredictResponse>> = _resultPredict.asSharedFlow()
 
-    private val _photoUri = MutableLiveData<Uri?>()
-    val photoUri: LiveData<Uri?> get() = _photoUri
+    private val _imageUri = MutableLiveData<Uri?>()
+    val imageUri: LiveData<Uri?> get() = _imageUri
 
-    fun setPhotoUri(uri: Uri?) {
-        _photoUri.value = uri
+    fun setImageUri(uri: Uri?) {
+        _imageUri.value = uri
     }
 
-    fun predict(photo: MultipartBody.Part) {
+    fun predict(image: MultipartBody.Part) {
         viewModelScope.launch {
-            repository.predict(photo).collect {
-                _resultPredict.value = it
+            repository.predict(image).collect {
+                _resultPredict.emit(it)
             }
         }
     }

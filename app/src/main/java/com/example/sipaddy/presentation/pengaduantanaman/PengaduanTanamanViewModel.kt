@@ -22,7 +22,7 @@ class PengaduanTanamanViewModel(private val repository: PaddyRepository) : ViewM
         deskripsi: String,
         latitude: String,
         longitude: String,
-        photo: File
+        image: File
     ) {
 
 
@@ -35,7 +35,7 @@ class PengaduanTanamanViewModel(private val repository: PaddyRepository) : ViewM
                 deskripsi,
                 latitude.toDoubleOrNull() ?: 0.0,
                 longitude.toDoubleOrNull() ?: 0.0,
-                photo
+                image
             ).collect {
                 _result.value = it
             }

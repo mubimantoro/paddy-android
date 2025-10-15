@@ -40,11 +40,6 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.getSession().observe(viewLifecycleOwner) {
-            if (it.isNotEmpty()) {
-                view.findNavController().navigate(R.id.action_loginFragment_to_navigation_home)
-            }
-        }
 
         with(binding) {
             backBtn.setOnClickListener {

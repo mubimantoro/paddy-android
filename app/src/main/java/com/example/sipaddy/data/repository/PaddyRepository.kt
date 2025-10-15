@@ -72,11 +72,11 @@ class PaddyRepository(
         deskripsi: String,
         latitude: Double,
         longitude: Double,
-        photoFile: File
+        image: File
     ): Flow<ResultState<CommonResponse>> = flow {
         emit(ResultState.Loading)
         val rbText = "text/plain".toMediaType()
-        val rPhotoFile = photoFile.asRequestBody("image/jpeg".toMediaType())
+        val rbImage = image.asRequestBody("image/jpeg".toMediaType())
         val kelompokTaniField = kelompokTani.toRequestBody(rbText)
         val alamatField = alamat.toRequestBody(rbText)
         val kecamatanField = kecamatan.toRequestBody(rbText)
@@ -85,15 +85,14 @@ class PaddyRepository(
         val latitudeField = latitude.toString().toRequestBody(rbText)
         val longitudeField = longitude.toString().toRequestBody(rbText)
         val multipartBody = MultipartBody.Part.createFormData(
-            "photo",
-            photoFile.name,
-            rPhotoFile
+            "image",
+            image.name,
+            rbImage
         )
         try {
             val token = runBlocking { userPreference.getSession().first() }
             val apiService = ApiConfig.getApiService(token)
             val response = apiService.createPengaduanTanaman(
-                token,
                 kelompokTaniField,
                 alamatField,
                 kecamatanField,
@@ -114,12 +113,12 @@ class PaddyRepository(
 
     }
 
-    fun predict(photo: MultipartBody.Part): Flow<ResultState<PredictResponse>> = flow {
+    fun predict(image: MultipartBody.Part): Flow<ResultState<PredictResponse>> = flow {
         emit(ResultState.Loading)
         try {
             val token = runBlocking { userPreference.getSession().first() }
             val apiService = ApiConfig.getApiService(token)
-            val response = apiService.predict(photo)
+            val response = apiService.predict(image)
             emit(ResultState.Success(response))
         } catch (e: Exception) {
             emit(ResultState.Error(e.message.toString()))

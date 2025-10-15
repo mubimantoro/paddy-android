@@ -54,7 +54,7 @@
     <string name="failed_to_predict_label">Gagal memprediksi. Silakan coba lagi</string>
     <string name="failed_to_get_history">Gagal mendapatkan riwayat.</string>
     <string name="result_label">Hasil</string>
-    <string name="result_subheading_label">Hasil analisis Padi Anda</string>
+    <string name="result_subheading_label">Hasil analisis Padi Anda.</string>
     <string name="disease_name_label">Nama penyakit</string>
     <string name="predicted_on">Di prediksi pada</string>
     <string name="cause_label">Penyebab</string>
@@ -83,4 +83,5 @@
     <string name="please_wait_label">Mohon menunggu...</string>
     <string name="success_register_label">Akun Anda berhasil terdaftar</string>
     <string name="error_register_label">Gagal mendaftarkan akun Anda</string>
+    <string name="diagnose_image">Diagnose Image</string>
 </resources>

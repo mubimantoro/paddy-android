@@ -25,10 +25,7 @@ class LoginViewModel(private val repository: PaddyRepository) : ViewModel() {
 
     fun saveSession(username: String, token: String, callback: () -> Unit) {
         viewModelScope.launch {
-            Log.d("LoginViewModel", "Saving session: $username")
             repository.saveSession(username, token)
-            Log.d("LoginViewModel", "Session saved, calling callback")
-
             callback()
         }
     }

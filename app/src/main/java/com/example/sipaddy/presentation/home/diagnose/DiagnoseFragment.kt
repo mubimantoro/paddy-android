@@ -15,6 +15,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.findNavController
 import com.example.sipaddy.R
 import com.example.sipaddy.data.ResultState
@@ -30,6 +33,7 @@ import com.example.sipaddy.utils.show
 import com.example.sipaddy.utils.uriToFile
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.yalantis.ucrop.UCrop
+import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -38,10 +42,10 @@ import java.io.File
 
 class DiagnoseFragment : Fragment() {
 
-    private var cameraPhotoUri: Uri? = null
+    private var cameraImageUri: Uri? = null
     private var tempCropFile: File? = null
-    private var isPickPhoto: Boolean = false
-    private var currentPhotoUri: Uri? = null
+    private var isPickImage: Boolean = false
+    private var currentImageUri: Uri? = null
     private var loadingDialog: AlertDialog? = null
 
     private val binding: FragmentDiagnoseBinding by lazy {
@@ -65,7 +69,7 @@ class DiagnoseFragment : Fragment() {
 
         with(binding) {
             backBtn.setOnClickListener {
-                currentPhotoUri?.let { deleteFromUri(it) }
+                currentImageUri?.let { deleteFromUri(it) }
                 view.findNavController().popBackStack()
             }
 
@@ -80,8 +84,8 @@ class DiagnoseFragment : Fragment() {
             }
 
             galleryCardBtn.setOnClickListener {
-                if (!isPickPhoto) {
-                    isPickPhoto = true
+                if (!isPickImage) {
+                    isPickImage = true
                     startGallery()
                 }
             }
@@ -90,15 +94,50 @@ class DiagnoseFragment : Fragment() {
                 viewLifecycleOwner,
                 object : OnBackPressedCallback(true) {
                     override fun handleOnBackPressed() {
-                        currentPhotoUri?.let { deleteFromUri(it) }
+                        currentImageUri?.let { deleteFromUri(it) }
                         view.findNavController().popBackStack()
                     }
                 }
             )
 
-            viewModel.photoUri.observe(viewLifecycleOwner) {
-                currentPhotoUri = it
-                showPreview(currentPhotoUri)
+            viewModel.imageUri.observe(viewLifecycleOwner) {
+                currentImageUri = it
+                showPreview(currentImageUri)
+            }
+
+            viewLifecycleOwner.lifecycleScope.launch {
+                viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    viewModel.resultPredict.collect { result ->
+                        when (result) {
+                            is ResultState.Loading -> {
+                                showLoading(true)
+                            }
+
+                            is ResultState.Error -> {
+                                showLoading(false)
+                                bottomSheetDialog(
+                                    requireContext(),
+                                    result.error,
+                                    R.drawable.error_image,
+                                    buttonColorResId = R.color.red,
+                                    onClick = {}
+                                )
+                            }
+
+                            is ResultState.Success -> {
+                                showLoading(false)
+                                val toResultFragment =
+                                    DiagnoseFragmentDirections.actionNavigationDiagnoseToResultFragment(
+                                        currentImageUri.toString(),
+                                        result.data.data,
+                                        null,
+                                    )
+                                isPickImage = false
+                                view.findNavController().navigate(toResultFragment)
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -107,15 +146,15 @@ class DiagnoseFragment : Fragment() {
         ActivityResultContracts.StartActivityForResult()
     ) {
         if (it.resultCode == CameraActivity.CAMERA_RESULT) {
-            cameraPhotoUri = it.data?.getStringExtra(CameraActivity.EXTRA_CAMERA_IMAGE)?.toUri()
-            launchUCrop(cameraPhotoUri!!)
+            cameraImageUri = it.data?.getStringExtra(CameraActivity.EXTRA_CAMERA_IMAGE)?.toUri()
+            launchUCrop(cameraImageUri!!)
         }
 
     }
 
     private val launchGallery =
         registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri: Uri? ->
-            uri?.let { launchUCrop(it) } ?: run { isPickPhoto = false }
+            uri?.let { launchUCrop(it) } ?: run { isPickImage = false }
         }
 
     private fun startGallery() {
@@ -130,9 +169,9 @@ class DiagnoseFragment : Fragment() {
                     handlePhotoUri(uri)
                 }
             } else {
-                cameraPhotoUri?.let { deleteFromUri(it) }
+                cameraImageUri?.let { deleteFromUri(it) }
                 tempCropFile?.delete()
-                isPickPhoto = false
+                isPickImage = false
             }
         }
 
@@ -147,55 +186,23 @@ class DiagnoseFragment : Fragment() {
     }
 
     private fun predict(view: View) {
-        if (currentPhotoUri != null) {
-            currentPhotoUri?.let { uri ->
-                val photoFile = File(uri.path.toString())
+        if (currentImageUri != null) {
+            currentImageUri?.let { uri ->
+                val imageFile = File(uri.path.toString())
                 showLoading(true)
 
-                val requestPhotoFile = photoFile.asRequestBody("image/jpeg".toMediaType())
+                val requestImageFile = imageFile.asRequestBody("image/jpeg".toMediaType())
                 val multipartBody = MultipartBody.Part.createFormData(
-                    "photo",
-                    photoFile.name,
-                    requestPhotoFile
+                    "image",
+                    imageFile.name,
+                    requestImageFile
                 )
+
+                showLoading(true)
 
                 viewModel.predict(multipartBody)
 
-                viewModel.resultPredict.observe(viewLifecycleOwner) { result ->
-                    if (result != null) {
-                        when (result) {
-                            is ResultState.Loading -> {
-                                showLoading(true)
-                            }
 
-                            is ResultState.Error -> {
-                                showLoading(false)
-                                bottomSheetDialog(
-                                    requireContext(),
-                                    getString(R.string.failed_to_predict_label),
-                                    R.drawable.error_image,
-                                    buttonColorResId = R.color.red,
-                                    onClick = {}
-                                )
-                            }
-
-                            is ResultState.Success -> {
-                                showLoading(false)
-                                val toResultFragment =
-                                    DiagnoseFragmentDirections.actionNavigationDiagnoseToResultFragment(
-                                        currentPhotoUri.toString(),
-                                        result.data.data,
-                                        null,
-                                    )
-                                isPickPhoto = false
-                                view.findNavController().navigate(toResultFragment)
-                            }
-
-
-                        }
-                    }
-
-                }
             }
         } else {
             Toast.makeText(
@@ -207,12 +214,12 @@ class DiagnoseFragment : Fragment() {
     }
 
     private fun handlePhotoUri(uri: Uri) {
-        currentPhotoUri?.let { deleteFromUri(it) }
-        val photoCompress = uriToFile(uri, requireContext()).reduceFileImage()
-        viewModel.setPhotoUri(photoCompress.toUri())
+        currentImageUri?.let { deleteFromUri(it) }
+        val imageCompress = uriToFile(uri, requireContext()).reduceFileImage()
+        viewModel.setImageUri(imageCompress.toUri())
         tempCropFile?.let { deleteFromUri(it.toUri()) }
-        cameraPhotoUri?.let { deleteFromUri(it) }
-        isPickPhoto = false
+        cameraImageUri?.let { deleteFromUri(it) }
+        isPickImage = false
     }
 
     private fun showPreview(uri: Uri?, isShow: Boolean = true) {
