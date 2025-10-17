@@ -4,46 +4,57 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.sipaddy.R
 import com.example.sipaddy.adapter.HistoryAdapter
 import com.example.sipaddy.data.ResultState
-import com.example.sipaddy.data.network.response.HistoryItem
+import com.example.sipaddy.data.network.response.DiseaseData
 import com.example.sipaddy.databinding.FragmentHistoryBinding
 import com.example.sipaddy.presentation.ViewModelFactory
-import com.example.sipaddy.utils.bottomSheetDialog
+import com.example.sipaddy.presentation.base.BaseFragment
+import kotlinx.coroutines.launch
 
 
-class HistoryFragment : Fragment() {
+class HistoryFragment : BaseFragment() {
 
-    private val binding: FragmentHistoryBinding by lazy {
-        FragmentHistoryBinding.inflate(layoutInflater)
-    }
+    private var _binding: FragmentHistoryBinding? = null
+    private val binding get() = _binding!!
 
     private val viewModel: HistoryViewModel by viewModels {
         ViewModelFactory(requireContext())
     }
+
+    private val historyAdapter by lazy { HistoryAdapter() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        _binding = FragmentHistoryBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.getHistory()
-        getHistory()
+        setupView()
+        setupObserver()
     }
 
-    private fun getHistory() {
-        viewModel.resultHistory.observe(viewLifecycleOwner) { result ->
-            if (result != null) {
+    private fun setupView() {
+        binding.historyRv.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = historyAdapter
+        }
+    }
+
+    private fun setupObserver() {
+        viewModel.getHistory()
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.resultHistory.observe(viewLifecycleOwner) { result ->
                 when (result) {
                     is ResultState.Loading -> {
                         showLoading(true)
@@ -51,14 +62,21 @@ class HistoryFragment : Fragment() {
 
                     is ResultState.Error -> {
                         showLoading(false)
-                        bottomSheetDialog(
-                            requireContext(),
-                            getString(R.string.failed_to_get_history),
-                            R.drawable.error_image,
-                            buttonColorResId = R.color.red,
-                            onClick = {}
 
-                        )
+                        if (result.isTokenExpired) {
+                            viewLifecycleOwner.lifecycleScope.launch {
+                                viewModel.logout()
+                            }
+                            handleTokenExpired()
+
+                        } else {
+                            showError(
+                                message = result.error,
+                                onRetry = {
+                                    viewModel.getHistory()
+                                }
+                            )
+                        }
                     }
 
                     is ResultState.Success -> {
@@ -66,19 +84,30 @@ class HistoryFragment : Fragment() {
                         setHistoryData(result.data.data)
                     }
                 }
+
             }
         }
     }
 
-    private fun setHistoryData(item: List<HistoryItem>?) {
-        val adapter = HistoryAdapter()
-        adapter.submitList(item)
+    private fun setHistoryData(item: DiseaseData?) {
+        val diseases = item?.diseases.orEmpty()
 
-        with(binding) {
-            historyRv.layoutManager = LinearLayoutManager(requireContext())
-            historyRv.adapter = adapter
+        if (diseases.isEmpty()) {
+            showEmptyState()
+        } else {
+            showContent()
+            historyAdapter.submitList(diseases)
         }
     }
+
+    private fun showEmptyState() {
+        binding.historyRv.visibility = View.GONE
+    }
+
+    private fun showContent() {
+        binding.historyRv.visibility = View.VISIBLE
+    }
+
 
     private fun showLoading(isLoading: Boolean) {
         with(binding) {
@@ -87,5 +116,9 @@ class HistoryFragment : Fragment() {
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
 }

@@ -3,7 +3,9 @@ package com.example.sipaddy.presentation
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.sipaddy.di.Injection
+import com.example.sipaddy.data.pref.UserPreference
+import com.example.sipaddy.data.pref.dataStore
+import com.example.sipaddy.data.repository.PaddyRepository
 import com.example.sipaddy.presentation.history.HistoryViewModel
 import com.example.sipaddy.presentation.home.HomeViewModel
 import com.example.sipaddy.presentation.home.diagnose.DiagnoseViewModel
@@ -18,33 +20,36 @@ class ViewModelFactory(
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        val pref = UserPreference.getInstance(context.dataStore)
+        val repository = PaddyRepository.getInstance(pref)
+
         return when {
             modelClass.isAssignableFrom(RegisterViewModel::class.java) -> {
-                RegisterViewModel(Injection.provideRepository(context)) as T
+                RegisterViewModel(repository) as T
             }
 
             modelClass.isAssignableFrom(LoginViewModel::class.java) -> {
-                LoginViewModel(Injection.provideRepository(context)) as T
+                LoginViewModel(repository) as T
             }
 
             modelClass.isAssignableFrom(HomeViewModel::class.java) -> {
-                HomeViewModel(Injection.provideRepository(context)) as T
+                HomeViewModel(repository) as T
             }
 
             modelClass.isAssignableFrom(DiagnoseViewModel::class.java) -> {
-                DiagnoseViewModel(Injection.provideRepository(context)) as T
+                DiagnoseViewModel(repository) as T
             }
 
             modelClass.isAssignableFrom(HistoryViewModel::class.java) -> {
-                HistoryViewModel(Injection.provideRepository(context)) as T
+                HistoryViewModel(repository) as T
             }
 
             modelClass.isAssignableFrom(ProfilViewModel::class.java) -> {
-                ProfilViewModel(Injection.provideRepository(context)) as T
+                ProfilViewModel(repository) as T
             }
 
             modelClass.isAssignableFrom(PengaduanTanamanViewModel::class.java) -> {
-                PengaduanTanamanViewModel(Injection.provideRepository(context)) as T
+                PengaduanTanamanViewModel(repository) as T
             }
 
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)

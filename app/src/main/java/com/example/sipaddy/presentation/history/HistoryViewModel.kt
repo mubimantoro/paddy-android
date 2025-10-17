@@ -5,13 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.sipaddy.data.ResultState
-import com.example.sipaddy.data.network.response.HistoryResponse
+import com.example.sipaddy.data.network.response.DiseaseResponse
 import com.example.sipaddy.data.repository.PaddyRepository
 import kotlinx.coroutines.launch
 
 class HistoryViewModel(private val repository: PaddyRepository) : ViewModel() {
-    private val _resultHistory = MutableLiveData<ResultState<HistoryResponse>>()
-    val resultHistory: LiveData<ResultState<HistoryResponse>> = _resultHistory
+    private val _resultHistory = MutableLiveData<ResultState<DiseaseResponse>>()
+    val resultHistory: LiveData<ResultState<DiseaseResponse>> = _resultHistory
 
     fun getHistory() {
         viewModelScope.launch {
@@ -20,5 +20,9 @@ class HistoryViewModel(private val repository: PaddyRepository) : ViewModel() {
             }
 
         }
+    }
+
+    suspend fun logout() {
+        repository.logout()
     }
 }

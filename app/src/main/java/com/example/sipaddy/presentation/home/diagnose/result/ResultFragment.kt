@@ -42,7 +42,7 @@ class ResultFragment : Fragment() {
 
         val imageUri = ResultFragmentArgs.fromBundle(arguments as Bundle).imageUri
         val predictResult = ResultFragmentArgs.fromBundle(arguments as Bundle).predictResult
-        val history = ResultFragmentArgs.fromBundle(arguments as Bundle).history
+        val history = ResultFragmentArgs.fromBundle(arguments as Bundle).disease
 
         with(binding) {
             backBtn.setOnClickListener {
@@ -61,7 +61,7 @@ class ResultFragment : Fragment() {
                     solutionTv.text = Html.fromHtml(solutionText, Html.FROM_HTML_MODE_COMPACT)
                 }
                 Glide.with(requireContext())
-                    .load(history.photoUrl)
+                    .load(history.imageUrl)
                     .error(R.drawable.sample_scan)
                     .into(resultIv)
 

@@ -163,8 +163,8 @@
                     android:layout_marginTop="@dimen/dp_12"
                     android:layout_marginEnd="@dimen/dp_20"
                     android:fontFamily="@font/noto_sans_bold"
-                    android:maxLines="2"
-                    android:text="@string/history_diagnose_heading_label"
+                    android:maxLines="3"
+                    android:text="@string/history_pengaduan_heading_label"
                     android:textColor="@color/black"
                     android:textSize="@dimen/sp_20"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -178,6 +178,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dp_20"
+                    android:layout_marginTop="@dimen/dp_20"
                     android:layout_marginEnd="@dimen/dp_20"
                     android:layout_marginBottom="@dimen/dp_20"
                     android:backgroundTint="@color/green_200"
@@ -187,7 +188,8 @@
                     android:textColor="@color/black"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cardHeadingHistoryTv" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

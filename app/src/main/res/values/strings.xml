@@ -4,6 +4,8 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="back_button_label">Tombol kembali</string>
+    <string name="login_label">Login</string>
+    <string name="retry_label">Coba Lagi</string>
     <string name="login_heading_label">Mari daftarkan diri Anda.</string>
     <string name="login_subheading_label">Masuk dengan data yang telah Anda masukkan saat anda mendaftar</string>
     <string name="email_label">Email</string>
@@ -65,7 +67,7 @@
     <string name="pengaduan_tanaman_subheading_label">Lapor masalah tanaman Anda ke petugas</string>
     <string name="image_home_label">Image Home</string>
     <string name="lapor_now_label">Lapor sekarang</string>
-    <string name="history_diagnose_heading_label">Riwayat diagnosa tanaman</string>
+    <string name="history_pengaduan_heading_label">Riwayat Pengaduan Tanaman</string>
     <string name="history_diagnose_subheading_label">Lihat riwayat diagnosa Tanaman Anda</string>
     <string name="history_btn_label">Lihat Riwayat</string>
     <string name="location_not_found_label">Tidak dapat mengambil lokasi. Pastikan GPS aktif</string>
@@ -84,4 +86,8 @@
     <string name="success_register_label">Akun Anda berhasil terdaftar</string>
     <string name="error_register_label">Gagal mendaftarkan akun Anda</string>
     <string name="diagnose_image">Diagnose Image</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="session_exp_label">Sesi Anda telah berakhir. Silakan login kembali.</string>
 </resources>

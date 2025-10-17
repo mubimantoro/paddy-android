@@ -8,21 +8,21 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.sipaddy.R
-import com.example.sipaddy.data.network.response.HistoryItem
+import com.example.sipaddy.data.network.response.DiseaseItem
 import com.example.sipaddy.databinding.ItemHistoryBinding
 import com.example.sipaddy.presentation.history.HistoryFragmentDirections
 import com.example.sipaddy.utils.DateFormatter
 
-class HistoryAdapter() : ListAdapter<HistoryItem, HistoryAdapter.HistoryViewHolder>(DIFF_CALLBACK) {
+class HistoryAdapter() : ListAdapter<DiseaseItem, HistoryAdapter.HistoryViewHolder>(DIFF_CALLBACK) {
 
     class HistoryViewHolder(private val binding: ItemHistoryBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: HistoryItem) {
+        fun bind(item: DiseaseItem) {
             with(binding) {
-                diseaseNameTv.text = item.label
-                diseaseDateTv.text = item.createdAt?.let { DateFormatter.formatIsoDate(it) }
+                diseaseNameTv.text = item.label ?: "-"
+                diseaseDateTv.text = item.createdAt?.let { DateFormatter.formatIsoDate(it) } ?: "-"
                 Glide.with(itemView.context)
-                    .load(item.photoUrl)
+                    .load(item.imageUrl)
                     .placeholder(R.drawable.sample_scan)
                     .error(R.drawable.sample_scan)
                     .into(historyIv)
@@ -53,12 +53,12 @@ class HistoryAdapter() : ListAdapter<HistoryItem, HistoryAdapter.HistoryViewHold
     }
 
     companion object {
-        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<HistoryItem>() {
-            override fun areItemsTheSame(oldItem: HistoryItem, newItem: HistoryItem): Boolean {
-                return oldItem == newItem
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<DiseaseItem>() {
+            override fun areItemsTheSame(oldItem: DiseaseItem, newItem: DiseaseItem): Boolean {
+                return oldItem.id == newItem.id
             }
 
-            override fun areContentsTheSame(oldItem: HistoryItem, newItem: HistoryItem): Boolean {
+            override fun areContentsTheSame(oldItem: DiseaseItem, newItem: DiseaseItem): Boolean {
                 return oldItem == newItem
             }
 
