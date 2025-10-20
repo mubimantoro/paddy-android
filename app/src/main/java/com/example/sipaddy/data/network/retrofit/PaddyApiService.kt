@@ -3,6 +3,7 @@ package com.example.sipaddy.data.network.retrofit
 import com.example.sipaddy.data.network.response.CommonResponse
 import com.example.sipaddy.data.network.response.DiseaseResponse
 import com.example.sipaddy.data.network.response.LoginResponse
+import com.example.sipaddy.data.network.response.PengaduanTanamanResponse
 import com.example.sipaddy.data.network.response.PredictResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -51,4 +52,7 @@ interface PaddyApiService {
 
     @GET("histories")
     suspend fun getHistory(): DiseaseResponse
+
+    @GET("pengaduan-tanaman")
+    suspend fun getPengaduanTanamanHistory(): PengaduanTanamanResponse
 }

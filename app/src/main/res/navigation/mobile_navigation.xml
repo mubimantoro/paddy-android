@@ -20,8 +20,10 @@
             android:id="@+id/action_navigation_home_to_navigation_login"
             app:destination="@id/navigation_login"
             app:popUpTo="@id/main_navigation"
-            app:popUpToInclusive="true"
-            />
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_navigation_home_to_historyPengaduanTanamanFragment"
+            app:destination="@id/historyPengaduanTanamanFragment" />
     </fragment>
 
     <fragment
@@ -114,4 +116,24 @@
         android:name="com.example.sipaddy.presentation.pengaduantanaman.PengaduanTanamanFragment"
         android:label="fragment_pengaduan_tanaman"
         tools:layout="@layout/fragment_pengaduan_tanaman" />
+    <fragment
+        android:id="@+id/historyPengaduanTanamanFragment"
+        android:name="com.example.sipaddy.presentation.pengaduantanaman.history.HistoryPengaduanTanamanFragment"
+        android:label="fragment_history_pengaduan_tanaman"
+        tools:layout="@layout/fragment_history_pengaduan_tanaman">
+        <action
+            android:id="@+id/action_historyPengaduanTanamanFragment_to_detailPengaduanTanamanFragment"
+            app:destination="@id/detailPengaduanTanamanFragment" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/detailPengaduanTanamanFragment"
+        android:name="com.example.sipaddy.presentation.pengaduantanaman.detail.DetailPengaduanTanamanFragment"
+        android:label="fragment_detail_pengaduan_tanaman"
+        tools:layout="@layout/fragment_detail_pengaduan_tanaman" >
+        <argument
+            android:name="PengaduanTanaman"
+            app:argType="com.example.sipaddy.data.network.response.PengaduanTanamanItem"
+            app:nullable="true" />
+    </fragment>
 </navigation>

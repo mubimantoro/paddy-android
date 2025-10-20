@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.sipaddy.adapter.HistoryAdapter
 import com.example.sipaddy.data.ResultState
 import com.example.sipaddy.data.network.response.DiseaseData
 import com.example.sipaddy.databinding.FragmentHistoryBinding

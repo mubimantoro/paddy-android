@@ -42,6 +42,13 @@ class HomeFragment : BaseFragment() {
                 view.findNavController()
                     .navigate(R.id.action_navigation_home_to_pengaduanTanamanFragment)
             }
+
+            historyPengaduanTanamanBtn.setOnClickListener {
+                view.findNavController()
+                    .navigate(R.id.action_navigation_home_to_historyPengaduanTanamanFragment)
+            }
+
+
         }
 
         setupObserver()

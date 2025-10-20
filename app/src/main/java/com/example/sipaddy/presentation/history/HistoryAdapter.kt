@@ -1,4 +1,4 @@
-package com.example.sipaddy.adapter
+package com.example.sipaddy.presentation.history
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,10 +10,9 @@ import com.bumptech.glide.Glide
 import com.example.sipaddy.R
 import com.example.sipaddy.data.network.response.DiseaseItem
 import com.example.sipaddy.databinding.ItemHistoryBinding
-import com.example.sipaddy.presentation.history.HistoryFragmentDirections
 import com.example.sipaddy.utils.DateFormatter
 
-class HistoryAdapter() : ListAdapter<DiseaseItem, HistoryAdapter.HistoryViewHolder>(DIFF_CALLBACK) {
+class HistoryAdapter : ListAdapter<DiseaseItem, HistoryAdapter.HistoryViewHolder>(DIFF_CALLBACK) {
 
     class HistoryViewHolder(private val binding: ItemHistoryBinding) :
         RecyclerView.ViewHolder(binding.root) {

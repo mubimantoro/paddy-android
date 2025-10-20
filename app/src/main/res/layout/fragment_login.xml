@@ -10,7 +10,6 @@
     tools:context=".presentation.login.LoginFragment">
 
     <ScrollView
-        android:id="@+id/scrollView2"
         android:layout_width="@dimen/dp_0"
         android:layout_height="match_parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -44,7 +43,6 @@
                 android:fontFamily="@font/noto_sans_bold"
                 android:text="@string/login_heading_label"
                 android:textSize="@dimen/sp_28"
-                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/backBtn" />

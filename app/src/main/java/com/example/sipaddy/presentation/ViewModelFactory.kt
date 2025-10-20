@@ -11,6 +11,8 @@ import com.example.sipaddy.presentation.home.HomeViewModel
 import com.example.sipaddy.presentation.home.diagnose.DiagnoseViewModel
 import com.example.sipaddy.presentation.login.LoginViewModel
 import com.example.sipaddy.presentation.pengaduantanaman.PengaduanTanamanViewModel
+import com.example.sipaddy.presentation.pengaduantanaman.detail.DetailPengaduanTanamanViewModel
+import com.example.sipaddy.presentation.pengaduantanaman.history.HistoryPengaduanTanamanViewModel
 import com.example.sipaddy.presentation.profile.ProfilViewModel
 import com.example.sipaddy.presentation.register.RegisterViewModel
 
@@ -50,6 +52,14 @@ class ViewModelFactory(
 
             modelClass.isAssignableFrom(PengaduanTanamanViewModel::class.java) -> {
                 PengaduanTanamanViewModel(repository) as T
+            }
+
+            modelClass.isAssignableFrom(HistoryPengaduanTanamanViewModel::class.java) -> {
+                HistoryPengaduanTanamanViewModel(repository) as T
+            }
+
+            modelClass.isAssignableFrom(DetailPengaduanTanamanViewModel::class.java) -> {
+                DetailPengaduanTanamanViewModel(repository) as T
             }
 
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)

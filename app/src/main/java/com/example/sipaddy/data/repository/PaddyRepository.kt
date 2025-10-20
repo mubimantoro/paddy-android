@@ -4,6 +4,7 @@ import com.example.sipaddy.data.ResultState
 import com.example.sipaddy.data.network.response.CommonResponse
 import com.example.sipaddy.data.network.response.DiseaseResponse
 import com.example.sipaddy.data.network.response.LoginResponse
+import com.example.sipaddy.data.network.response.PengaduanTanamanResponse
 import com.example.sipaddy.data.network.response.PredictResponse
 import com.example.sipaddy.data.network.retrofit.ApiConfig
 import com.example.sipaddy.data.network.retrofit.PaddyApiService
@@ -169,6 +170,17 @@ class PaddyRepository(
             emit(ResultState.Error(e.message.toString()))
         }
 
+    }
+
+    fun getPengaduanTanamanHistory(): Flow<ResultState<PengaduanTanamanResponse>> = flow {
+        emit(ResultState.Loading)
+        try {
+            val apiService = getApiService()
+            val response = apiService.getPengaduanTanamanHistory()
+            emit(ResultState.Success(response))
+        } catch (e: Exception) {
+            emit(ResultState.Error(e.message.toString()))
+        }
     }
 
     fun predict(image: MultipartBody.Part): Flow<ResultState<PredictResponse>> = flow {

@@ -11,7 +11,7 @@
 
         <ImageView
             android:id="@+id/historyIv"
-            android:layout_width="96dp"
+            android:layout_width="@dimen/dp_96"
             android:layout_height="wrap_content"
             android:contentDescription="@string/history_image_view_label"
             android:scaleType="centerCrop"
