@@ -1,6 +1,5 @@
 package com.example.sipaddy.presentation.login
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -23,14 +22,18 @@ class LoginViewModel(private val repository: PaddyRepository) : ViewModel() {
         }
     }
 
-    fun saveSession(username: String, token: String, callback: () -> Unit) {
+    fun saveSession(username: String, token: String, role: String, callback: () -> Unit) {
         viewModelScope.launch {
-            repository.saveSession(username, token)
+            repository.saveSession(username, token, role)
             callback()
         }
     }
 
     fun getSession(): LiveData<String> {
         return repository.getSession().asLiveData()
+    }
+
+    fun getRole(): LiveData<String> {
+        return repository.getRole().asLiveData()
     }
 }

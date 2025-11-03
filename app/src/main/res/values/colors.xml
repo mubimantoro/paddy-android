@@ -27,6 +27,8 @@
     <color name="red">#FFFF4747</color>
     <color name="edit_text_bg">#EDEDED</color>
     <color name="status_pending">#FF9800</color>
+    <color name="yellow">#FF9800</color>
     <color name="status_in_progress">#2196F3</color>
+    <color name="blue">#2196F3</color>
     <color name="status_resolved">#4CAF50</color>
 </resources>

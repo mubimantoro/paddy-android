@@ -67,7 +67,7 @@
     <string name="pengaduan_tanaman_subheading_label">Lapor masalah tanaman Anda ke petugas</string>
     <string name="image_home_label">Image Home</string>
     <string name="lapor_now_label">Lapor sekarang</string>
-    <string name="history_pengaduan_heading_label">Riwayat Pengaduan Tanaman</string>
+    <string name="history_pengaduan_heading_label">Riwayat Pengaduan</string>
     <string name="history_diagnose_subheading_label">Lihat riwayat diagnosa Tanaman Anda</string>
     <string name="history_btn_label">Lihat Riwayat</string>
     <string name="location_not_found_label">Tidak dapat mengambil lokasi. Pastikan GPS aktif</string>
@@ -95,9 +95,16 @@
     <string name="resolved_label">Selesai</string>
     <string name="lokasi_pengaduan_tanaman_label">Lokasi Pengaduan Tanaman</string>
     <string name="empty_pengaduan_tanaman_label">Belum ada riwayat pengaduan tanaman</string>
-    <string name="detail_pengaduan_tanaman_title_label">Detail Pengaduan Tanaman</string>
+    <string name="detail_pengaduan_tanaman_title_label">Detail Laporan</string>
     <string name="plant_image_label">Gambar Tanaman</string>
+
+    <string name="riwayat_pengaduan_tanaman_heading_popt_label">Riwayat Pengaduan Petani</string>
+    <string name="riwayat_pengaduan_tanaman_subheading_popt_label">Periksa hasil pengaduan petani.</string>
+
     <string name="status_label">Status</string>
+    <string name="status_pending_label">Pending</string>
+    <string name="status_assigned_label">Ditugaskan</string>
+
     <string name="tanggal_laporan_label">Tanggal Laporan</string>
     <string name="nama_kelompok_tani_label">Nama kelompok tani</string>
     <string name="icon_label">Icon</string>
@@ -106,4 +113,5 @@
     <string name="deskripsi_masalah_label">Deskripsi Masalah</string>
     <string name="koordinat_lokasi_label">Koordinat Lokasi</string>
     <string name="open_in_maps_label">Buka di Maps</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

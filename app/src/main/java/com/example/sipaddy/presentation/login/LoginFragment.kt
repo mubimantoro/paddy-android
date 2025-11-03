@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import com.example.sipaddy.R
 import com.example.sipaddy.data.ResultState
@@ -62,12 +61,14 @@ class LoginFragment : Fragment() {
                         showLoading(false)
                         val username = result.data.loginResult?.user?.username
                         val token = result.data.loginResult?.token
+                        val roles = result.data.loginResult?.user?.roles
+                        val role = roles?.firstOrNull() ?: "user"
 
-
+                        Log.d("LoginFragment", "Username: $username, Token: $token, Role: $role")
 
                         if (token != null && username != null) {
-                            viewModel.saveSession(username, token) {
-                                toHome(view)
+                            viewModel.saveSession(username, token, role) {
+                                navigateToHome(view)
                             }
                         }
                     }
@@ -90,14 +91,8 @@ class LoginFragment : Fragment() {
 
     }
 
-
-    private fun toHome(view: View?) {
-
-        view?.findNavController()?.navigate(
-            R.id.action_loginFragment_to_navigation_home,
-            null,
-            navOptions = NavOptions.Builder().setPopUpTo(R.id.main_navigation, true).build()
-        )
+    private fun navigateToHome(view: View?) {
+        view?.findNavController()?.navigate(R.id.action_to_navigation_home)
     }
 
     private fun showLoading(isLoading: Boolean) {

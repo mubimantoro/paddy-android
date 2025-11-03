@@ -25,7 +25,7 @@ class HomeFragment : BaseFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -33,26 +33,74 @@ class HomeFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        with(binding) {
-            diagnoseBtn.setOnClickListener {
-                view.findNavController().navigate(R.id.action_navigation_home_to_diagnoseFragment)
+        viewModel.getUsername().observe(viewLifecycleOwner) { username ->
+            binding.homeHeadingTv.text = "Selamat Datang, \n$username"
+        }
+
+        viewModel.getRole().observe(viewLifecycleOwner) { role ->
+            when (role) {
+                "user" -> {
+                    setupUserView()
+                }
+
+                "popt" -> {
+                    setupPoptView()
+                }
             }
-
-            pengaduanTanamanBtn.setOnClickListener {
-                view.findNavController()
-                    .navigate(R.id.action_navigation_home_to_pengaduanTanamanFragment)
-            }
-
-            historyPengaduanTanamanBtn.setOnClickListener {
-                view.findNavController()
-                    .navigate(R.id.action_navigation_home_to_historyPengaduanTanamanFragment)
-            }
-
-
         }
 
         setupObserver()
 
+    }
+
+    private fun setupUserView() {
+        with(binding) {
+
+            headingPengaduanTanamanTv.text = "Pengaduan\nTanaman"
+            pengaduanTanamanBtn.text = "Lapor"
+
+            headingHistoryTv.text = "Riwayat\nPengaduan"
+            historyBtn.text = "Lihat"
+
+
+            diagnoseBtn.setOnClickListener {
+                view?.findNavController()?.navigate(R.id.action_navigation_home_to_diagnoseFragment)
+            }
+
+            pengaduanTanamanBtn.setOnClickListener {
+                view?.findNavController()
+                    ?.navigate(R.id.action_navigation_home_to_pengaduanTanamanFragment)
+            }
+
+            historyBtn.setOnClickListener {
+                view?.findNavController()
+                    ?.navigate(R.id.action_navigation_home_to_historyPengaduanTanamanFragment)
+            }
+
+
+        }
+    }
+
+    private fun setupPoptView() {
+        with(binding) {
+            headingPengaduanTanamanTv.text = "Kelola\nPengaduan"
+            pengaduanTanamanBtn.text = "Lihat Semua"
+
+            headingHistoryTv.text = "Pengaduan\nPetani"
+            historyBtn.text = "Lihat"
+
+            diagnoseBtn.setOnClickListener {
+                view?.findNavController()?.navigate(
+                    R.id.action_navigation_home_to_diagnoseFragment
+                )
+            }
+
+            historyBtn.setOnClickListener {
+                view?.findNavController()?.navigate(
+                    R.id.action_navigation_home_to_poptPengaduanTanamanFragment
+                )
+            }
+        }
     }
 
     private fun setupObserver() {

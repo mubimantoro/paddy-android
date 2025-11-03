@@ -10,5 +10,8 @@ data class UserResponse(
     val namaLengkap: String? = null,
 
     @field:SerializedName("username")
-    val username: String? = null
+    val username: String? = null,
+
+    @field:SerializedName("roles")
+    val roles: List<String>? = null
 )

@@ -16,12 +16,12 @@
             android:id="@+id/homeHeadingTv"
             android:layout_width="@dimen/dp_0"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/noto_sans_extrabold"
-            android:text="@string/welcome_label"
-            android:textSize="@dimen/sp_39"
+            android:fontFamily="@font/noto_sans_bold"
+            android:textSize="@dimen/sp_28"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Selamat Datang, User" />
 
 
         <com.google.android.material.card.MaterialCardView
@@ -156,7 +156,7 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/cardHeadingHistoryTv"
+                    android:id="@+id/headingHistoryTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dp_20"
@@ -174,7 +174,7 @@
 
 
                 <Button
-                    android:id="@+id/historyPengaduanTanamanBtn"
+                    android:id="@+id/historyBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dp_20"
@@ -189,7 +189,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/cardHeadingHistoryTv" />
+                    app:layout_constraintTop_toBottomOf="@+id/headingHistoryTv" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

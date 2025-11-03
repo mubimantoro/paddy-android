@@ -5,6 +5,18 @@
     android:id="@+id/main_navigation"
     app:startDestination="@+id/navigation_home">
 
+    <action
+        android:id="@+id/action_to_navigation_home"
+        app:destination="@id/navigation_home"
+        app:popUpTo="@id/main_navigation"
+        app:popUpToInclusive="true" />
+
+    <action
+        android:id="@+id/action_to_navigation_login"
+        app:destination="@id/navigation_login"
+        app:popUpTo="@id/main_navigation"
+        app:popUpToInclusive="true" />
+
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.example.sipaddy.presentation.home.HomeFragment"
@@ -16,14 +28,13 @@
         <action
             android:id="@+id/action_navigation_home_to_pengaduanTanamanFragment"
             app:destination="@id/navigation_pengaduan_tanaman" />
-        <action
-            android:id="@+id/action_navigation_home_to_navigation_login"
-            app:destination="@id/navigation_login"
-            app:popUpTo="@id/main_navigation"
-            app:popUpToInclusive="true" />
+
         <action
             android:id="@+id/action_navigation_home_to_historyPengaduanTanamanFragment"
             app:destination="@id/historyPengaduanTanamanFragment" />
+        <action
+            android:id="@+id/action_navigation_home_to_poptPengaduanTanamanFragment"
+            app:destination="@id/poptPengaduanTanamanFragment" />
     </fragment>
 
     <fragment
@@ -32,15 +43,6 @@
         android:label="fragment_login"
         tools:layout="@layout/fragment_login">
         <action
-            android:id="@+id/action_loginFragment_to_navigation_home"
-            app:destination="@id/navigation_home"
-            app:enterAnim="@anim/from_right"
-            app:exitAnim="@anim/to_left"
-            app:launchSingleTop="true"
-            app:popEnterAnim="@anim/from_left"
-            app:popExitAnim="@anim/to_right"
-            app:popUpTo="@id/navigation_login" />
-        <action
             android:id="@+id/action_navigation_login_to_navigation_register"
             app:destination="@id/navigation_register"
             app:enterAnim="@anim/from_right"
@@ -48,6 +50,7 @@
             app:popEnterAnim="@anim/from_left"
             app:popExitAnim="@anim/to_right" />
     </fragment>
+
     <fragment
         android:id="@+id/navigation_register"
         android:name="com.example.sipaddy.presentation.register.RegisterFragment"
@@ -66,18 +69,12 @@
             app:popEnterAnim="@anim/from_left"
             app:popExitAnim="@anim/to_right" />
     </fragment>
+
     <fragment
         android:id="@+id/navigation_profile"
         android:name="com.example.sipaddy.presentation.profile.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile">
-        <action
-            android:id="@+id/action_navigation_profile_to_navigation_login"
-            app:destination="@id/navigation_login"
-            app:launchSingleTop="true"
-            app:popUpTo="@id/navigation_login"
-            app:popUpToInclusive="true" />
-    </fragment>
+        tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/navigation_diagnose"
         android:name="com.example.sipaddy.presentation.home.diagnose.DiagnoseFragment"
@@ -91,6 +88,7 @@
             app:popEnterAnim="@anim/from_left"
             app:popExitAnim="@anim/to_right" />
     </fragment>
+
     <fragment
         android:id="@+id/navigation_result"
         android:name="com.example.sipaddy.presentation.home.diagnose.result.ResultFragment"
@@ -108,9 +106,8 @@
             android:name="Disease"
             app:argType="com.example.sipaddy.data.network.response.DiseaseItem"
             app:nullable="true" />
-
-
     </fragment>
+
     <fragment
         android:id="@+id/navigation_pengaduan_tanaman"
         android:name="com.example.sipaddy.presentation.pengaduantanaman.PengaduanTanamanFragment"
@@ -126,14 +123,22 @@
             app:destination="@id/detailPengaduanTanamanFragment" />
 
     </fragment>
+
     <fragment
         android:id="@+id/detailPengaduanTanamanFragment"
         android:name="com.example.sipaddy.presentation.pengaduantanaman.detail.DetailPengaduanTanamanFragment"
         android:label="fragment_detail_pengaduan_tanaman"
-        tools:layout="@layout/fragment_detail_pengaduan_tanaman" >
+        tools:layout="@layout/fragment_detail_pengaduan_tanaman">
         <argument
             android:name="PengaduanTanaman"
             app:argType="com.example.sipaddy.data.network.response.PengaduanTanamanItem"
             app:nullable="true" />
     </fragment>
+    <fragment
+        android:id="@+id/poptPengaduanTanamanFragment"
+        android:name="com.example.sipaddy.presentation.popt.PoptPengaduanTanamanFragment"
+        android:label="fragment_popt_pengaduan_tanaman"
+        tools:layout="@layout/fragment_popt_pengaduan_tanaman" />
+
+
 </navigation>

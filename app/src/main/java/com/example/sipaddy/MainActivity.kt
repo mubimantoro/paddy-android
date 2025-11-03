@@ -19,10 +19,10 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        navigationBar()
+        setupNavigation()
     }
 
-    private fun navigationBar() {
+    private fun setupNavigation() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
         navController = navHostFragment.navController
@@ -58,27 +58,48 @@ class MainActivity : AppCompatActivity() {
         }
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            when (destination.id) {
-                R.id.navigation_home, R.id.navigation_history, R.id.navigation_profile -> {
-                    bottomNavView.visibility = View.VISIBLE
-                }
+            handleBottomNavigationVisibility(destination.id)
 
-                else -> bottomNavView.visibility = View.GONE
+        }
+    }
+
+    private fun handleBottomNavigationVisibility(destinationId: Int) {
+        when (destinationId) {
+            R.id.navigation_home, R.id.navigation_history, R.id.navigation_profile -> {
+                binding.bottomNavigation.visibility = View.VISIBLE
+
             }
+
+            else -> binding.bottomNavigation.visibility = View.GONE
+
         }
     }
 
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
-        if (navController.currentDestination?.id == R.id.navigation_history || navController.currentDestination?.id == R.id.navigation_profile) {
-            if (navController.currentDestination?.id != R.id.navigation_home) {
+        val currentDestination = navController.currentDestination?.id
+
+        when (currentDestination) {
+            // Jika di history atau profile, kembali ke home
+            R.id.navigation_history, R.id.navigation_profile -> {
                 binding.bottomNavigation.selectedItemId = R.id.navigation_home
                 navController.navigate(R.id.navigation_home)
-            } else {
+            }
+
+            // Jika di login, keluar dari app
+            R.id.navigation_login -> {
+                finish()
+            }
+
+            // Jika di home, keluar dari app
+            R.id.navigation_home -> {
+                finish()
+            }
+
+            // Default behavior
+            else -> {
                 super.onBackPressed()
             }
-        } else {
-            super.onBackPressed()
         }
 
     }

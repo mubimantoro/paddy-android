@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp">
+
+        <ImageView
+            android:id="@+id/imageIv"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:contentDescription="@string/plant_image_label"
+            android:scaleType="centerCrop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_photo" />
+
+        <TextView
+            android:id="@+id/kelompokTaniTv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/imageIv"
+            app:layout_constraintTop_toTopOf="@id/imageIv"
+            tools:text="Kelompok Tani Makmur" />
+
+        <TextView
+            android:id="@+id/alamatTv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@id/kelompokTaniTv"
+            app:layout_constraintStart_toStartOf="@id/kelompokTaniTv"
+            app:layout_constraintTop_toBottomOf="@id/kelompokTaniTv"
+            tools:text="Jl. Raya No. 123, Kecamatan ABC" />
+
+        <!-- Status Badge -->
+        <TextView
+            android:id="@+id/tvStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="4dp"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/sp_11"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/kelompokTaniTv"
+            app:layout_constraintTop_toBottomOf="@id/alamatTv"
+            tools:background="@color/yellow"
+            tools:text="Pending" />
+
+        <TextView
+            android:id="@+id/deskripsiTv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imageIv"
+            tools:text="Tanaman padi mengalami kerusakan pada daun dan batang" />
+
+        <TextView
+            android:id="@+id/userPelaporTv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textColor="@color/neutral_900"
+            android:textSize="12sp"
+            android:textStyle="italic"
+            app:layout_constraintEnd_toStartOf="@id/tanggalTv"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/deskripsiTv"
+            tools:text="Pelapor: John Doe" />
+
+        <TextView
+            android:id="@+id/tanggalTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/neutral_900"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@id/userPelaporTv"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/userPelaporTv"
+            tools:text="01 Jan 2024, 10:00" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

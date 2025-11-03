@@ -13,7 +13,6 @@ data class LoginResponse(
 
 data class LoginResult(
 
-
     @field:SerializedName("user")
     val user: UserResponse? = null,
 

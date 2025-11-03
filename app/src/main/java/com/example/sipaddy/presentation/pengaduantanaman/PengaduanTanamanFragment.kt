@@ -120,7 +120,7 @@ class PengaduanTanamanFragment : Fragment() {
                 submitPengaduanTanaman()
             }
 
-            locationBtn.setOnClickListener {
+            checkboxLocation.setOnClickListener {
                 getMyLocation()
             }
         }

@@ -195,12 +195,20 @@ class PaddyRepository(
     }
 
 
-    suspend fun saveSession(username: String, token: String) {
-        userPreference.saveSession(username, token)
+    suspend fun saveSession(username: String, token: String, role: String) {
+        userPreference.saveSession(username, token, role)
     }
 
     fun getSession(): Flow<String> {
         return userPreference.getSession()
+    }
+
+    fun getRole(): Flow<String> {
+        return userPreference.getRole()
+    }
+
+    fun getUsername(): Flow<String> {
+        return userPreference.getUsername()
     }
 
     suspend fun logout() {
