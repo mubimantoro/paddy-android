@@ -8,5 +8,6 @@ data class CommonResponse(
 	val message: String,
 
 	@field:SerializedName("status")
-	val status: String
+	val status: String,
+
 )

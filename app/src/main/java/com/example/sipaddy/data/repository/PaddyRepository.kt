@@ -4,8 +4,10 @@ import com.example.sipaddy.data.ResultState
 import com.example.sipaddy.data.network.response.CommonResponse
 import com.example.sipaddy.data.network.response.DiseaseResponse
 import com.example.sipaddy.data.network.response.LoginResponse
+import com.example.sipaddy.data.network.response.PengaduanTanamanDetailResponse
 import com.example.sipaddy.data.network.response.PengaduanTanamanResponse
 import com.example.sipaddy.data.network.response.PredictResponse
+import com.example.sipaddy.data.network.response.VerifikasiPengaduanTanamanItem
 import com.example.sipaddy.data.network.retrofit.ApiConfig
 import com.example.sipaddy.data.network.retrofit.PaddyApiService
 import com.example.sipaddy.data.pref.UserPreference
@@ -182,6 +184,36 @@ class PaddyRepository(
             emit(ResultState.Error(e.message.toString()))
         }
     }
+
+    fun getPengaduanTanamanDetail(id: String): Flow<ResultState<PengaduanTanamanDetailResponse>> =
+        flow {
+            emit(ResultState.Loading)
+            try {
+                val apiService = getApiService()
+                val response = apiService.getPengaduanTanamanDetail(id)
+                emit(ResultState.Success(response))
+            } catch (e: Exception) {
+                emit(ResultState.Error(e.message.toString()))
+            }
+        }
+
+    fun verifikasiPengaduanTanaman(pengaduanTanamanId: String): Flow<ResultState<VerifikasiPengaduanTanamanItem>> =
+        flow {
+            emit(ResultState.Loading)
+            try {
+                val apiService = getApiService()
+                val response = apiService.verifikasiPengaduanTanaman(pengaduanTanamanId)
+
+                if (response.status === "success") {
+                    emit(ResultState.Success(response.data))
+                } else {
+                    emit(ResultState.Error(response.message))
+                }
+
+            } catch (e: Exception) {
+                emit(ResultState.Error(e.message.toString()))
+            }
+        }
 
     fun predict(image: MultipartBody.Part): Flow<ResultState<PredictResponse>> = flow {
         emit(ResultState.Loading)

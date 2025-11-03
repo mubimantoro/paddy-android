@@ -59,5 +59,18 @@ data class PengaduanTanamanItem(
     val longitude: Double? = 0.0,
 
     @field:SerializedName("status")
-    val status: String? = null
+    val status: String? = null,
+
+    @field:SerializedName("popt_nama")
+    val poptNama: String? = null,
+
+    @field:SerializedName("user_username")
+    val userUsername: String? = null,
+
+    @field:SerializedName("user_nama")
+    val userNama: String? = null,
+
+    @field:SerializedName("popt_username")
+    val poptUsername: String? = null
+
 ) : Parcelable

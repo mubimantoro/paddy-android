@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presentation.popt.detail.PoptDetailPengaduanTanamanFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_35"
+        android:layout_marginTop="@dimen/dp_35"
+        android:layout_marginEnd="@dimen/dp_35"
+        android:paddingBottom="@dimen/dp_35"
+        tools:context=".presentation.popt.PoptDetailPengaduanTanamanFragment">
+
+        <ImageButton
+            android:id="@+id/backBtn"
+            style="@style/BackButton"
+            android:layout_width="@dimen/dp_48"
+            android:layout_height="@dimen/dp_48"
+            android:contentDescription="@string/back_button_label"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_arrow_left_alt"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/detailHeadingTv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_8"
+            android:fontFamily="@font/noto_sans_bold"
+            android:text="@string/detail_pengaduan_tanaman_label"
+            android:textSize="@dimen/sp_28"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/backBtn" />
+
+        <!-- Foto Tanaman -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/fotoCard"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_200"
+            android:layout_marginTop="@dimen/dp_24"
+            app:cardCornerRadius="@dimen/dp_12"
+            app:cardElevation="@dimen/dp_2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/detailHeadingTv">
+
+            <ImageView
+                android:id="@+id/fotoTanamanIv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/plant_image_label"
+                android:scaleType="centerCrop"
+                tools:src="@drawable/ic_launcher_background" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Status Badge -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/statusCard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_16"
+            app:cardBackgroundColor="@color/green_500"
+            app:cardCornerRadius="@dimen/dp_16"
+            app:cardElevation="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fotoCard">
+
+            <TextView
+                android:id="@+id/statusTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/noto_sans_semibold"
+                android:paddingHorizontal="@dimen/dp_16"
+                android:paddingVertical="@dimen/dp_6"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/sp_14"
+                tools:text="Sudah Ditangani" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Informasi Pengaduan -->
+        <TextView
+            android:id="@+id/infoSectionTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_24"
+            android:fontFamily="@font/noto_sans_bold"
+            android:text="@string/informasi_pengaduan_label"
+            android:textSize="@dimen/sp_18"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/statusCard" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/infoCard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_12"
+            app:cardCornerRadius="@dimen/dp_12"
+            app:cardElevation="@dimen/dp_1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/infoSectionTv">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp_16">
+
+                <!-- Nama Pelapor -->
+                <TextView
+                    android:id="@+id/namaPelaporLabelTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/noto_sans_medium"
+                    android:text="@string/nama_pelapor_label"
+                    android:textColor="@color/neutral_600"
+                    android:textSize="@dimen/sp_14"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/namaPelaporTv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_4"
+                    android:fontFamily="@font/noto_sans_semibold"
+                    android:textSize="@dimen/sp_16"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/namaPelaporLabelTv"
+                    tools:text="Jhon Doe" />
+
+                <!-- Nomor Telepon -->
+                <TextView
+                    android:id="@+id/teleponLabelTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_16"
+                    android:fontFamily="@font/noto_sans_medium"
+                    android:text="@string/nomor_hp_pelapor_label"
+                    android:textColor="@color/neutral_600"
+                    android:textSize="@dimen/sp_14"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/namaPelaporTv" />
+
+                <TextView
+                    android:id="@+id/teleponTv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_4"
+                    android:fontFamily="@font/noto_sans_semibold"
+                    android:textSize="@dimen/sp_16"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/teleponLabelTv"
+                    tools:text="081234567890" />
+
+                <!-- Lokasi -->
+                <TextView
+                    android:id="@+id/lokasiLabelTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_16"
+                    android:fontFamily="@font/noto_sans_medium"
+                    android:text="@string/lokasi_label"
+                    android:textColor="@color/neutral_600"
+                    android:textSize="@dimen/sp_14"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/teleponTv" />
+
+                <TextView
+                    android:id="@+id/lokasiTv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_4"
+                    android:fontFamily="@font/noto_sans_semibold"
+                    android:textSize="@dimen/sp_16"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/lokasiLabelTv"
+                    tools:text="Jl. Raya Pertanian No. 123" />
+
+                <!-- Tanggal Pengaduan -->
+                <TextView
+                    android:id="@+id/tanggalLabelTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_16"
+                    android:fontFamily="@font/noto_sans_medium"
+                    android:text="@string/tanggal_pengaduan_label"
+                    android:textColor="@color/neutral_600"
+                    android:textSize="@dimen/sp_14"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/lokasiTv" />
+
+                <TextView
+                    android:id="@+id/tanggalTv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_4"
+                    android:fontFamily="@font/noto_sans_semibold"
+                    android:textSize="@dimen/sp_16"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tanggalLabelTv"
+                    tools:text="12 Oktober 2024" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:id="@+id/deskripsiSectionTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_24"
+            android:fontFamily="@font/noto_sans_bold"
+            android:text="@string/deskripsi_masalah_tanaman_label"
+            android:textSize="@dimen/sp_18"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/infoCard" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/deskripsiCard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_12"
+            app:cardCornerRadius="@dimen/dp_12"
+            app:cardElevation="@dimen/dp_1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/deskripsiSectionTv">
+
+            <TextView
+                android:id="@+id/deskripsiTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/noto_sans"
+                android:lineSpacingExtra="@dimen/dp_4"
+                android:padding="@dimen/dp_16"
+                android:textSize="@dimen/sp_14"
+                tools:text="Tanaman padi mengalami bercak coklat pada daun, pertumbuhan terhambat, dan sebagian daun mulai menguning." />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/verifikasiBtn"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_50"
+            android:layout_marginTop="@dimen/dp_32"
+            android:text="@string/verifikasi_pengaduan_label"
+            android:textSize="@dimen/sp_16"
+            app:cornerRadius="@dimen/dp_12"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/deskripsiCard" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/verifikasiBtn"
+            app:layout_constraintEnd_toEndOf="@+id/verifikasiBtn"
+            app:layout_constraintStart_toStartOf="@+id/verifikasiBtn"
+            app:layout_constraintTop_toTopOf="@+id/verifikasiBtn"
+            tools:visibility="visible" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

@@ -12,7 +12,9 @@ import com.example.sipaddy.data.network.response.PengaduanTanamanItem
 import com.example.sipaddy.databinding.ItemPengaduanTanamanPoptBinding
 import com.example.sipaddy.utils.DateFormatter
 
-class PoptPengaduanTanamanAdapter() :
+class PoptPengaduanTanamanAdapter(
+    private val onItemClick: (PengaduanTanamanItem) -> Unit
+) :
     ListAdapter<PengaduanTanamanItem, PoptPengaduanTanamanAdapter.ViewHolder>(DIFF_CALLBACK) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -51,6 +53,10 @@ class PoptPengaduanTanamanAdapter() :
                     .error(R.drawable.sample_scan)
                     .centerCrop()
                     .into(imageIv)
+
+                root.setOnClickListener {
+                    onItemClick(item)
+                }
 
             }
         }

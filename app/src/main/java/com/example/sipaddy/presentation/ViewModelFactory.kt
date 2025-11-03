@@ -14,6 +14,7 @@ import com.example.sipaddy.presentation.pengaduantanaman.PengaduanTanamanViewMod
 import com.example.sipaddy.presentation.pengaduantanaman.detail.DetailPengaduanTanamanViewModel
 import com.example.sipaddy.presentation.pengaduantanaman.history.HistoryPengaduanTanamanViewModel
 import com.example.sipaddy.presentation.popt.PoptPengaduanTanamanViewModel
+import com.example.sipaddy.presentation.popt.detail.PoptDetailPengaduanTanamanViewModel
 import com.example.sipaddy.presentation.profile.ProfilViewModel
 import com.example.sipaddy.presentation.register.RegisterViewModel
 
@@ -61,6 +62,10 @@ class ViewModelFactory(
 
             modelClass.isAssignableFrom(PoptPengaduanTanamanViewModel::class.java) -> {
                 PoptPengaduanTanamanViewModel(repository) as T
+            }
+
+            modelClass.isAssignableFrom(PoptDetailPengaduanTanamanViewModel::class.java) -> {
+                PoptDetailPengaduanTanamanViewModel(repository) as T
             }
 
             modelClass.isAssignableFrom(DetailPengaduanTanamanViewModel::class.java) -> {

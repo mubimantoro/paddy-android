@@ -138,7 +138,21 @@
         android:id="@+id/poptPengaduanTanamanFragment"
         android:name="com.example.sipaddy.presentation.popt.PoptPengaduanTanamanFragment"
         android:label="fragment_popt_pengaduan_tanaman"
-        tools:layout="@layout/fragment_popt_pengaduan_tanaman" />
+        tools:layout="@layout/fragment_popt_pengaduan_tanaman" >
+        <action
+            android:id="@+id/action_poptPengaduanTanamanFragment_to_poptDetailPengaduanTanamanFragment"
+            app:destination="@id/poptDetailPengaduanTanamanFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/poptDetailPengaduanTanamanFragment"
+        android:name="com.example.sipaddy.presentation.popt.detail.PoptDetailPengaduanTanamanFragment"
+        android:label="fragment_popt_detail_pengaduan_tanaman"
+        tools:layout="@layout/fragment_popt_detail_pengaduan_tanaman" >
+        <argument
+            android:name="PengaduanTanaman"
+            app:argType="com.example.sipaddy.data.network.response.PengaduanTanamanItem"
+            app:nullable="true" />
+    </fragment>
 
 
 </navigation>

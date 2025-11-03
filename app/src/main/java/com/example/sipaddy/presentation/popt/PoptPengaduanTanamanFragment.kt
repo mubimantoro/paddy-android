@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sipaddy.data.ResultState
 import com.example.sipaddy.databinding.FragmentPoptPengaduanTanamanBinding
@@ -40,7 +41,7 @@ class PoptPengaduanTanamanFragment : Fragment() {
         with(binding) {
             backBtn.setOnClickListener {
                 view.findNavController().popBackStack()
-            }8
+            }
         }
 
 
@@ -82,7 +83,13 @@ class PoptPengaduanTanamanFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        adapter = PoptPengaduanTanamanAdapter()
+        adapter = PoptPengaduanTanamanAdapter { item ->
+            val action =
+                PoptPengaduanTanamanFragmentDirections.actionPoptPengaduanTanamanFragmentToPoptDetailPengaduanTanamanFragment(
+                    item
+                )
+            findNavController().navigate(action)
+        }
 
         binding.pengaduanTanamanRv.apply {
             layoutManager = LinearLayoutManager(requireContext())

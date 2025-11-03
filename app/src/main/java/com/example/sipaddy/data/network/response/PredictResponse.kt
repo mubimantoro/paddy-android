@@ -20,7 +20,7 @@ data class PredictResponse(
 data class DataPredict(
 
     @field:SerializedName("confidenceScore")
-    val confidenceScore: Int = 0,
+    val confidenceScore: Double = 0.0,
 
     @field:SerializedName("solutions")
     val solutions: String? = null,

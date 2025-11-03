@@ -114,4 +114,12 @@
     <string name="koordinat_lokasi_label">Koordinat Lokasi</string>
     <string name="open_in_maps_label">Buka di Maps</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="detail_pengaduan_tanaman_label">Detail Pengaduan</string>
+    <string name="informasi_pengaduan_label">Informasi Pengaduan</string>
+    <string name="nama_pelapor_label">Nama Pelapor</string>
+    <string name="nomor_hp_pelapor_label">Nomor HP pelapor</string>
+    <string name="tanggal_pengaduan_label">Tanggal Pengaduan</string>
+    <string name="deskripsi_masalah_tanaman_label">Deskripsi Masalah Tanaman</string>
+    <string name="hasil_diagnosa_label">Hasil Diagnosa</string>
+    <string name="verifikasi_pengaduan_label">Verifikasi Pengaduan</string>
 </resources>

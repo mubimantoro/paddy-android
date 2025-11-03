@@ -83,11 +83,11 @@ class HomeFragment : BaseFragment() {
 
     private fun setupPoptView() {
         with(binding) {
-            headingPengaduanTanamanTv.text = "Kelola\nPengaduan"
+            headingPengaduanTanamanTv.text = "Pengaduan\nTanaman"
             pengaduanTanamanBtn.text = "Lihat Semua"
 
             headingHistoryTv.text = "Pengaduan\nPetani"
-            historyBtn.text = "Lihat"
+            historyBtn.text = "Lihat Semua"
 
             diagnoseBtn.setOnClickListener {
                 view?.findNavController()?.navigate(
