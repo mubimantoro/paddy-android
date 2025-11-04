@@ -61,6 +61,10 @@ data class PengaduanTanamanItem(
     @field:SerializedName("status")
     val status: String? = null,
 
+    @field:SerializedName("tanggal_verifikasi")
+    val tanggalVerifikasi: String? = null,
+
+
     @field:SerializedName("popt_nama")
     val poptNama: String? = null,
 

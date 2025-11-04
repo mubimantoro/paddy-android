@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 object ApiConfig {
-    private const val BASE_URL = "http://192.168.1.3:9000/api/"
+    private const val BASE_URL = "http://192.168.1.7:9000/api/"
 
     fun getApiService(tokenProvider: () -> String = { "" }): PaddyApiService {
         val loggingInterceptor = if (BuildConfig.DEBUG) {
