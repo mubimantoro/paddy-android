@@ -67,7 +67,7 @@ class ResultFragment : Fragment() {
 
             } else {
                 if (predictResult != null) {
-                    diseaseLabelTv.text = predictResult.label
+                    diseaseLabelTv.text = predictResult.disease
                     dateTv.text = date
                     descTv.text = predictResult.description
                     causesTv.text = predictResult.causes

@@ -31,6 +31,6 @@ data class DataPredict(
     @field:SerializedName("description")
     val description: String? = null,
 
-    @field:SerializedName("label")
-    val label: String? = null
+    @field:SerializedName("disease")
+    val disease: String? = null
 ): Parcelable
