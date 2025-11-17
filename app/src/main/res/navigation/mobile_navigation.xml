@@ -35,6 +35,7 @@
         <action
             android:id="@+id/action_navigation_home_to_poptPengaduanTanamanFragment"
             app:destination="@id/poptPengaduanTanamanFragment" />
+
     </fragment>
 
     <fragment
@@ -129,10 +130,19 @@
         android:name="com.example.sipaddy.presentation.pengaduantanaman.detail.DetailPengaduanTanamanFragment"
         android:label="fragment_detail_pengaduan_tanaman"
         tools:layout="@layout/fragment_detail_pengaduan_tanaman">
+
         <argument
-            android:name="PengaduanTanaman"
-            app:argType="com.example.sipaddy.data.network.response.PengaduanTanamanItem"
-            app:nullable="true" />
+            android:name="id"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/poptDetailPengaduanTanamanFragment"
+        android:name="com.example.sipaddy.presentation.popt.detail.PoptDetailPengaduanTanamanFragment"
+        android:label="fragment_popt_detail_pengaduan_tanaman"
+        tools:layout="@layout/fragment_popt_detail_pengaduan_tanaman" >
+        <argument
+            android:name="id"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/poptPengaduanTanamanFragment"
@@ -142,16 +152,6 @@
         <action
             android:id="@+id/action_poptPengaduanTanamanFragment_to_poptDetailPengaduanTanamanFragment"
             app:destination="@id/poptDetailPengaduanTanamanFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/poptDetailPengaduanTanamanFragment"
-        android:name="com.example.sipaddy.presentation.popt.detail.PoptDetailPengaduanTanamanFragment"
-        android:label="fragment_popt_detail_pengaduan_tanaman"
-        tools:layout="@layout/fragment_popt_detail_pengaduan_tanaman" >
-        <argument
-            android:name="PengaduanTanaman"
-            app:argType="com.example.sipaddy.data.network.response.PengaduanTanamanItem"
-            app:nullable="true" />
     </fragment>
 
 

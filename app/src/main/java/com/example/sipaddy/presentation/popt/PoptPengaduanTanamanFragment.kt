@@ -42,16 +42,16 @@ class PoptPengaduanTanamanFragment : Fragment() {
             backBtn.setOnClickListener {
                 view.findNavController().popBackStack()
             }
+
+            swipeRefresh.setOnRefreshListener {
+                loadData()
+            }
         }
 
 
         setupRecyclerView()
         setupObserver()
         loadData()
-
-        binding.swipeRefresh.setOnRefreshListener {
-            loadData()
-        }
     }
 
     private fun setupObserver() {
@@ -78,6 +78,11 @@ class PoptPengaduanTanamanFragment : Fragment() {
         }
     }
 
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+        binding.pengaduanTanamanRv.visibility = if (isLoading) View.GONE else View.VISIBLE
+    }
+
     private fun loadData() {
         viewModel.getPengaduanTanaman()
     }
@@ -86,7 +91,7 @@ class PoptPengaduanTanamanFragment : Fragment() {
         adapter = PoptPengaduanTanamanAdapter { item ->
             val action =
                 PoptPengaduanTanamanFragmentDirections.actionPoptPengaduanTanamanFragmentToPoptDetailPengaduanTanamanFragment(
-                    item
+                    item.id
                 )
             findNavController().navigate(action)
         }
@@ -98,14 +103,9 @@ class PoptPengaduanTanamanFragment : Fragment() {
         }
     }
 
-    private fun showLoading(isLoading: Boolean) {
-        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
-        binding.pengaduanTanamanRv.visibility = if (isLoading) View.GONE else View.VISIBLE
-    }
-
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+
 }

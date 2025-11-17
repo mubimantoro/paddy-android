@@ -8,13 +8,10 @@ data class PengaduanTanamanDetailResponse(
     val status: String? = null,
 
     @field:SerializedName("data")
-    val data: PengaduanTanamanDetailData? = null,
-
-
-    )
+    val data: PengaduanTanamanDetailData? = null
+)
 
 data class PengaduanTanamanDetailData(
-
     @field:SerializedName("pengaduan")
-    val pengaduanTanaman: PengaduanTanamanItem? = null
+    val pengaduan: PengaduanTanamanDetailItem
 )

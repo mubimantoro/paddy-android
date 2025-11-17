@@ -1,8 +1,6 @@
 package com.example.sipaddy.data.network.response
 
-import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import kotlinx.parcelize.Parcelize
 
 data class PengaduanTanamanResponse(
 
@@ -19,8 +17,11 @@ data class PengaduanTanamanData(
     val pengaduanTanaman: List<PengaduanTanamanItem>? = null
 )
 
-@Parcelize
+
 data class PengaduanTanamanItem(
+
+    @field:SerializedName("id")
+    val id: String,
 
     @field:SerializedName("image")
     val image: String? = null,
@@ -46,9 +47,6 @@ data class PengaduanTanamanItem(
     @field:SerializedName("kecamatan")
     val kecamatan: String? = null,
 
-    @field:SerializedName("id")
-    val id: String? = null,
-
     @field:SerializedName("deskripsi")
     val deskripsi: String? = null,
 
@@ -64,17 +62,13 @@ data class PengaduanTanamanItem(
     @field:SerializedName("tanggal_verifikasi")
     val tanggalVerifikasi: String? = null,
 
+    @field:SerializedName("file")
+    val file: String? = null,
 
-    @field:SerializedName("popt_nama")
-    val poptNama: String? = null,
+    @field:SerializedName("popt")
+    val popt: PoptResponseItem? = null,
 
-    @field:SerializedName("user_username")
-    val userUsername: String? = null,
+    @field:SerializedName("user")
+    val user: User? = null
 
-    @field:SerializedName("user_nama")
-    val userNama: String? = null,
-
-    @field:SerializedName("popt_username")
-    val poptUsername: String? = null
-
-) : Parcelable
+)

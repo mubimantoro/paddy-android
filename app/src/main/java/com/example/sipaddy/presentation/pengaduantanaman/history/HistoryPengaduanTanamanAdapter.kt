@@ -53,22 +53,22 @@ class HistoryPengaduanTanamanAdapter(
                 when (status) {
                     "Pending" -> {
                         text = context.getString(R.string.pending_label)
-                        setBackgroundResource(R.drawable.badge_pending_bg)
+                        setBackgroundResource(R.drawable.status_pending_bg)
                     }
 
-                    "in_progress", "diproses" -> {
-                        text = context.getString(R.string.in_progress_label)
-                        setBackgroundResource(R.drawable.badge_in_progress_bg)
+                    "Diverifikasi" -> {
+                        text = context.getString(R.string.verifikasi_status_label)
+                        setBackgroundResource(R.drawable.status_verified_bg)
                     }
 
                     "resolved", "selesai" -> {
                         text = context.getString(R.string.resolved_label)
-                        setBackgroundResource(R.drawable.badge_resolved_bg)
+                        setBackgroundResource(R.drawable.status_completed_bg)
                     }
 
                     else -> {
                         text = context.getString(R.string.pending_label)
-                        setBackgroundResource(R.drawable.badge_pending_bg)
+                        setBackgroundResource(R.drawable.status_pending_bg)
                     }
 
                 }
@@ -95,7 +95,7 @@ class HistoryPengaduanTanamanAdapter(
         holder.itemView.setOnClickListener {
             val toDetail =
                 HistoryPengaduanTanamanFragmentDirections.actionHistoryPengaduanTanamanFragmentToDetailPengaduanTanamanFragment(
-                    pengaduanTanaman
+                    pengaduanTanaman.id
                 )
             holder.itemView.findNavController().navigate(toDetail)
         }

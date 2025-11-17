@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".presentation.pengaduantanaman.detail.DetailPengaduanTanamanFragment">
 
+
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
@@ -96,7 +97,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dp_4"
-                            android:background="@drawable/badge_pending_bg"
+                            android:background="@drawable/status_pending_bg"
                             android:fontFamily="@font/noto_sans_bold"
                             android:paddingHorizontal="@dimen/dp_12"
                             android:paddingVertical="@dimen/dp_6"
@@ -130,6 +131,101 @@
                             tools:text="15 Okt 2025" />
 
                     </LinearLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/downloadHasilPemeriksaanCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp_16"
+                android:visibility="gone"
+                app:cardBackgroundColor="@color/green_50"
+                app:strokeColor="@color/green_500"
+                app:strokeWidth="1dp"
+                tools:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/dp_16">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:background="@drawable/status_completed_bg"
+                            android:contentDescription="@string/icon_label"
+                            android:padding="@dimen/dp_12"
+                            android:src="@drawable/ic_check"
+                            app:tint="@color/white" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dp_12"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/noto_sans_bold"
+                                android:text="@string/hasil_pemeriksaan_tanaman_label"
+                                android:textColor="@color/green_700"
+                                android:textSize="@dimen/sp_16" />
+
+                            <TextView
+                                android:id="@+id/tanggalVerifikasiTv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_2"
+                                android:fontFamily="@font/noto_sans"
+                                android:textColor="@color/green_600"
+                                android:textSize="@dimen/sp_12"
+                                tools:text="Diverifikasi pada 12 Nov 2025" />
+
+                            <TextView
+                                android:id="@+id/namaPoptTv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_2"
+                                android:fontFamily="@font/noto_sans"
+                                android:textColor="@color/green_600"
+                                android:textSize="@dimen/sp_12"
+                                tools:text="oleh: Petugas POPT" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginVertical="@dimen/dp_12"
+                        android:background="@color/green_200" />
+
+                    <Button
+                        android:id="@+id/downloaHasilPemeriksaanBtn"
+                        style="@style/Widget.Material3.Button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/green_500"
+                        android:fontFamily="@font/noto_sans_bold"
+                        android:paddingVertical="@dimen/dp_12"
+                        android:text="@string/download_file_label"
+                        android:textColor="@color/white"
+                        app:icon="@drawable/ic_download"
+                        app:iconGravity="textStart"
+                        app:iconTint="@color/white" />
 
                 </LinearLayout>
 
@@ -400,6 +496,7 @@
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
+
 
     <ProgressBar
         android:id="@+id/progressBar"

@@ -91,7 +91,7 @@
     <string name="riwayat_pengaduan_tanaman_heading_label">Riwayat Pengaduan Tanaman</string>
     <string name="riwayat_pengaduan_tanaman_subheading_label">Periksa hasil pengaduan Tanaman Anda.</string>
     <string name="pending_label">pending</string>
-    <string name="in_progress_label">Sedang Diproses</string>
+    <string name="verifikasi_status_label">Diverifikasi</string>
     <string name="resolved_label">Selesai</string>
     <string name="lokasi_pengaduan_tanaman_label">Lokasi Pengaduan Tanaman</string>
     <string name="empty_pengaduan_tanaman_label">Belum ada riwayat pengaduan tanaman</string>
@@ -122,4 +122,14 @@
     <string name="deskripsi_masalah_tanaman_label">Deskripsi Masalah Tanaman</string>
     <string name="hasil_diagnosa_label">Hasil Diagnosa</string>
     <string name="verifikasi_pengaduan_label">Verifikasi Pengaduan</string>
+    <string name="download_file_label">Download Hasil</string>
+    <string name="hasil_pemeriksaan_tanaman_label">Hasil Pemeriksaan Tanaman</string>
+    <string name="tanggal_verifikasi_label">Diverifikasi pada %1$s</string>
+    <string name="nama_popt_label">oleh: %1$s</string>
+    <string name="kecamatan_kabupaten_label">Kec. %1$s, Kab. %2$s</string>
+    <string name="catatan_popt_label">Catatan POPT</string>
+    <string name="informasi_pelapor_label">Informasi Pelapor</string>
+    <string name="catatan_from_popt_label">Catatan Hasil Pemeriksaan (Opsional)</string>
+    <string name="verified_pengaduan_label">Verifikasi Pengaduan</string>
+
 </resources>

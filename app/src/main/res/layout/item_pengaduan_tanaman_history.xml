@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_12"
             android:layout_marginEnd="@dimen/dp_12"
-            android:background="@drawable/badge_pending_bg"
+            android:background="@drawable/status_pending_bg"
             android:fontFamily="@font/noto_sans_semibold"
             android:paddingHorizontal="@dimen/dp_8"
             android:paddingVertical="@dimen/dp_4"

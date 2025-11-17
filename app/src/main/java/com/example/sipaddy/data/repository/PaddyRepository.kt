@@ -4,10 +4,12 @@ import com.example.sipaddy.data.ResultState
 import com.example.sipaddy.data.network.response.CommonResponse
 import com.example.sipaddy.data.network.response.DiseaseResponse
 import com.example.sipaddy.data.network.response.LoginResponse
+import com.example.sipaddy.data.network.response.PengaduanTanamanDetailItem
 import com.example.sipaddy.data.network.response.PengaduanTanamanDetailResponse
 import com.example.sipaddy.data.network.response.PengaduanTanamanResponse
 import com.example.sipaddy.data.network.response.PredictResponse
 import com.example.sipaddy.data.network.response.VerifikasiPengaduanTanamanItem
+import com.example.sipaddy.data.network.response.VerifikasiPengaduanTanamanResponse
 import com.example.sipaddy.data.network.retrofit.ApiConfig
 import com.example.sipaddy.data.network.retrofit.PaddyApiService
 import com.example.sipaddy.data.pref.UserPreference
@@ -197,14 +199,14 @@ class PaddyRepository(
             }
         }
 
-    fun verifikasiPengaduanTanaman(pengaduanTanamanId: String): Flow<ResultState<VerifikasiPengaduanTanamanItem>> =
+    fun verifikasiPengaduanTanaman(id: String, catatanPopt: String?): Flow<ResultState<VerifikasiPengaduanTanamanItem>> =
         flow {
             emit(ResultState.Loading)
             try {
                 val apiService = getApiService()
-                val response = apiService.verifikasiPengaduanTanaman(pengaduanTanamanId)
+                val response = apiService.verifikasiPengaduanTanaman(id, catatanPopt)
 
-                if (response.status === "success") {
+                if (response.status == "success") {
                     emit(ResultState.Success(response.data))
                 } else {
                     emit(ResultState.Error(response.message))

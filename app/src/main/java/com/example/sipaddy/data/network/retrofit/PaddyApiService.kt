@@ -3,11 +3,13 @@ package com.example.sipaddy.data.network.retrofit
 import com.example.sipaddy.data.network.response.CommonResponse
 import com.example.sipaddy.data.network.response.DiseaseResponse
 import com.example.sipaddy.data.network.response.LoginResponse
+import com.example.sipaddy.data.network.response.PengaduanTanamanDetailItem
 import com.example.sipaddy.data.network.response.PengaduanTanamanDetailResponse
 import com.example.sipaddy.data.network.response.PengaduanTanamanResponse
 import com.example.sipaddy.data.network.response.PredictResponse
 import com.example.sipaddy.data.network.response.Response
 import com.example.sipaddy.data.network.response.VerifikasiPengaduanTanamanItem
+import com.example.sipaddy.data.network.response.VerifikasiPengaduanTanamanResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.Field
@@ -66,8 +68,10 @@ interface PaddyApiService {
         @Path("id") id: String
     ): PengaduanTanamanDetailResponse
 
+    @FormUrlEncoded
     @PUT("pengaduan-tanaman/{id}/verifikasi")
     suspend fun verifikasiPengaduanTanaman(
-        @Path("id") pengaduanTanamanId: String
-    ): Response<VerifikasiPengaduanTanamanItem>
+        @Path("id") pengaduanTanamanId: String,
+        @Field("catatanPopt") catatanPopt: String? = null
+    ): VerifikasiPengaduanTanamanResponse
 }
