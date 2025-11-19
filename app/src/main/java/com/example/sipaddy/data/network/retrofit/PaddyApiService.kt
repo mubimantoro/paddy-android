@@ -3,12 +3,9 @@ package com.example.sipaddy.data.network.retrofit
 import com.example.sipaddy.data.network.response.CommonResponse
 import com.example.sipaddy.data.network.response.DiseaseResponse
 import com.example.sipaddy.data.network.response.LoginResponse
-import com.example.sipaddy.data.network.response.PengaduanTanamanDetailItem
 import com.example.sipaddy.data.network.response.PengaduanTanamanDetailResponse
 import com.example.sipaddy.data.network.response.PengaduanTanamanResponse
 import com.example.sipaddy.data.network.response.PredictResponse
-import com.example.sipaddy.data.network.response.Response
-import com.example.sipaddy.data.network.response.VerifikasiPengaduanTanamanItem
 import com.example.sipaddy.data.network.response.VerifikasiPengaduanTanamanResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody

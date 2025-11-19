@@ -12,13 +12,5 @@ data class VerifikasiPengaduanTanamanResponse(
     val message: String,
 
     @field:SerializedName("data")
-    val data: VerifikasiPengaduanTanamanItem,
-)
-
-data class VerifikasiPengaduanTanamanItem(
-    @field:SerializedName("pengaduanId")
-    val pengaduanId: String? = null,
-
-    @field:SerializedName("tanggalVerifikasi")
-    val tanggalVerifikasi: String? = null
+    val data: PengaduanTanamanDetailItem,
 )

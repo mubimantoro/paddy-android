@@ -187,7 +187,6 @@ class PoptDetailPengaduanTanamanFragment : Fragment() {
 
                 is ResultState.Error -> {
                     showLoading(false)
-                    viewModel.resetVerifikasi()
                 }
 
                 is ResultState.Success -> {
@@ -199,7 +198,7 @@ class PoptDetailPengaduanTanamanFragment : Fragment() {
                     currentPengaduanId?.let {
                         viewModel.getDetailPengaduanTanaman(it)
                     }
-                    viewModel.resetVerifikasi()
+
                 }
             }
         }

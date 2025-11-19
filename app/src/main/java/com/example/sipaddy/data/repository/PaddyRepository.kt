@@ -8,8 +8,6 @@ import com.example.sipaddy.data.network.response.PengaduanTanamanDetailItem
 import com.example.sipaddy.data.network.response.PengaduanTanamanDetailResponse
 import com.example.sipaddy.data.network.response.PengaduanTanamanResponse
 import com.example.sipaddy.data.network.response.PredictResponse
-import com.example.sipaddy.data.network.response.VerifikasiPengaduanTanamanItem
-import com.example.sipaddy.data.network.response.VerifikasiPengaduanTanamanResponse
 import com.example.sipaddy.data.network.retrofit.ApiConfig
 import com.example.sipaddy.data.network.retrofit.PaddyApiService
 import com.example.sipaddy.data.pref.UserPreference
@@ -199,7 +197,10 @@ class PaddyRepository(
             }
         }
 
-    fun verifikasiPengaduanTanaman(id: String, catatanPopt: String?): Flow<ResultState<VerifikasiPengaduanTanamanItem>> =
+    fun verifikasiPengaduanTanaman(
+        id: String,
+        catatanPopt: String?
+    ): Flow<ResultState<PengaduanTanamanDetailItem>> =
         flow {
             emit(ResultState.Loading)
             try {

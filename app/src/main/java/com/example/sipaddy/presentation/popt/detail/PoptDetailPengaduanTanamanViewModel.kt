@@ -5,9 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.sipaddy.data.ResultState
+import com.example.sipaddy.data.network.response.PengaduanTanamanDetailItem
 import com.example.sipaddy.data.network.response.PengaduanTanamanDetailResponse
-import com.example.sipaddy.data.network.response.VerifikasiPengaduanTanamanItem
-import com.example.sipaddy.data.network.response.VerifikasiPengaduanTanamanResponse
 import com.example.sipaddy.data.repository.PaddyRepository
 import kotlinx.coroutines.launch
 
@@ -16,8 +15,8 @@ class PoptDetailPengaduanTanamanViewModel(private val repository: PaddyRepositor
     private var _detailResult = MutableLiveData<ResultState<PengaduanTanamanDetailResponse>>()
     val detailResult: LiveData<ResultState<PengaduanTanamanDetailResponse>> = _detailResult
 
-    private var _verifikasiResult = MutableLiveData<ResultState<VerifikasiPengaduanTanamanItem>>()
-    val verifikasiResult: LiveData<ResultState<VerifikasiPengaduanTanamanItem>> = _verifikasiResult
+    private var _verifikasiResult = MutableLiveData<ResultState<PengaduanTanamanDetailItem>>()
+    val verifikasiResult: LiveData<ResultState<PengaduanTanamanDetailItem>> = _verifikasiResult
 
     fun getDetailPengaduanTanaman(id: String) {
         viewModelScope.launch {
@@ -33,9 +32,5 @@ class PoptDetailPengaduanTanamanViewModel(private val repository: PaddyRepositor
                 _verifikasiResult.value = it
             }
         }
-    }
-
-    fun resetVerifikasi() {
-        _verifikasiResult.value = null
     }
 }
