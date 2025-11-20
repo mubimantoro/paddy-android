@@ -13,8 +13,9 @@ val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "se
 
 class UserPreference private constructor(private val dataStore: DataStore<Preferences>) {
 
-    suspend fun saveSession(username: String, token: String, role: String) {
+    suspend fun saveSession(namaLengkap: String, username: String, token: String, role: String) {
         dataStore.edit { preferences ->
+            preferences[NAMALENGKAP_KEY] = namaLengkap
             preferences[USERNAME_KEY] = username
             preferences[TOKEN_KEY] = token
             preferences[ROLE_KEY] = role
@@ -30,6 +31,12 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
     fun getUsername(): Flow<String> {
         return dataStore.data.map { preferences ->
             preferences[USERNAME_KEY] ?: ""
+        }
+    }
+
+    fun getNamaLengkap(): Flow<String> {
+        return dataStore.data.map {
+            it[NAMALENGKAP_KEY] ?: ""
         }
     }
 
@@ -50,6 +57,7 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
         private var INSTANCE: UserPreference? = null
 
         private val USERNAME_KEY = stringPreferencesKey("username")
+        private val NAMALENGKAP_KEY = stringPreferencesKey("namaLengkap")
         private val TOKEN_KEY = stringPreferencesKey("token")
         private val ROLE_KEY = stringPreferencesKey("role")
 

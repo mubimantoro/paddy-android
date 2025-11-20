@@ -22,9 +22,15 @@ class LoginViewModel(private val repository: PaddyRepository) : ViewModel() {
         }
     }
 
-    fun saveSession(username: String, token: String, role: String, callback: () -> Unit) {
+    fun saveSession(
+        namaLengkap: String,
+        username: String,
+        token: String,
+        role: String,
+        callback: () -> Unit
+    ) {
         viewModelScope.launch {
-            repository.saveSession(username, token, role)
+            repository.saveSession(namaLengkap, username, token, role)
             callback()
         }
     }

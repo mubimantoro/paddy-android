@@ -6,6 +6,7 @@ import com.example.sipaddy.data.network.response.LoginResponse
 import com.example.sipaddy.data.network.response.PengaduanTanamanDetailResponse
 import com.example.sipaddy.data.network.response.PengaduanTanamanResponse
 import com.example.sipaddy.data.network.response.PredictResponse
+import com.example.sipaddy.data.network.response.UserProfileResponse
 import com.example.sipaddy.data.network.response.VerifikasiPengaduanTanamanResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -71,4 +72,16 @@ interface PaddyApiService {
         @Path("id") pengaduanTanamanId: String,
         @Field("catatanPopt") catatanPopt: String? = null
     ): VerifikasiPengaduanTanamanResponse
+
+    @GET("users/me")
+    suspend fun getUserProfile(): UserProfileResponse
+
+    @FormUrlEncoded
+    @PUT("users/me")
+    suspend fun updateUserProfile(
+        @Field("username") username: String,
+        @Field("namaLengkap") namaLengkap: String,
+        @Field("nomorHp") nomorHp: String?,
+        @Field("password") password: String?
+    ): CommonResponse
 }

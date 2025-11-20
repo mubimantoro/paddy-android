@@ -57,7 +57,7 @@
             app:layout_constraintTop_toBottomOf="@id/header_container">
 
             <TextView
-                android:id="@+id/fullnameTv"
+                android:id="@+id/namaLengkapTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/noto_sans_bold"
@@ -65,7 +65,7 @@
                 tools:text="Mu Bimantoro" />
 
             <TextView
-                android:id="@+id/email_text_view"
+                android:id="@+id/usernameTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/noto_sans"

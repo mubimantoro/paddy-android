@@ -75,7 +75,11 @@
         android:id="@+id/navigation_profile"
         android:name="com.example.sipaddy.presentation.profile.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_navigation_profile_to_settingAkunFragment"
+            app:destination="@id/settingAkunFragment" />
+    </fragment>
     <fragment
         android:id="@+id/navigation_diagnose"
         android:name="com.example.sipaddy.presentation.home.diagnose.DiagnoseFragment"
@@ -153,6 +157,11 @@
             android:id="@+id/action_poptPengaduanTanamanFragment_to_poptDetailPengaduanTanamanFragment"
             app:destination="@id/poptDetailPengaduanTanamanFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/settingAkunFragment"
+        android:name="com.example.sipaddy.presentation.profile.setting.SettingAkunFragment"
+        android:label="fragment_setting_akun"
+        tools:layout="@layout/fragment_setting_akun" />
 
 
 </navigation>

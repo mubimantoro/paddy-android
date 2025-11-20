@@ -18,7 +18,7 @@ class HistoryAdapter : ListAdapter<DiseaseItem, HistoryAdapter.HistoryViewHolder
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: DiseaseItem) {
             with(binding) {
-                diseaseNameTv.text = item.label ?: "-"
+                diseaseNameTv.text = item.disease ?: "-"
                 diseaseDateTv.text = item.createdAt?.let { DateFormatter.formatIsoDate(it) } ?: "-"
                 Glide.with(itemView.context)
                     .load(item.imageUrl)

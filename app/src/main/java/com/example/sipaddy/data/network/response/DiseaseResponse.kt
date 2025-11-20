@@ -27,8 +27,11 @@ data class DiseaseItem(
     @field:SerializedName("solutions")
     val solutions: String? = null,
 
+    @field:SerializedName("url_solution")
+    val urlSolution: String? = null,
+
     @field:SerializedName("confidence_score")
-    val confidenceScore: String? = null,
+    val confidenceScore: Double = 0.0,
 
     @field:SerializedName("causes")
     val causes: String? = null,
@@ -45,6 +48,7 @@ data class DiseaseItem(
     @field:SerializedName("id")
     val id: String? = null,
 
-    @field:SerializedName("label")
-    val label: String? = null
+
+    @field:SerializedName("disease")
+    val disease: String? = null
 ) : Parcelable

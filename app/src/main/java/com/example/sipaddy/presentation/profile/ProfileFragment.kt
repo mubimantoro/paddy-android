@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.sipaddy.R
 import com.example.sipaddy.databinding.FragmentProfileBinding
@@ -37,8 +38,24 @@ class ProfileFragment : Fragment() {
 
         with(binding) {
 
+            viewModel.getNamaLengkap().observe(viewLifecycleOwner) { namaLengkap ->
+                if (namaLengkap != null) {
+                    namaLengkapTv.text = namaLengkap
+                }
+            }
+
+            viewModel.getUsername().observe(viewLifecycleOwner) { username ->
+                if (username != null) {
+                    usernameTv.text = username
+                }
+            }
+
             btnLogout.setOnClickListener {
                 showLogoutDialog()
+            }
+
+            btnSettings.setOnClickListener {
+                view.findNavController().navigate(R.id.action_navigation_profile_to_settingAkunFragment)
             }
         }
     }

@@ -8,6 +8,7 @@ import com.example.sipaddy.data.network.response.PengaduanTanamanDetailItem
 import com.example.sipaddy.data.network.response.PengaduanTanamanDetailResponse
 import com.example.sipaddy.data.network.response.PengaduanTanamanResponse
 import com.example.sipaddy.data.network.response.PredictResponse
+import com.example.sipaddy.data.network.response.UserProfile
 import com.example.sipaddy.data.network.retrofit.ApiConfig
 import com.example.sipaddy.data.network.retrofit.PaddyApiService
 import com.example.sipaddy.data.pref.UserPreference
@@ -229,9 +230,92 @@ class PaddyRepository(
         }
     }
 
+    fun getUserProfile(): Flow<ResultState<UserProfile>> = flow {
+        emit(ResultState.Loading)
+        try {
+            val apiService = getApiService()
+            val response = apiService.getUserProfile()
 
-    suspend fun saveSession(username: String, token: String, role: String) {
-        userPreference.saveSession(username, token, role)
+            if (response.status == "success") {
+                emit(ResultState.Success(response.data.user))
+            } else {
+                emit(ResultState.Error("Gagal mengambil data profil"))
+            }
+
+        } catch (e: HttpException) {
+            if (isTokenExpired(e)) {
+                emit(
+                    ResultState.Error(
+                        "Sesi Anda telah berakhir. Silakan login kembali.",
+                        isTokenExpired = true
+                    )
+                )
+            } else {
+                val errorMessage = when (e.code()) {
+                    500 -> "Server sedang bermasalah"
+                    else -> getErrorMessage(e)
+                }
+                emit(ResultState.Error(errorMessage))
+            }
+        } catch (e: IOException) {
+            emit(ResultState.Error("Tidak ada koneksi internet"))
+        } catch (e: Exception) {
+            emit(ResultState.Error(e.message.toString()))
+        }
+    }
+
+    fun updateUserProfile(
+        username: String,
+        namaLengkap: String,
+        nomorHp: String?,
+        password: String?
+    ): Flow<ResultState<CommonResponse>> = flow {
+        emit(ResultState.Loading)
+        try {
+            val apiService = getApiService()
+            val response = apiService.updateUserProfile(
+                username = username,
+                namaLengkap = namaLengkap,
+                nomorHp = nomorHp,
+                password = password
+            )
+
+            if (response.status == "success") {
+                val currentToken = userPreference.getSession().first()
+                val currentRole = userPreference.getRole().first()
+                userPreference.saveSession(namaLengkap, username, currentToken, currentRole)
+
+                emit(ResultState.Success(response))
+            } else {
+                emit(ResultState.Error(response.message))
+            }
+
+        } catch (e: HttpException) {
+            if (isTokenExpired(e)) {
+                emit(
+                    ResultState.Error(
+                        "Sesi Anda telah berakhir. Silakan login kembali.",
+                        isTokenExpired = true
+                    )
+                )
+            } else {
+                val errorMessage = when (e.code()) {
+                    500 -> "Server sedang bermasalah"
+                    else -> getErrorMessage(e)
+                }
+                emit(ResultState.Error(errorMessage))
+            }
+        } catch (e: IOException) {
+            emit(ResultState.Error("Tidak ada koneksi internet"))
+        } catch (e: Exception) {
+            emit(ResultState.Error(e.message.toString()))
+        }
+    }
+
+
+
+    suspend fun saveSession(namaLengkap: String, username: String, token: String, role: String) {
+        userPreference.saveSession(namaLengkap, username, token, role)
     }
 
     fun getSession(): Flow<String> {
@@ -244,6 +328,10 @@ class PaddyRepository(
 
     fun getUsername(): Flow<String> {
         return userPreference.getUsername()
+    }
+
+    fun getNamaLengkap(): Flow<String> {
+        return userPreference.getNamaLengkap()
     }
 
     suspend fun logout() {

@@ -56,9 +56,9 @@
     <string name="failed_to_predict_label">Gagal memprediksi. Silakan coba lagi</string>
     <string name="failed_to_get_history">Gagal mendapatkan riwayat.</string>
     <string name="result_label">Hasil</string>
-    <string name="result_subheading_label">Hasil analisis Padi Anda.</string>
+    <string name="result_subheading_label">Hasil Identifikasi Padi Anda.</string>
     <string name="disease_name_label">Nama penyakit</string>
-    <string name="predicted_on">Di prediksi pada</string>
+    <string name="predicted_on">Diprediksi pada</string>
     <string name="cause_label">Penyebab</string>
     <string name="solution_label">Solusi</string>
     <string name="lorem_label">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultrices, velit nec scelerisque fringilla, lectus est egestas risus, in vehicula tellus diam eu arcu. Fusce facilisis elit semper, pretium arcu ut, ultrices dolor. Aliquam erat volutpat. Nam egestas leo vitae nunc lobortis sagittis. Phasellus varius iaculis quam at posuere. Integer tempor justo in facilisis tempus.</string>
@@ -131,5 +131,18 @@
     <string name="informasi_pelapor_label">Informasi Pelapor</string>
     <string name="catatan_from_popt_label">Catatan Hasil Pemeriksaan (Opsional)</string>
     <string name="verified_pengaduan_label">Verifikasi Pengaduan</string>
+    <string name="youtube_icon_label">YouTube Icon</string>
+    <string name="tonton_tutorial_penanganan_label">Tonton Tutorial Penanganan</string>
+    <string name="klik_untuk_menonton_video">Klik untuk menonton video</string>
+    <string name="video_penanganan_label">Video Penanganan</string>
+    <string name="confidence_score_label">Tingkat Keyakinan:</string>
+    <string name="edit_profil_label">Edit Profil</string>
+    <string name="password_hint_optional_label">Kosongkan jika tidak ingin mengubah password</string>
+    <string name="simpan_perubahan_label">Simpan Perubahan</string>
+    <string name="password_optional_info_label">Kosongkan jika tidak ingin mengubah password</string>
+    <string name="nomor_hp_hint">Masukkan nomor HP</string>
+    <string name="nomor_hp_label">Nomor HP</string>
+    <string name="nama_lengkap_hint">Masukkan nama lengkap</string>
+    <string name="nama_lengkap">Nama Lengkap</string>
 
 </resources>

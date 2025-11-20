@@ -16,6 +16,7 @@ import com.example.sipaddy.presentation.pengaduantanaman.history.HistoryPengadua
 import com.example.sipaddy.presentation.popt.PoptPengaduanTanamanViewModel
 import com.example.sipaddy.presentation.popt.detail.PoptDetailPengaduanTanamanViewModel
 import com.example.sipaddy.presentation.profile.ProfilViewModel
+import com.example.sipaddy.presentation.profile.setting.SettingAkunViewModel
 import com.example.sipaddy.presentation.register.RegisterViewModel
 
 class ViewModelFactory(
@@ -70,6 +71,10 @@ class ViewModelFactory(
 
             modelClass.isAssignableFrom(DetailPengaduanTanamanViewModel::class.java) -> {
                 DetailPengaduanTanamanViewModel(repository) as T
+            }
+
+            modelClass.isAssignableFrom(SettingAkunViewModel::class.java) -> {
+                SettingAkunViewModel(repository) as T
             }
 
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)

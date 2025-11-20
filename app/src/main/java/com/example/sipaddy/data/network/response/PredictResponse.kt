@@ -25,6 +25,9 @@ data class DataPredict(
     @field:SerializedName("solutions")
     val solutions: String? = null,
 
+    @field:SerializedName("urlSolution")
+    val urlSolution: String? = null,
+
     @field:SerializedName("causes")
     val causes: String? = null,
 
@@ -33,4 +36,5 @@ data class DataPredict(
 
     @field:SerializedName("disease")
     val disease: String? = null
-): Parcelable
+
+) : Parcelable

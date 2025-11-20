@@ -59,6 +59,7 @@ class LoginFragment : Fragment() {
 
                     is ResultState.Success -> {
                         showLoading(false)
+                        val namaLengkap = result.data.loginResult?.user?.namaLengkap
                         val username = result.data.loginResult?.user?.username
                         val token = result.data.loginResult?.token
                         val roles = result.data.loginResult?.user?.roles
@@ -66,8 +67,8 @@ class LoginFragment : Fragment() {
 
                         Log.d("LoginFragment", "Username: $username, Token: $token, Role: $role")
 
-                        if (token != null && username != null) {
-                            viewModel.saveSession(username, token, role) {
+                        if (namaLengkap != null && token != null && username != null) {
+                            viewModel.saveSession(namaLengkap, username, token, role) {
                                 navigateToHome(view)
                             }
                         }
