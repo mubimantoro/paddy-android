@@ -3,16 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layout_marginHorizontal="@dimen/dp_16"
+    android:layout_marginVertical="@dimen/dp_8"
+    app:cardCornerRadius="@dimen/dp_8"
+    app:cardElevation="@dimen/dp_2"
+    app:strokeColor="?attr/colorOutline"
+    app:strokeWidth="1dp"
     android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_12">
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/pengaduanTanamanIv"
-            android:layout_width="@dimen/dp_96"
-            android:layout_height="@dimen/dp_0"
+            android:id="@+id/imageIv"
+            android:layout_width="@dimen/dp_80"
+            android:layout_height="@dimen/dp_80"
             android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -20,79 +27,46 @@
             tools:src="@drawable/sample_scan" />
 
         <TextView
-            android:id="@+id/statusTv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_12"
-            android:layout_marginEnd="@dimen/dp_12"
-            android:background="@drawable/status_pending_bg"
-            android:fontFamily="@font/noto_sans_semibold"
-            android:paddingHorizontal="@dimen/dp_8"
-            android:paddingVertical="@dimen/dp_4"
-            android:text="@string/pending_label"
-            android:textColor="@color/white"
-            android:textSize="@dimen/sp_11"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/kelompokTaniTv"
-            android:layout_width="0dp"
+            android:id="@+id/deskripsiTv"
+            android:layout_width="@dimen/dp_0"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_12"
-            android:layout_marginTop="@dimen/dp_4"
-            android:ellipsize="end"
-            android:fontFamily="@font/noto_sans_bold"
-            android:maxLines="1"
-            android:textColor="@color/black"
-            android:textSize="@dimen/sp_16"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/pengaduanTanamanIv"
-            app:layout_constraintTop_toBottomOf="@id/statusTv"
-            tools:text="Kelompok Tani Sejahtera" />
-
-        <ImageView
-            android:id="@+id/locationIconIv"
-            android:layout_width="@dimen/dp_20"
-            android:layout_height="@dimen/dp_20"
-            android:layout_marginStart="@dimen/dp_12"
-            android:layout_marginTop="@dimen/dp_8"
-            android:contentDescription="@string/lokasi_pengaduan_tanaman_label"
-            android:src="@drawable/ic_location"
-            app:layout_constraintStart_toEndOf="@id/pengaduanTanamanIv"
-            app:layout_constraintTop_toBottomOf="@id/kelompokTaniTv"
-            app:tint="@color/green_500" />
-
-        <TextView
-            android:id="@+id/locationTv"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp_4"
             android:ellipsize="end"
             android:fontFamily="@font/noto_sans"
             android:maxLines="2"
             android:textSize="@dimen/sp_12"
-            app:layout_constraintBottom_toBottomOf="@id/locationIconIv"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/locationIconIv"
-            app:layout_constraintTop_toTopOf="@id/locationIconIv"
-            tools:text="Kec. Limboto, Kab. Gorontalo" />
+            app:layout_constraintStart_toEndOf="@+id/imageIv"
+            app:layout_constraintTop_toTopOf="@+id/imageIv"
+            tools:text="Tanaman padi terserang hama wereng" />
 
-        <!-- Date -->
+        <TextView
+            android:id="@+id/statusTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_4"
+            android:fontFamily="@font/noto_sans_bold"
+            android:text="@string/pending_label"
+            android:textSize="@dimen/sp_12"
+            app:layout_constraintStart_toStartOf="@+id/deskripsiTv"
+            app:layout_constraintTop_toBottomOf="@+id/deskripsiTv"
+            tools:text="Pending"
+            tools:textColor="@color/orange" />
+
         <TextView
             android:id="@+id/dateTv"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/dp_0"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp_12"
             android:layout_marginTop="@dimen/dp_4"
-            android:layout_marginBottom="@dimen/dp_12"
             android:fontFamily="@font/noto_sans"
-            android:textSize="@dimen/sp_11"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:text="@string/pending_label"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:textSize="@dimen/sp_12"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/pengaduanTanamanIv"
-            app:layout_constraintTop_toBottomOf="@id/locationTv"
-            tools:text="15 Oktober 2025" />
+            app:layout_constraintStart_toStartOf="@+id/deskripsiTv"
+            app:layout_constraintTop_toBottomOf="@+id/statusTv"
+            tools:text="22 Jan 2026, 09:48" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

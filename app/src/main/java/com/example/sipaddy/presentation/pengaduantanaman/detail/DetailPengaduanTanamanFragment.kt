@@ -1,10 +1,8 @@
 package com.example.sipaddy.presentation.pengaduantanaman.detail
 
-import android.Manifest
 import android.app.DownloadManager
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
@@ -12,8 +10,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -22,13 +18,14 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.sipaddy.R
-import com.example.sipaddy.data.ResultState
-import com.example.sipaddy.data.network.response.PengaduanTanamanDetailItem
+import com.example.sipaddy.data.model.response.DetailPengaduanTanamanResponse
 import com.example.sipaddy.databinding.FragmentDetailPengaduanTanamanBinding
 import com.example.sipaddy.presentation.ViewModelFactory
-import com.example.sipaddy.utils.DateFormatter
+import com.example.sipaddy.utils.ResultState
+import com.example.sipaddy.utils.showToast
 import java.text.SimpleDateFormat
 import java.util.Locale
+import java.util.TimeZone
 
 
 class DetailPengaduanTanamanFragment : Fragment() {
@@ -39,25 +36,7 @@ class DetailPengaduanTanamanFragment : Fragment() {
     private val args: DetailPengaduanTanamanFragmentArgs by navArgs()
 
     private val viewModel: DetailPengaduanTanamanViewModel by viewModels {
-        ViewModelFactory(requireContext())
-    }
-
-    private var fileUrl: String? = null
-
-
-    private val requestPermissionLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestPermission()
-    ) { isGranted ->
-        if (isGranted) {
-            fileUrl?.let { downloadFile(it) }
-        } else {
-            Toast.makeText(
-                requireContext(),
-                "Permission diperlukan untuk mengunduh file",
-                Toast.LENGTH_SHORT
-            ).show()
-        }
-        fileUrl = null
+        ViewModelFactory.getInstance(requireContext())
     }
 
 
@@ -73,16 +52,13 @@ class DetailPengaduanTanamanFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.toolbar.setNavigationOnClickListener {
-            findNavController().navigateUp()
-        }
-
-        val pengaduanTanamanId = args.id
-        viewModel.getDetailPengaduanTanaman(pengaduanTanamanId)
-
-
         setupObserver()
+        setupListener()
+        loadDetailPengaduan()
+    }
 
+    private fun loadDetailPengaduan() {
+        viewModel.getDetailPengaduanTanaman(args.id)
     }
 
     private fun setupObserver() {
@@ -94,105 +70,162 @@ class DetailPengaduanTanamanFragment : Fragment() {
 
                 is ResultState.Error -> {
                     showLoading(false)
+                    requireContext().showToast(result.message)
                 }
 
                 is ResultState.Success -> {
                     showLoading(false)
-                    result.data.data?.let { displayDetailPengaduanTanaman(it.pengaduan) }
+                    displayDetailPengaduan(result.data)
                 }
             }
         }
     }
 
-    private fun displayDetailPengaduanTanaman(item: PengaduanTanamanDetailItem) {
+    private fun setupListener() {
+        binding.toolbar.setNavigationOnClickListener {
+            findNavController().navigateUp()
+        }
+
+        binding.openMapBtn.setOnClickListener {
+            openMap()
+        }
+    }
+
+    private fun displayDetailPengaduan(data: DetailPengaduanTanamanResponse) {
+        val pengaduan = data.pengaduanTanaman
+
         with(binding) {
-            Glide.with(requireContext())
-                .load(item.image)
-                .placeholder(R.drawable.sample_scan)
-                .error(R.drawable.sample_scan)
-                .centerCrop()
-                .into(pengaduanTanamanIv)
+            // Basic Information
+            pelaporTv.text = pengaduan.pelaporNama
+            kelompokTaniTv.text = pengaduan.kelompokTaniNama
+            kecamatanTv.text = pengaduan.kecamatanNama
+            deskripsiTv.text = pengaduan.deskripsi
 
-            statusTv.text = item.status
-            setStatusBadge(item.status)
+            // Status
+            statusTv.text = pengaduan.status
+            statusChip.text = pengaduan.status
+            statusChip.setChipBackgroundColorResource(getStatusColor(pengaduan.status))
 
-            createdDateTv.text = item.createdAt?.let { DateFormatter.formatIsoDate(it) }
-            kelompokTaniTv.text = item.kelompokTani
-            alamatTv.text = item.alamat
-            kecamatanKabupatenTv.text = getString(
-                R.string.kecamatan_kabupaten_label,
-                item.kecamatan,
-                item.kabupaten
-            )
-            descriptionTv.text = item.deskripsi
-            latitudeTv.text = item.latitude
-            longitudeTv.text = item.longitude
+            // Location
+            latitudeTv.text = pengaduan.latitude
+            longitudeTv.text = pengaduan.longitude
 
-            openMapBtn.setOnClickListener {
-                openInMaps(item.latitude?.toDouble(), item.longitude?.toDouble())
-            }
+            // Date
+            createdAtTv.text = formatDate(pengaduan.createdAt)
+            updatedAtTv.text = formatDate(pengaduan.updatedAt)
 
-
-            if (item.status.equals("Selesai", ignoreCase = true)) {
-                downloadHasilPemeriksaanCard.isVisible = true
-
-                tanggalVerifikasiTv.text = getString(
-                    R.string.tanggal_verifikasi_label,
-                    formatDate(item.tanggalVerifikasi ?: "")
-                )
-
-                namaPoptTv.text = getString(
-                    R.string.nama_popt_label,
-                    item.popt?.namaLengkap ?: "-"
-                )
-
-                binding.downloaHasilPemeriksaanBtn.setOnClickListener {
-                    checkPermissionAndDownload(item.file)
-                }
+            // POPT Assignment
+            if (pengaduan.poptNama != null) {
+                poptTv.text = pengaduan.poptNama
+                poptSectionCard.visibility = View.VISIBLE
             } else {
-                downloadHasilPemeriksaanCard.isVisible = false
+                poptSectionCard.visibility = View.GONE
+            }
+
+            // Image
+            if (!pengaduan.image.isNullOrEmpty()) {
+                Glide.with(requireContext())
+                    .load(pengaduan.image)
+                    .placeholder(R.drawable.ic_image_placeholder)
+                    .error(R.drawable.ic_image_placeholder)
+                    .centerCrop()
+                    .into(pengaduanImageIv)
+                imageCard.visibility = View.VISIBLE
+            } else {
+                imageCard.visibility = View.GONE
+            }
+
+            // Verifikasi Section
+            if (data.verifikasiPengaduanTanaman.isNotEmpty()) {
+                val verifikasi = data.verifikasiPengaduanTanaman.first()
+                verifikasiStatusTv.text = "Status: ${verifikasi.status}"
+                verifikasiCatatanTv.text = verifikasi.catatan ?: "Tidak ada catatan"
+                verifikasiPoptTv.text = "Oleh: ${verifikasi.poptNama ?: "Unknown"}"
+                verifikasiDateTv.text = formatDate(verifikasi.createdAt)
+                verifikasiCard.visibility = View.VISIBLE
+            } else {
+                verifikasiCard.visibility = View.GONE
+            }
+
+            // Pemeriksaan Section
+            if (data.pemeriksaanPengaduanTanaman.isNotEmpty()) {
+                val pemeriksaan = data.pemeriksaanPengaduanTanaman.first()
+                poptTv.text = "Oleh: ${pemeriksaan.poptNama ?: "Unknown"}"
+                pemeriksaanDateTv.text = formatDate(pemeriksaan.createdAt)
+
+                if (!pemeriksaan.image.isNullOrEmpty()) {
+                    pemeriksaanFileCard.visibility = View.VISIBLE
+                    pemeriksaanFileNameTv.text = "Dokumen Pemeriksaan.pdf"
+
+                    openPemeriksaanFileBtn.setOnClickListener {
+                        openPdfFile(pemeriksaan.image)
+                    }
+                } else {
+                    pemeriksaanFileCard.visibility = View.GONE
+                }
+
+                pemeriksaanCard.visibility = View.VISIBLE
+            } else {
+                pemeriksaanCard.visibility = View.GONE
             }
         }
     }
 
-    private fun openInMaps(latitude: Double?, longitude: Double?) {
-        val uri = "geo:$latitude,$longitude?q=$latitude,$longitude".toUri()
-        val intent = Intent(Intent.ACTION_VIEW, uri)
-        intent.setPackage("com.google.android.apps.maps")
+    private fun openMap() {
+        viewModel.detailResult.value?.let { state ->
+            if (state is ResultState.Success) {
+                val pengaduan = state.data.pengaduanTanaman
+                val latitude = pengaduan.latitude
+                val longitude = pengaduan.longitude
 
-        if (intent.resolveActivity(requireActivity().packageManager) != null) {
-            startActivity(intent)
-        } else {
-            val browserIntent = Intent(
-                Intent.ACTION_VIEW,
-                "https://www.google.com/maps/search/?api=1&query=$latitude,$longitude".toUri()
-            )
-            startActivity(browserIntent)
+                val gmmIntentUri =
+                    "geo:$latitude,$longitude?q=$latitude,$longitude(${pengaduan.deskripsi})".toUri()
+                val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+                mapIntent.setPackage("com.google.android.apps.maps")
+
+                if (mapIntent.resolveActivity(requireActivity().packageManager) != null) {
+                    startActivity(mapIntent)
+                } else {
+                    // Fallback to browser
+                    val browserIntent = Intent(
+                        Intent.ACTION_VIEW,
+                        "https://www.google.com/maps/search/?api=1&query=$latitude,$longitude".toUri()
+                    )
+                    startActivity(browserIntent)
+                }
+            }
         }
     }
 
-    private fun checkPermissionAndDownload(file: String?) {
-        if (file.isNullOrEmpty()) {
-            Toast.makeText(requireContext(), "File tidak tersedia", Toast.LENGTH_SHORT).show()
-            return
-        }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            downloadFile(file)
-        } else {
-            when {
-                ContextCompat.checkSelfPermission(
-                    requireContext(),
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE
-                ) == PackageManager.PERMISSION_GRANTED -> {
-                    downloadFile(file)
-                }
+    private fun openPdfFile(pdfUrl: String) {
+        try {
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.setDataAndType(pdfUrl.toUri(), "application/pdf")
+            intent.flags = Intent.FLAG_ACTIVITY_NO_HISTORY
 
-                else -> {
-                    fileUrl = file
-                    requestPermissionLauncher.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                }
+            val chooser = Intent.createChooser(intent, "Buka PDF dengan")
+
+            if (intent.resolveActivity(requireActivity().packageManager) != null) {
+                startActivity(chooser)
+            } else {
+                // Fallback: open in browser
+                val browserIntent = Intent(Intent.ACTION_VIEW, pdfUrl.toUri())
+                startActivity(browserIntent)
             }
+        } catch (e: Exception) {
+            requireContext().showToast("Tidak dapat membuka file PDF: ${e.message}")
+        }
+    }
+
+    private fun getStatusColor(status: String): Int {
+        return when (status.lowercase()) {
+            "pending" -> R.color.status_pending
+            "verified" -> R.color.status_verified
+            "in_progress" -> R.color.status_in_progress
+            "completed" -> R.color.status_completed
+            "rejected" -> R.color.status_rejected
+            else -> R.color.status_pending
         }
     }
 
@@ -233,32 +266,22 @@ class DetailPengaduanTanamanFragment : Fragment() {
         }
     }
 
-
-    private fun setStatusBadge(status: String?) {
-        val (backgroundColor, textColor) = when (status) {
-            "Pending" -> R.drawable.status_pending_bg to R.color.white
-            "Diverifikasi" -> R.drawable.status_verified_bg to R.color.white
-            "Selesai" -> R.drawable.status_completed_bg to R.color.white
-            else -> R.drawable.status_pending_bg to R.color.white
-        }
-
-        binding.statusTv.setBackgroundResource(backgroundColor)
-        binding.statusTv.setTextColor(ContextCompat.getColor(requireContext(), textColor))
-    }
-
-    private fun showLoading(isLoading: Boolean) {
-        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
-    }
-
     private fun formatDate(dateString: String): String {
         return try {
-            val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
-            val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale("id", "ID"))
+            val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US)
+            inputFormat.timeZone = TimeZone.getTimeZone("UTC")
             val date = inputFormat.parse(dateString)
+
+            val outputFormat = SimpleDateFormat("dd MMM yyyy, HH:mm", Locale("id", "ID"))
             date?.let { outputFormat.format(it) } ?: dateString
         } catch (e: Exception) {
             dateString
         }
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.isVisible = isLoading
+        binding.scrollView.isVisible = !isLoading
     }
 
 

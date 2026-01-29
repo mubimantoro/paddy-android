@@ -23,8 +23,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.sipaddy.R
-import com.example.sipaddy.data.ResultState
-import com.example.sipaddy.data.network.response.PengaduanTanamanDetailItem
+import com.example.sipaddy.utils.ResultState
 import com.example.sipaddy.databinding.FragmentPoptDetailPengaduanTanamanBinding
 import com.example.sipaddy.presentation.ViewModelFactory
 import com.example.sipaddy.utils.DateFormatter
@@ -142,12 +141,12 @@ class PoptDetailPengaduanTanamanFragment : Fragment() {
                 )
 
 
-//                if (!item.catatanPopt.isNullOrEmpty()) {
-//                    binding.catatanPoptContainer.isVisible = true
-//                    binding.catatanPoptTv.text = pengaduan.catatanPopt
-//                } else {
-//                    binding.catatanPoptContainer.isVisible = false
-//                }
+                if (!item.catatanPopt.isNullOrEmpty()) {
+                    binding.catatanPoptContainer.isVisible = true
+                    binding.catatanPoptTv.text = item.catatanPopt
+                } else {
+                    binding.catatanPoptContainer.isVisible = false
+                }
 
                 downloadReportBtn.setOnClickListener {
                     checkPermissionAndDownload(item.file)
@@ -329,24 +328,18 @@ class PoptDetailPengaduanTanamanFragment : Fragment() {
     }
 
     private fun setStatusBadge(status: String?) {
-        Log.d("PoptDetail", "setStatusBadge called with: '$status'")
+        val (backgroundColor, textColor) = when (status) {
+            PengaduanTanamanStatus.PENDING -> R.drawable.status_pending_bg to R.color.white
 
-        Log.d("PoptDetail", "PENDING: '${PengaduanTanamanStatus.PENDING.lowercase()}'")
-        Log.d("PoptDetail", "ASSIGNED: '${PengaduanTanamanStatus.ASSIGNED.lowercase()}'")
-        Log.d("PoptDetail", "VERIFIED: '${PengaduanTanamanStatus.VERIFIED.lowercase()}'")
-        Log.d("PoptDetail", "COMPLETED: '${PengaduanTanamanStatus.COMPLETED.lowercase()}'")
+            PengaduanTanamanStatus.ASSIGNED -> R.drawable.status_assigned_label to R.color.white
 
-        val statusLower = status?.lowercase() ?: ""
+            PengaduanTanamanStatus.VERIFIED -> R.drawable.status_verified_bg to R.color.white
 
-        val (backgroundColor, textColor) = when (statusLower) {
-            PengaduanTanamanStatus.PENDING.lowercase() -> R.drawable.status_pending_bg to R.color.white
-            PengaduanTanamanStatus.ASSIGNED.lowercase() -> R.drawable.status_assigned_label to R.color.white
-            PengaduanTanamanStatus.VERIFIED.lowercase() -> R.drawable.status_verified_bg to R.color.white
-            PengaduanTanamanStatus.COMPLETED.lowercase() -> R.drawable.status_completed_bg to R.color.white
-            else -> {
-                Log.w("PoptDetail", "Status tidak dikenali: '$status', using default")
-                R.drawable.status_pending_bg to R.color.white
-            }
+            PengaduanTanamanStatus.HANDLED -> R.drawable.status_handled_bg to R.color.white
+
+            PengaduanTanamanStatus.COMPLETED -> R.drawable.status_completed_bg to R.color.white
+
+            else -> R.drawable.status_pending_bg to R.color.white
         }
 
         binding.statusTv.setBackgroundResource(backgroundColor)

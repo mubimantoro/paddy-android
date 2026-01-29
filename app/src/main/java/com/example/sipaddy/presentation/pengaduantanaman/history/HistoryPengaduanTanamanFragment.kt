@@ -4,15 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.sipaddy.data.ResultState
-import com.example.sipaddy.data.network.response.PengaduanTanamanData
+import com.example.sipaddy.utils.ResultState
 import com.example.sipaddy.databinding.FragmentHistoryPengaduanTanamanBinding
 import com.example.sipaddy.presentation.ViewModelFactory
-import com.example.sipaddy.utils.showErrorDialog
 
 
 class HistoryPengaduanTanamanFragment : Fragment() {
@@ -21,12 +20,10 @@ class HistoryPengaduanTanamanFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: HistoryPengaduanTanamanViewModel by viewModels {
-        ViewModelFactory(requireContext())
+        ViewModelFactory.getInstance(requireContext())
     }
 
-    private val pengaduanTanamanAdapter by lazy {
-        HistoryPengaduanTanamanAdapter()
-    }
+    private lateinit var historyPengaduanAdapter: HistoryPengaduanTanamanAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,23 +37,37 @@ class HistoryPengaduanTanamanFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        with(binding) {
-
-            backBtn.setOnClickListener {
-                view.findNavController().popBackStack()
-            }
-
-            historyPengaduanTanamanRv.apply {
-                layoutManager = LinearLayoutManager(requireContext())
-                adapter = pengaduanTanamanAdapter
-            }
-        }
-
+        setupRecyclerView()
         setupObserver()
     }
 
-    private fun setupObserver() {
+    private fun setupRecyclerView() {
+        historyPengaduanAdapter = HistoryPengaduanTanamanAdapter { item ->
+            val action =
+                HistoryPengaduanTanamanFragmentDirections.actionHistoryPengaduanTanamanFragmentToDetailPengaduanTanamanFragment(
+                    item.id
+                )
+            findNavController().navigate(action)
+        }
+
+        binding.historyPengaduanTanamanRv.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = historyPengaduanAdapter
+            setHasFixedSize(true)
+        }
+
+        binding.swipeRefresh.setOnRefreshListener {
+            loadHistory()
+        }
+
+
+    }
+
+    private fun loadHistory() {
         viewModel.getPengaduanTanamanHistory()
+    }
+
+    private fun setupObserver() {
 
         viewModel.result.observe(viewLifecycleOwner) { result ->
             when (result) {
@@ -66,52 +77,40 @@ class HistoryPengaduanTanamanFragment : Fragment() {
 
                 is ResultState.Error -> {
                     showLoading(false)
-                    showErrorDialog(
-                        requireContext(),
-                        message = result.error,
-                        onClick = {},
-                    )
+                    binding.swipeRefresh.isRefreshing = false
+                    Toast.makeText(requireContext(), result.message, Toast.LENGTH_SHORT).show()
+
                 }
 
                 is ResultState.Success -> {
                     showLoading(false)
-                    setHistoryPengaduanTanaman(result.data.data)
+                    binding.swipeRefresh.isRefreshing = false
+                    if (result.data.isEmpty()) {
+                        showEmptyState(true)
+                    } else {
+                        showEmptyState(false)
+                        historyPengaduanAdapter.submitList(result.data)
+                    }
                 }
             }
         }
     }
 
-    private fun setHistoryPengaduanTanaman(item: PengaduanTanamanData?) {
-        val pengaduanTanaman = item?.pengaduanTanaman.orEmpty()
-        if (pengaduanTanaman.isEmpty()) {
-            showEmptyState()
-        } else {
-            showContent()
-            pengaduanTanamanAdapter.submitList(pengaduanTanaman)
-        }
-
-    }
-
-    private fun showEmptyState() {
+    private fun showEmptyState(isEmpty: Boolean) {
         binding.apply {
-            historyPengaduanTanamanRv.visibility = View.GONE
-            emptyStateContainer.visibility = View.VISIBLE
-        }
-    }
-
-    private fun showContent() {
-        binding.apply {
-            historyPengaduanTanamanRv.visibility = View.VISIBLE
-            emptyStateContainer.visibility = View.GONE
+            if (isEmpty) {
+                emptyStateTv.visibility = View.VISIBLE
+                historyPengaduanTanamanRv.visibility = View.GONE
+            } else {
+                emptyStateTv.visibility = View.GONE
+                historyPengaduanTanamanRv.visibility = View.VISIBLE
+            }
         }
     }
 
 
     private fun showLoading(isLoading: Boolean) {
-        binding.apply {
-            progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
-            historyPengaduanTanamanRv.visibility = if (isLoading) View.GONE else View.VISIBLE
-        }
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     override fun onDestroyView() {

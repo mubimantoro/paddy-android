@@ -4,13 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.sipaddy.data.ResultState
+import com.example.sipaddy.utils.ResultState
 import com.example.sipaddy.data.network.response.CommonResponse
 import com.example.sipaddy.data.network.response.UserProfile
-import com.example.sipaddy.data.repository.PaddyRepository
+import com.example.sipaddy.data.repository.DataRepository
 import kotlinx.coroutines.launch
 
-class SettingAkunViewModel(private val repository: PaddyRepository) : ViewModel() {
+class SettingAkunViewModel(private val repository: DataRepository) : ViewModel() {
     private val _profileState = MutableLiveData<ResultState<UserProfile>>()
     val profileState: LiveData<ResultState<UserProfile>> = _profileState
 

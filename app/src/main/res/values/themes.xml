@@ -71,6 +71,19 @@
         <item name="android:textColor">@color/neutral_900</item>
     </style>
 
+    <style name="SecondaryButton" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="cornerRadius">@dimen/dp_15</item>
+        <item name="fontFamily">@font/noto_sans_semibold</item>
+        <item name="android:textColor">@color/green_500</item>
+        <item name="strokeColor">@color/green_500</item>
+        <item name="android:minHeight">48dp</item>
+    </style>
+
+    <style name="TextButton" parent="Widget.Material3.Button.TextButton">
+        <item name="fontFamily">@font/noto_sans_semibold</item>
+        <item name="android:textColor">@color/green_500</item>
+    </style>
+
     <style name="Widget.App.Button" parent="Widget.Material3.Button.TextButton.Dialog">
         <item name="android:textColor">@color/neutral_900</item>
     </style>

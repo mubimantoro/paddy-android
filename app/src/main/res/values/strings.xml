@@ -15,7 +15,7 @@
     <string name="dont_have_account_label">Belum punya akun?</string>
     <string name="register_here_label">Daftar disini</string>
     <string name="register_heading_label">Buat akun Anda.</string>
-    <string name="register_subheading_label">Silakan isi formulir di bawah ini.</string>
+    <string name="register_subheading_label">Silakan isi data diri Anda untuk mendaftar</string>
     <string name="fullname_label">Nama Lengkap</string>
     <string name="phone_number_label">Nomor hp</string>
     <string name="username_label">Username</string>
@@ -30,11 +30,15 @@
     <string name="camera_label">Kamera</string>
     <string name="gallery_label">Galeri</string>
     <string name="preview_label">Pratinjau</string>
-    <string name="preview_image_label">Gambar pratinjau</string>
+    <string name="preview_image_label">Pratinjau Gambar</string>
     <string name="start_diagnose_label">Mulai Diagnosa</string>
     <string name="my_account_label">Akun Saya</string>
     <string name="profile_subheading_label">Informasi akun Anda</string>
     <string name="logout_label">Keluar</string>
+    <string name="handled_status_label">Ditangani</string>
+    <string name="ditangani_pada_label">Ditangani pada %1$s</string>
+    <string name="oleh_popt_label">oleh: %1$s</string>
+
     <string name="settings_label">Pengaturan</string>
     <string name="data_not_found_label">Data Tidak Ditemukan</string>
     <string name="history_label">Riwayat</string>
@@ -71,7 +75,7 @@
     <string name="history_diagnose_subheading_label">Lihat riwayat diagnosa Tanaman Anda</string>
     <string name="history_btn_label">Lihat Riwayat</string>
     <string name="location_not_found_label">Tidak dapat mengambil lokasi. Pastikan GPS aktif</string>
-    <string name="take_my_location_label">Ambil Lokasi Saya</string>
+    <string name="take_my_location_label">Ambil lokasi Saat ini</string>
 
     <string name="username_empty_label">Username tidak boleh kosong</string>
     <string name="password_empty_label">Password tidak boleh kosong</string>
@@ -110,13 +114,12 @@
     <string name="icon_label">Icon</string>
     <string name="informasi_kelompok_tani_label">Informasi Kelompok Tani</string>
     <string name="lokasi_label">Lokasi</string>
-    <string name="deskripsi_masalah_label">Deskripsi Masalah</string>
     <string name="koordinat_lokasi_label">Koordinat Lokasi</string>
     <string name="open_in_maps_label">Buka di Maps</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="detail_pengaduan_tanaman_label">Detail Pengaduan</string>
     <string name="informasi_pengaduan_label">Informasi Pengaduan</string>
-    <string name="nama_pelapor_label">Nama Pelapor</string>
+    <string name="nama_pelapor_label">Pelapor</string>
     <string name="nomor_hp_pelapor_label">Nomor HP pelapor</string>
     <string name="tanggal_pengaduan_label">Tanggal Pengaduan</string>
     <string name="deskripsi_masalah_tanaman_label">Deskripsi Masalah Tanaman</string>
@@ -144,5 +147,46 @@
     <string name="nomor_hp_label">Nomor HP</string>
     <string name="nama_lengkap_hint">Masukkan nama lengkap</string>
     <string name="nama_lengkap">Nama Lengkap</string>
+    <string name="catatan_popt">Catatan POPT</string>
+    <string name="location_label">Lokasi</string>
+    <string name="pengaduan_not_found_label">Belum ada riwayat pengaduan</string>
+    <string name="to_detail_label">Lihat Detail</string>
+    <string name="not_found_history_label">Belum Ada Riwayat</string>
+    <string name="pilih_gambar_tanaman_padi_label">Pilih Gambar Tanaman Padi</string>
+    <string name="take_picture_or_choose_from_gallery_label">Ambil foto atau pilih dari galeri\nuntuk mendeteksi penyakit tanaman padi</string>
+    <string name="change_image">Ganti Gambar</string>
+    <string name="close_camera_label">Tutup Kamera</string>
+    <string name="toggle_flash_label">Toggle Flash</string>
+    <string name="take_photo_label">Ambil Foto</string>
+    <string name="disease_info_label">Pastikan gambar jelas dan fokus pada bagian penyakit tanaman padi</string>
+    <string name="info_icon_label">Info Icon</string>
+    <string name="disease_image_label">Gambar Penyakit</string>
+    <string name="confidence_icon_label">Confidence Icon</string>
+    <string name="description_label">Deskripsi Pengaduan</string>
+    <string name="causes_icon_label">Causes Icon</string>
+    <string name="causes_label">Penyebab</string>
+    <string name="solutions_icon_label">Solutions Icon</string>
+    <string name="solutions_label">Solusi</string>
+    <string name="watch_solution_video_label">Tonton Video Solusi</string>
+    <string name="share_result_label">Bagikan Hasil</string>
+    <string name="diagnose_again_label">Diagnosa Lagi</string>
+    <string name="retry_again_label">Coba Lagi</string>
+    <string name="start_scan_plant_to_detection_disease_label">Mulai scan tanaman Anda\nuntuk mendeteksi penyakit</string>
+    <string name="already_have_account">Sudah punya akun?</string>
+    <string name="create_account_label">Buat Akun</string>
+    <string name="register_subtitle_label">Daftar untuk memulai</string>
+    <string name="login_subtitle_label">Masuk untuk melanjutkan</string>
+    <string name="login_title_label">Selamat Datang</string>
+    <string name="upload_photo_label">Upload Foto</string>
+    <string name="choose_image_label">Pilih Gambar</string>
+    <string name="image_pengaduan_tanaman_label">Gambar Pengaduan</string>
+    <string name="status_and_date_label"><![CDATA[Status & Tanggal]]></string>
+    <string name="created_at_label">Dibuat</string>
+    <string name="updated_at_label">Diperbarui</string>
+    <string name="handle_by_label">Ditangani Oleh</string>
+    <string name="verification_label">Verifikasi</string>
+    <string name="click_to_open_pdf_label">Klik untuk membuka</string>
+    <string name="document_name_pemeriksaan_label">Dokumen Pemeriksaan.pdf</string>
+    <string name="pdf_icon_label">PDF icon</string>
 
 </resources>

@@ -9,7 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.sipaddy.data.ResultState
+import com.example.sipaddy.utils.ResultState
 import com.example.sipaddy.databinding.FragmentPoptPengaduanTanamanBinding
 import com.example.sipaddy.presentation.ViewModelFactory
 

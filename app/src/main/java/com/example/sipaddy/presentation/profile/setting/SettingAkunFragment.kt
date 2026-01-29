@@ -8,7 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.example.sipaddy.data.ResultState
+import com.example.sipaddy.utils.ResultState
 import com.example.sipaddy.data.network.response.UserProfile
 import com.example.sipaddy.databinding.FragmentSettingAkunBinding
 import com.example.sipaddy.presentation.ViewModelFactory

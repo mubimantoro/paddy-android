@@ -11,6 +11,7 @@ import com.example.sipaddy.R
 import com.example.sipaddy.data.network.response.PengaduanTanamanItem
 import com.example.sipaddy.databinding.ItemPengaduanTanamanPoptBinding
 import com.example.sipaddy.utils.DateFormatter
+import com.example.sipaddy.utils.PengaduanTanamanStatus
 
 class PoptPengaduanTanamanAdapter(
     private val onItemClick: (PengaduanTanamanItem) -> Unit
@@ -62,48 +63,37 @@ class PoptPengaduanTanamanAdapter(
         }
 
         private fun setStatusBadge(status: String?) {
-            val context = itemView.context
-            when (status?.lowercase()) {
-                "pending" -> {
-                    binding.tvStatus.text = context.getString(R.string.status_pending_label)
-                    binding.tvStatus.setBackgroundColor(
-                        ContextCompat.getColor(context, R.color.yellow)
-                    )
-                }
+            with(binding.tvStatus) {
+                when (status) {
+                    PengaduanTanamanStatus.PENDING -> {
+                        text = context.getString(R.string.pending_label)
+                        setBackgroundResource(R.drawable.status_pending_bg)
+                    }
 
-                "assigned" -> {
-                    binding.tvStatus.text = context.getString(R.string.status_assigned_label)
-                    binding.tvStatus.setBackgroundColor(
-                        ContextCompat.getColor(context, R.color.blue)
-                    )
-                }
+                    PengaduanTanamanStatus.ASSIGNED -> {
+                        text = context.getString(R.string.status_assigned_label)
+                        setBackgroundResource(R.drawable.status_assigned_label)
+                    }
 
-                /* "in_progress" -> {
-                    binding.tvStatus.text = "Diproses"
-                    binding.tvStatus.setBackgroundColor(
-                        ContextCompat.getColor(context, R.color.primary)
-                    )
-                } */
+                    PengaduanTanamanStatus.VERIFIED -> {
+                        text = context.getString(R.string.verifikasi_status_label)
+                        setBackgroundResource(R.drawable.status_verified_bg)
+                    }
 
-                /* "completed" -> {
-                    binding.tvStatus.text = "Selesai"
-                    binding.tvStatus.setBackgroundColor(
-                        ContextCompat.getColor(context, R.color.success)
-                    )
-                } */
+                    PengaduanTanamanStatus.HANDLED -> {
+                        text = context.getString(R.string.handled_status_label)
+                        setBackgroundResource(R.drawable.status_handled_bg)
+                    }
 
-                /* "rejected" -> {
-                    binding.tvStatus.text = "Ditolak"
-                    binding.tvStatus.setBackgroundColor(
-                        ContextCompat.getColor(context, R.color.danger)
-                    )
-                } */
+                    PengaduanTanamanStatus.COMPLETED -> {
+                        text = context.getString(R.string.resolved_label)
+                        setBackgroundResource(R.drawable.status_completed_bg)
+                    }
 
-                else -> {
-                    binding.tvStatus.text = status
-                    binding.tvStatus.setBackgroundColor(
-                        ContextCompat.getColor(context, R.color.red)
-                    )
+                    else -> {
+                        text = context.getString(R.string.pending_label)
+                        setBackgroundResource(R.drawable.status_pending_bg)
+                    }
                 }
             }
         }
