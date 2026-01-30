@@ -70,6 +70,8 @@ dependencies {
     implementation(libs.gms.play.services.location)
     implementation(libs.play.services.location)
 
+    implementation(libs.androidx.viewpager2)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

@@ -6,6 +6,7 @@ import com.example.sipaddy.data.model.response.DetailPengaduanTanamanResponse
 import com.example.sipaddy.data.model.response.KecamatanResponse
 import com.example.sipaddy.data.model.response.KelompokTaniResponse
 import com.example.sipaddy.data.model.response.LoginResponse
+import com.example.sipaddy.data.model.response.PengaduanTanamanDetail
 import com.example.sipaddy.data.model.response.PengaduanTanamanResponse
 import com.example.sipaddy.data.model.response.PredictResponse
 import com.example.sipaddy.data.model.response.RegisterResponse
@@ -48,6 +49,9 @@ interface ApiService {
         @Part("longitude") longitude: RequestBody,
         @Part image: MultipartBody.Part?
     ): BaseResponse<PengaduanTanamanResponse>
+
+    @GET("pengaduan-tanaman/my")
+    suspend fun getMyPengaduanTanaman(): BaseResponse<List<PengaduanTanamanResponse>>
 
     @GET("pengaduan-tanaman/id")
     suspend fun getDetailPengaduanTanaman(

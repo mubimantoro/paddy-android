@@ -1,30 +1,26 @@
 package com.example.sipaddy.presentation.home.predict
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.bumptech.glide.Glide
-import com.example.sipaddy.R
-import com.example.sipaddy.data.model.response.PredictResponse
 import com.example.sipaddy.databinding.FragmentPredictDiseaseBinding
 import com.example.sipaddy.presentation.ViewModelFactory
 import com.example.sipaddy.utils.ImageUtils
 import com.example.sipaddy.utils.ResultState
-import com.example.sipaddy.utils.gone
+import com.example.sipaddy.utils.reduceFileImage
 import com.example.sipaddy.utils.showToast
-import com.example.sipaddy.utils.visible
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.yalantis.ucrop.UCrop
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.io.File
 
 class PredictDiseaseFragment : Fragment() {
@@ -35,25 +31,56 @@ class PredictDiseaseFragment : Fragment() {
         ViewModelFactory.getInstance(requireContext())
     }
 
-    private var currentPhotoUri: Uri? = null
-    private var croppedImageFile: File? = null
+    private var currentImageFile: File? = null
 
-    private val launcherGallery = registerForActivityResult(
+    private val cameraLauncher = registerForActivityResult(
+        ActivityResultContracts.TakePicture()
+    ) { success ->
+        if (success) {
+            currentImageFile?.let { file ->
+                startUCrop(Uri.fromFile(file))
+            }
+        }
+    }
+
+    private val galleryLauncher = registerForActivityResult(
         ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
         uri?.let {
-            startCrop(it)
+            val file = ImageUtils.uriToFile(it, requireContext())
+            startUCrop(Uri.fromFile(file))
         }
     }
 
-    private val launcherUCrop = registerForActivityResult(
+
+    private val uCropLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
-        val resultUri = UCrop.getOutput(result.data ?: return@registerForActivityResult)
-        resultUri?.let { uri ->
-            handleCroppedImage(uri)
+        if (result.resultCode == android.app.Activity.RESULT_OK) {
+            result.data?.let { intent ->
+                val resultUri = UCrop.getOutput(intent)
+                resultUri?.let { uri ->
+                    val file = ImageUtils.uriToFile(uri, requireContext())
+                    currentImageFile = file.reduceFileImage()
+                    binding.previewIv.setImageURI(uri)
+                    binding.imagePreviewCard.visibility = View.VISIBLE
+                    binding.predictBtn.isEnabled = true
+                }
+            }
         }
     }
+
+    private val cameraPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        if (isGranted) {
+            navigateToCameraX()
+        } else {
+            requireContext().showToast("Permission kamera ditolak")
+
+        }
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -69,69 +96,36 @@ class PredictDiseaseFragment : Fragment() {
 
         setupObserver()
         setupListener()
-        observerCameraResult()
+        handleCameraResult()
     }
 
-    private fun observerCameraResult() {
-        TODO("Not yet implemented")
+    private fun handleCameraResult() {
+        // Get image URI from CameraX if available
+        findNavController().currentBackStackEntry?.savedStateHandle
+            ?.getLiveData<String>("imageUri")?.observe(viewLifecycleOwner) { uriString ->
+                val uri = uriString.toUri()
+                startUCrop(uri)
+                // Clear the result
+                findNavController().currentBackStackEntry?.savedStateHandle?.remove<String>("imageUri")
+            }
     }
+
 
     private fun setupListener() {
-        binding.cameraBtn.setOnClickListener {
-            openCamera()
-        }
-        binding.galleryBtn.setOnClickListener {
-            openGallery()
-        }
-
-        binding.changeImageBtn.setOnClickListener {
+        binding.chooseImageBtn.setOnClickListener {
             showImageSourceDialog()
         }
 
+        binding.removeImageBtn.setOnClickListener {
+            removeImage()
+        }
+
         binding.predictBtn.setOnClickListener {
-            postPrediction()
+            predictDisease()
         }
-    }
-
-    private fun postPrediction() {
-        val imageFile = croppedImageFile
-
-        if (imageFile == null) {
-            requireContext().showToast("Pilih gambar terlebih dahulu")
-            return
-        }
-
-        MaterialAlertDialogBuilder(requireContext())
-            .setTitle("Mulai Diagnosa?")
-            .setMessage("Pastikan gambar sudah jelas dan fokus pada bagian penyakit tanaman padi.")
-            .setPositiveButton("Ya, Diagnosa") { dialog, _ ->
-                dialog.dismiss()
-
-                lifecycleScope.launch {
-                    val compressedFile = withContext(Dispatchers.IO) {
-                        ImageUtils.compressImage(requireContext(), Uri.fromFile(imageFile))
-                    }
-
-                    if (compressedFile != null) {
-                        viewModel.predictDisease(compressedFile)
-                    } else {
-                        requireContext().showToast("Gagal memproses gambar")
-                    }
-                }
-            }
-            .setNegativeButton("Batal", null)
-            .show()
     }
 
     private fun setupObserver() {
-        viewModel.selectedImage.observe(viewLifecycleOwner) { imageFile ->
-            if (imageFile != null) {
-                showPreview(imageFile)
-            } else {
-                hidePreview()
-            }
-        }
-
         viewModel.predictResult.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is ResultState.Loading -> {
@@ -140,138 +134,98 @@ class PredictDiseaseFragment : Fragment() {
 
                 is ResultState.Error -> {
                     showLoading(false)
-                    showErrorDialog(result.message)
+                    requireContext().showToast(result.message)
                 }
 
                 is ResultState.Success -> {
                     showLoading(false)
-                    navigateToResult(result.data)
+                    navigateToResult(result.data.id)
                 }
             }
         }
     }
 
-    private fun navigateToResult(data: PredictResponse) {
-        try {
-            val action =
-                PredictDiseaseFragmentDirections.actionNavigationPredictDiseaseToNavigationResult(
-                    data.id
-                )
-            findNavController().navigate(action)
-
-
-        } catch (e: Exception) {
-            requireContext().showToast("Prediksi berhasil: ${data.disease}")
-        }
-    }
-
     private fun showImageSourceDialog() {
+        val options = arrayOf("Kamera", "Galeri")
         MaterialAlertDialogBuilder(requireContext())
             .setTitle("Pilih Sumber Gambar")
-            .setMessage("Dari mana Anda ingin mengambil gambar?")
-            .setPositiveButton("Kamera") { dialog, _ ->
-                dialog.dismiss()
-                openCamera()
+            .setItems(options) { _, which ->
+                when (which) {
+                    0 -> checkCameraPermission()
+                    1 -> openGallery()
+                }
             }
-            .setNegativeButton("Galeri") { dialog, _ ->
-                dialog.dismiss()
-                openGallery()
-            }
-            .setNeutralButton("Batal", null)
             .show()
     }
 
+    private fun checkCameraPermission() {
+        when {
+            ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.CAMERA
+            ) == PackageManager.PERMISSION_GRANTED -> {
+                navigateToCameraX()
+            }
 
-    private fun openCamera() {
-        try {
-            findNavController().navigate(R.id.action_predictDiseaseFragment_to_navigation_camerax)
-        } catch (e: Exception) {
-            requireContext().showToast("Fitur kamera belum tersedia")
+            else -> {
+                cameraPermissionLauncher.launch(Manifest.permission.CAMERA)
+            }
         }
+    }
+
+    private fun navigateToCameraX() {
+        val action = PredictDiseaseFragmentDirections
+            .actionPredictDiseaseFragmentToNavigationCamerax()
+        findNavController().navigate(action)
     }
 
     private fun openGallery() {
-        launcherGallery.launch("image/*")
+        galleryLauncher.launch("image/*")
     }
 
-    private fun showErrorDialog(message: String) {
-        MaterialAlertDialogBuilder(requireContext())
-            .setTitle("Diagnosa Gagal")
-            .setMessage(message)
-            .setIcon(R.drawable.ic_error)
-            .setPositiveButton("Coba Lagi") { dialog, _ ->
-                dialog.dismiss()
-            }
-            .setNegativeButton("Ganti Gambar") { dialog, _ ->
-                dialog.dismiss()
-                showImageSourceDialog()
-            }
+    private fun startUCrop(sourceUri: Uri) {
+        val destinationUri = Uri.fromFile(ImageUtils.createCustomTempFile(requireContext()))
+        val options = UCrop.Options().apply {
+            setCompressionQuality(80)
+            setFreeStyleCropEnabled(true)
+            setToolbarTitle("Crop Image")
+        }
+
+        val uCropIntent = UCrop.of(sourceUri, destinationUri)
+            .withOptions(options)
+            .getIntent(requireContext())
+
+        uCropLauncher.launch(uCropIntent)
+
     }
 
-    private fun showLoading(isLoading: Boolean) {
-        if (isLoading) {
-            binding.progressBar.visible()
-            binding.scrollView.gone()
-        } else {
-            binding.progressBar.gone()
-            binding.scrollView.visible()
+
+    private fun removeImage() {
+        currentImageFile = null
+        binding.imagePreviewCard.visibility = View.GONE
+        binding.previewIv.setImageDrawable(null)
+        binding.predictBtn.isEnabled = false
+    }
+
+    private fun predictDisease() {
+        currentImageFile?.let { file ->
+            viewModel.predictDisease(file)
+        } ?: run {
+            requireContext().showToast("Silakan pilih gambar terlebih dahulu")
         }
     }
 
-
-    private fun showPreview(imageFile: File) {
-        binding.imagePickerLayout.gone()
-
-        binding.imagePreviewLayout.visible()
-
-        Glide.with(this)
-            .load(imageFile)
-            .centerCrop()
-            .placeholder(R.drawable.ic_image_placeholder)
-            .error(R.drawable.ic_error)
-            .into(binding.previewIv)
-
+    private fun navigateToResult(predictionId: String) {
+        val action = PredictDiseaseFragmentDirections
+            .actionNavigationPredictDiseaseToNavigationResult(predictionId)
+        findNavController().navigate(action)
     }
 
-    private fun hidePreview() {
-        binding.imagePickerLayout.visible()
-
-        binding.imagePreviewLayout.gone()
-
-        binding.previewIv.setImageDrawable(null)
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+        binding.predictBtn.isEnabled = !isLoading && currentImageFile != null
+        binding.chooseImageBtn.isEnabled = !isLoading
     }
-
-
-    private fun handleCroppedImage(uri: Uri) {
-        val imageFile = ImageUtils.createTempFileFromUri(
-            requireContext(),
-            uri,
-            "final_${System.currentTimeMillis()}.jpg"
-        )
-
-        croppedImageFile = imageFile
-        viewModel.setSelectedImage(imageFile)
-    }
-
-    private fun startCrop(sourceUri: Uri) {
-        val destinationUri = Uri.fromFile(
-            File(requireContext().cacheDir, "cropped_${System.currentTimeMillis()}.jpg")
-        )
-
-        val uCrop = UCrop.of(sourceUri, destinationUri)
-            .withAspectRatio(1f, 1f)
-            .withMaxResultSize(1024, 1024)
-            .withOptions(UCrop.Options().apply {
-                setCompressionQuality(80)
-                setHideBottomControls(false)
-                setFreeStyleCropEnabled(false)
-                setToolbarTitle("Crop Gambar")
-            })
-
-        launcherUCrop.launch(uCrop.getIntent(requireContext()))
-
-    }
-
 
     override fun onDestroyView() {
         super.onDestroyView()

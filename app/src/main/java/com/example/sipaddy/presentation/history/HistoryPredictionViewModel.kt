@@ -23,4 +23,8 @@ class HistoryPredictionViewModel(
             }
         }
     }
+
+    fun refreshHistory() {
+        loadPrediction()
+    }
 }

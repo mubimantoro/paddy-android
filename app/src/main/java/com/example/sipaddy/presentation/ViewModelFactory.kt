@@ -7,6 +7,8 @@ import com.example.sipaddy.data.repository.AuthRepository
 import com.example.sipaddy.data.repository.DataRepository
 import com.example.sipaddy.di.Injection
 import com.example.sipaddy.presentation.auth.AuthViewModel
+import com.example.sipaddy.presentation.auth.login.LoginViewModel
+import com.example.sipaddy.presentation.auth.register.RegisterViewModel
 import com.example.sipaddy.presentation.history.HistoryPredictionViewModel
 import com.example.sipaddy.presentation.home.diagnose.result.ResultViewModel
 import com.example.sipaddy.presentation.home.predict.PredictDiseaseViewModel
@@ -44,6 +46,18 @@ class ViewModelFactory(
 
             modelClass.isAssignableFrom(ResultViewModel::class.java) -> {
                 ResultViewModel(dataRepository) as T
+            }
+
+            modelClass.isAssignableFrom(HomeViewModel::class.java) -> {
+                HomeViewModel(authRepository) as T
+            }
+
+            modelClass.isAssignableFrom(RegisterViewModel::class.java) -> {
+                RegisterViewModel(authRepository, dataRepository) as T
+            }
+
+            modelClass.isAssignableFrom(LoginViewModel::class.java) -> {
+                LoginViewModel(authRepository) as T
             }
 
             else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")

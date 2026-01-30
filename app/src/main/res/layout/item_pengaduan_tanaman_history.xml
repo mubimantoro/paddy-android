@@ -3,70 +3,96 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_marginHorizontal="@dimen/dp_16"
-    android:layout_marginVertical="@dimen/dp_8"
-    app:cardCornerRadius="@dimen/dp_8"
-    app:cardElevation="@dimen/dp_2"
-    app:strokeColor="?attr/colorOutline"
-    app:strokeWidth="1dp"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="2dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/dp_12">
+        android:padding="@dimen/dp_16">
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/imageIv"
-            android:layout_width="@dimen/dp_80"
-            android:layout_height="@dimen/dp_80"
-            android:scaleType="centerCrop"
-            app:layout_constraintBottom_toBottomOf="parent"
+        <!-- Image -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/imageCard"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="0dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/sample_scan" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/deskripsiTv"
-            android:layout_width="@dimen/dp_0"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp_12"
-            android:ellipsize="end"
-            android:fontFamily="@font/noto_sans"
-            android:maxLines="2"
-            android:textSize="@dimen/sp_12"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageIv"
-            app:layout_constraintTop_toTopOf="@+id/imageIv"
-            tools:text="Tanaman padi terserang hama wereng" />
+            <ImageView
+                android:id="@+id/pengaduanIv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/image_plant_label"
+                android:scaleType="centerCrop"
+                tools:src="@tools:sample/backgrounds/scenic" />
 
-        <TextView
-            android:id="@+id/statusTv"
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Status Chip -->
+        <com.google.android.material.chip.Chip
+            android:id="@+id/statusChip"
+            style="@style/Widget.Material3.Chip.Assist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_4"
-            android:fontFamily="@font/noto_sans_bold"
-            android:text="@string/pending_label"
-            android:textSize="@dimen/sp_12"
-            app:layout_constraintStart_toStartOf="@+id/deskripsiTv"
-            app:layout_constraintTop_toBottomOf="@+id/deskripsiTv"
-            tools:text="Pending"
-            tools:textColor="@color/orange" />
-
-        <TextView
-            android:id="@+id/dateTv"
-            android:layout_width="@dimen/dp_0"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_4"
-            android:fontFamily="@font/noto_sans"
-            android:text="@string/pending_label"
-            android:textColor="?attr/colorOnSurfaceVariant"
-            android:textSize="@dimen/sp_12"
+            android:textColor="@android:color/white"
+            android:textSize="12sp"
+            app:chipBackgroundColor="@color/status_pending"
+            app:chipMinHeight="24dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/deskripsiTv"
-            app:layout_constraintTop_toBottomOf="@+id/statusTv"
-            tools:text="22 Jan 2026, 09:48" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Pending" />
+
+        <!-- Deskripsi -->
+        <TextView
+            android:id="@+id/deskripsiTv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="8dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textAppearance="?attr/textAppearanceTitleMedium"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@id/statusChip"
+            app:layout_constraintStart_toEndOf="@id/imageCard"
+            app:layout_constraintTop_toTopOf="@id/imageCard"
+            tools:text="Tanaman padi terserang hama wereng" />
+
+
+        <!-- Date -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="@dimen/dp_8"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/imageCard"
+            app:layout_constraintTop_toBottomOf="@id/deskripsiTv">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:contentDescription="@string/icon_label"
+                android:src="@drawable/ic_calendar"
+                app:tint="?attr/colorOnSurfaceVariant" />
+
+            <TextView
+                android:id="@+id/dateTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:textAppearance="?attr/textAppearanceBodySmall"
+                android:textColor="?attr/colorOnSurfaceVariant"
+                tools:text="29 Jan 2026, 10:20" />
+
+        </LinearLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

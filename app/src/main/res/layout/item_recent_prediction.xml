@@ -2,79 +2,86 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="180dp"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="8dp"
+    android:layout_marginEnd="12dp"
     app:cardCornerRadius="12dp"
-    app:cardElevation="2dp"
-    app:strokeWidth="0dp">
+    app:cardElevation="2dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="12dp">
 
-        <!-- Disease Badge -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardDiseaseBadge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="6dp"
-            app:cardElevation="0dp"
+        <!-- Disease Image -->
+        <ImageView
+            android:id="@+id/diseaseIv"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:contentDescription="@string/plant_image_label"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@tools:sample/backgrounds/scenic" />
 
-            <TextView
-                android:id="@+id/tvDiseaseName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/noto_sans_bold"
-                android:paddingHorizontal="10dp"
-                android:paddingVertical="4dp"
-                android:textColor="@color/white"
-                android:textSize="12sp"
-                tools:text="Stem Borer" />
-
-        </com.google.android.material.card.MaterialCardView>
+        <!-- Disease Name -->
+        <TextView
+            android:id="@+id/diseaseNameTv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAppearance="?attr/textAppearanceTitleMedium"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/diseaseIv"
+            tools:text="Blast" />
 
         <!-- Confidence -->
-        <TextView
-            android:id="@+id/tvConfidence"
+        <LinearLayout
+            android:id="@+id/ConfidenceLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:fontFamily="@font/noto_sans_bold"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="@id/cardDiseaseBadge"
-            app:layout_constraintStart_toEndOf="@id/cardDiseaseBadge"
-            app:layout_constraintTop_toTopOf="@id/cardDiseaseBadge"
-            tools:text="86.35%"
-            tools:textColor="@color/confidence_high" />
+            android:layout_marginTop="4dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/diseaseNameTv">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:contentDescription="@string/confidence_icon_label"
+                android:src="@drawable/ic_check_circle"
+                app:tint="?attr/colorPrimary" />
+
+            <TextView
+                android:id="@+id/confidenceTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:textAppearance="?attr/textAppearanceBodyMedium"
+                android:textColor="?attr/colorPrimary"
+                android:textStyle="bold"
+                tools:text="95%" />
+
+        </LinearLayout>
 
         <!-- Date -->
         <TextView
-            android:id="@+id/tvDate"
-            android:layout_width="wrap_content"
+            android:id="@+id/dateTv"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:drawablePadding="4dp"
-            android:fontFamily="@font/noto_sans"
-            android:textColor="@color/text_secondary"
-            android:textSize="11sp"
-            app:drawableStartCompat="@drawable/ic_calendar"
-            app:drawableTint="@color/text_secondary"
+            android:layout_marginTop="4dp"
+            android:textAppearance="?attr/textAppearanceBodySmall"
+            android:textColor="?attr/colorOnSurfaceVariant"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="27 Jan 2026" />
-
-        <!-- Arrow Icon -->
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/ic_arrow_right_alt"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/text_secondary" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ConfidenceLayout"
+            tools:text="29 Jan 2026" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

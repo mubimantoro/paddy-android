@@ -4,14 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.sipaddy.utils.ResultState
 import com.example.sipaddy.databinding.FragmentHistoryPengaduanTanamanBinding
 import com.example.sipaddy.presentation.ViewModelFactory
+import com.example.sipaddy.utils.ResultState
+import com.example.sipaddy.utils.showToast
 
 
 class HistoryPengaduanTanamanFragment : Fragment() {
@@ -23,7 +24,7 @@ class HistoryPengaduanTanamanFragment : Fragment() {
         ViewModelFactory.getInstance(requireContext())
     }
 
-    private lateinit var historyPengaduanAdapter: HistoryPengaduanTanamanAdapter
+    private lateinit var adapter: HistoryPengaduanTanamanAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,11 +39,12 @@ class HistoryPengaduanTanamanFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupRecyclerView()
+        setupListner()
         setupObserver()
     }
 
     private fun setupRecyclerView() {
-        historyPengaduanAdapter = HistoryPengaduanTanamanAdapter { item ->
+        adapter = HistoryPengaduanTanamanAdapter { item ->
             val action =
                 HistoryPengaduanTanamanFragmentDirections.actionHistoryPengaduanTanamanFragmentToDetailPengaduanTanamanFragment(
                     item.id
@@ -50,21 +52,12 @@ class HistoryPengaduanTanamanFragment : Fragment() {
             findNavController().navigate(action)
         }
 
-        binding.historyPengaduanTanamanRv.apply {
+        binding.pengaduanTanamanHistoryRv.apply {
             layoutManager = LinearLayoutManager(requireContext())
-            adapter = historyPengaduanAdapter
-            setHasFixedSize(true)
-        }
-
-        binding.swipeRefresh.setOnRefreshListener {
-            loadHistory()
+            adapter = this@HistoryPengaduanTanamanFragment.adapter
         }
 
 
-    }
-
-    private fun loadHistory() {
-        viewModel.getPengaduanTanamanHistory()
     }
 
     private fun setupObserver() {
@@ -77,40 +70,38 @@ class HistoryPengaduanTanamanFragment : Fragment() {
 
                 is ResultState.Error -> {
                     showLoading(false)
-                    binding.swipeRefresh.isRefreshing = false
-                    Toast.makeText(requireContext(), result.message, Toast.LENGTH_SHORT).show()
-
+                    requireContext().showToast(result.message)
                 }
 
                 is ResultState.Success -> {
                     showLoading(false)
-                    binding.swipeRefresh.isRefreshing = false
                     if (result.data.isEmpty()) {
-                        showEmptyState(true)
+                        showEmpty(true)
                     } else {
-                        showEmptyState(false)
-                        historyPengaduanAdapter.submitList(result.data)
+                        showEmpty(false)
+                        adapter.submitList(result.data)
                     }
                 }
             }
         }
     }
 
-    private fun showEmptyState(isEmpty: Boolean) {
-        binding.apply {
-            if (isEmpty) {
-                emptyStateTv.visibility = View.VISIBLE
-                historyPengaduanTanamanRv.visibility = View.GONE
-            } else {
-                emptyStateTv.visibility = View.GONE
-                historyPengaduanTanamanRv.visibility = View.VISIBLE
-            }
+    private fun setupListner() {
+        binding.swipeRefresh.setOnRefreshListener {
+            viewModel.refreshHistory()
+            binding.swipeRefresh.isRefreshing = false
         }
+    }
+
+    private fun showEmpty(isEmpty: Boolean) {
+        binding.emptyLayout.isVisible = isEmpty
+        binding.pengaduanTanamanHistoryRv.isVisible = !isEmpty
     }
 
 
     private fun showLoading(isLoading: Boolean) {
-        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+        binding.progressBar.isVisible = isLoading
+        binding.pengaduanTanamanHistoryRv.isVisible = !isLoading
     }
 
     override fun onDestroyView() {

@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 
 class AuthViewModel(
     private val authRepository: AuthRepository,
-    private val dataRepository: DataRepository? = null
+    private val dataRepository: DataRepository
 ) : ViewModel() {
     private val _loginResult = MutableLiveData<ResultState<LoginResponse>>()
     val loginResult: LiveData<ResultState<LoginResponse>> = _loginResult
@@ -54,7 +54,7 @@ class AuthViewModel(
 
     fun loadKelompokTani() {
         viewModelScope.launch {
-            dataRepository?.getKelompokTani()?.collect {
+            dataRepository.getKelompokTani().collect {
                 _kelompokTaniResult.value = it
             }
         }

@@ -2,13 +2,14 @@ package com.example.sipaddy.presentation.history
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.sipaddy.R
 import com.example.sipaddy.data.model.response.PredictResponse
-import com.example.sipaddy.databinding.ItemHistoryPredictionBinding
+import com.example.sipaddy.databinding.ItemPredictionHistoryBinding
+import com.example.sipaddy.utils.Constants
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -20,7 +21,7 @@ class HistoryPredictionAdapter(
         viewType: Int
     ): ViewHolder {
         val binding =
-            ItemHistoryPredictionBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ItemPredictionHistoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
 
     }
@@ -33,48 +34,39 @@ class HistoryPredictionAdapter(
     }
 
     inner class ViewHolder(
-        private val binding: ItemHistoryPredictionBinding
+        private val binding: ItemPredictionHistoryBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: PredictResponse) {
             with(binding) {
-                diseaseNameTv.text = item.disease.replace("-", " ")
-                descriptionTv.text = item.description
-                confidenceTv.text = "${item.confidenceScore}%"
+                // Disease name
+                diseaseNameTv.text = item.disease
+
+                // Confidence
+                val confidence = item.confidenceScore.toInt()
+                confidenceTv.text = "${confidence}%"
+                progressConfidence.progress = confidence
+
+                // Date
                 dateTv.text = formatDate(item.createdAt)
 
-                val confidence = item.confidenceScore
-                val color = when {
-                    confidence >= 80 -> ContextCompat.getColor(
-                        root.context,
-                        R.color.confidence_high
-                    )
+                // Description
+                descriptionTv.text = item.description
 
-                    confidence >= 60 -> ContextCompat.getColor(
-                        root.context,
-                        R.color.confidence_medium
-                    )
-
-                    else -> ContextCompat.getColor(root.context, R.color.confidence_low)
+                // Image
+                if (item.image.isNotEmpty()) {
+                    val imageUrl = "${Constants.BASE_URL} ${item.image}"
+                    Glide.with(itemView.context)
+                        .load(imageUrl)
+                        .placeholder(R.drawable.ic_image_placeholder)
+                        .error(R.drawable.ic_image_placeholder)
+                        .into(diseaseIv)
+                } else {
+                    diseaseIv.setImageResource(R.drawable.ic_image_placeholder)
                 }
-                confidenceTv.setTextColor(color)
-
-                val badgeColor = when (item.disease) {
-                    "Normal" -> ContextCompat.getColor(root.context, R.color.disease_normal)
-                    "Blast" -> ContextCompat.getColor(root.context, R.color.disease_blast)
-                    "Bacterial-Leaf-Blight" -> ContextCompat.getColor(
-                        root.context,
-                        R.color.disease_blight
-                    )
-
-                    "Stem-Borer" -> ContextCompat.getColor(root.context, R.color.disease_borer)
-                    else -> ContextCompat.getColor(root.context, R.color.disease_default)
-                }
-                diseaseCard.setCardBackgroundColor(badgeColor)
 
                 root.setOnClickListener {
                     onItemClick(item)
                 }
-
             }
         }
     }

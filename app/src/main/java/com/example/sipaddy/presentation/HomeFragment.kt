@@ -16,7 +16,7 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: AuthViewModel by viewModels {
+    private val viewModel: HomeViewModel by viewModels {
         ViewModelFactory.getInstance(requireContext())
     }
 
@@ -34,8 +34,33 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
+        setupObserver()
+        setupListener()
         observerLoginStatus()
 
+    }
+
+    private fun setupListener() {
+        binding.predictDiseaseCard.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_home_to_navigation_predict_disease)
+
+        }
+
+        binding.pengaduanTanamanCard.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_home_to_pengaduanTanamanFragment)
+        }
+
+        binding.historyPredictDiseaseCard.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_home_to_navigation_history_prediction_disease)
+        }
+
+        binding.tvSeeAllRecent.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_historyFragment)
+        }
+    }
+
+    private fun setupObservers() {
+        TODO("Not yet implemented")
     }
 
     private fun observerLoginStatus() {

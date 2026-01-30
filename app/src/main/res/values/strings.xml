@@ -12,10 +12,10 @@
     <string name="dash">-</string>
     <string name="password_label">Password</string>
     <string name="signin_label">Masuk</string>
-    <string name="dont_have_account_label">Belum punya akun?</string>
+    <string name="dont_have_account_label">Belum punya akun? </string>
     <string name="register_here_label">Daftar disini</string>
-    <string name="register_heading_label">Buat akun Anda.</string>
-    <string name="register_subheading_label">Silakan isi data diri Anda untuk mendaftar</string>
+    <string name="register_title_label">Buat Akun Baru</string>
+    <string name="register_subtitle_label">Lengkapi data berikut untuk mendaftar</string>
     <string name="fullname_label">Nama Lengkap</string>
     <string name="phone_number_label">Nomor hp</string>
     <string name="username_label">Username</string>
@@ -55,7 +55,6 @@
     <string name="deskripsi_label">Deskripsi</string>
     <string name="kabupaten_label">Kabupaten</string>
     <string name="image_sheet_label">Image Sheet</string>
-    <string name="description">Deskripsi</string>
     <string name="okay">Baiklah</string>
     <string name="failed_to_predict_label">Gagal memprediksi. Silakan coba lagi</string>
     <string name="failed_to_get_history">Gagal mendapatkan riwayat.</string>
@@ -63,7 +62,6 @@
     <string name="result_subheading_label">Hasil Identifikasi Padi Anda.</string>
     <string name="disease_name_label">Nama penyakit</string>
     <string name="predicted_on">Diprediksi pada</string>
-    <string name="cause_label">Penyebab</string>
     <string name="solution_label">Solusi</string>
     <string name="lorem_label">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultrices, velit nec scelerisque fringilla, lectus est egestas risus, in vehicula tellus diam eu arcu. Fusce facilisis elit semper, pretium arcu ut, ultrices dolor. Aliquam erat volutpat. Nam egestas leo vitae nunc lobortis sagittis. Phasellus varius iaculis quam at posuere. Integer tempor justo in facilisis tempus.</string>
     <string name="please_select_image_label">Silakan pilih gambar</string>
@@ -89,7 +87,6 @@
     <string name="please_wait_label">Mohon menunggu...</string>
     <string name="success_register_label">Akun Anda berhasil terdaftar</string>
     <string name="error_register_label">Gagal mendaftarkan akun Anda</string>
-    <string name="diagnose_image">Diagnose Image</string>
 
     <string name="session_exp_label">Sesi Anda telah berakhir. Silakan login kembali.</string>
     <string name="riwayat_pengaduan_tanaman_heading_label">Riwayat Pengaduan Tanaman</string>
@@ -146,7 +143,7 @@
     <string name="nomor_hp_hint">Masukkan nomor HP</string>
     <string name="nomor_hp_label">Nomor HP</string>
     <string name="nama_lengkap_hint">Masukkan nama lengkap</string>
-    <string name="nama_lengkap">Nama Lengkap</string>
+    <string name="nama_lengkap_label">Nama Lengkap</string>
     <string name="catatan_popt">Catatan POPT</string>
     <string name="location_label">Lokasi</string>
     <string name="pengaduan_not_found_label">Belum ada riwayat pengaduan</string>
@@ -160,26 +157,23 @@
     <string name="take_photo_label">Ambil Foto</string>
     <string name="disease_info_label">Pastikan gambar jelas dan fokus pada bagian penyakit tanaman padi</string>
     <string name="info_icon_label">Info Icon</string>
-    <string name="disease_image_label">Gambar Penyakit</string>
     <string name="confidence_icon_label">Confidence Icon</string>
     <string name="description_label">Deskripsi Pengaduan</string>
     <string name="causes_icon_label">Causes Icon</string>
     <string name="causes_label">Penyebab</string>
     <string name="solutions_icon_label">Solutions Icon</string>
-    <string name="solutions_label">Solusi</string>
+    <string name="solutions_label">Solusi &amp; Penanganan</string>
     <string name="watch_solution_video_label">Tonton Video Solusi</string>
     <string name="share_result_label">Bagikan Hasil</string>
-    <string name="diagnose_again_label">Diagnosa Lagi</string>
+    <string name="diagnose_another_image_label">Deteksi Gambar Lain</string>
     <string name="retry_again_label">Coba Lagi</string>
-    <string name="start_scan_plant_to_detection_disease_label">Mulai scan tanaman Anda\nuntuk mendeteksi penyakit</string>
-    <string name="already_have_account">Sudah punya akun?</string>
+    <string name="start_scan_plant_to_detection_disease_label">Mulai deteksi penyakit pada tanaman padi Anda</string>
+    <string name="already_have_account">Sudah punya akun? </string>
     <string name="create_account_label">Buat Akun</string>
-    <string name="register_subtitle_label">Daftar untuk memulai</string>
-    <string name="login_subtitle_label">Masuk untuk melanjutkan</string>
+    <string name="login_subtitle_label">Login untuk melanjutkan</string>
     <string name="login_title_label">Selamat Datang</string>
     <string name="upload_photo_label">Upload Foto</string>
     <string name="choose_image_label">Pilih Gambar</string>
-    <string name="image_pengaduan_tanaman_label">Gambar Pengaduan</string>
     <string name="status_and_date_label"><![CDATA[Status & Tanggal]]></string>
     <string name="created_at_label">Dibuat</string>
     <string name="updated_at_label">Diperbarui</string>
@@ -188,5 +182,26 @@
     <string name="click_to_open_pdf_label">Klik untuk membuka</string>
     <string name="document_name_pemeriksaan_label">Dokumen Pemeriksaan.pdf</string>
     <string name="pdf_icon_label">PDF icon</string>
+    <string name="upload_image_plant_label">Upload Foto Tanaman</string>
+    <string name="predict_disease_subtitle_label">Ambil atau pilih foto daun padi yang ingin dideteksi penyakitnya. Pastikan foto jelas dan fokus pada daun yang terserang penyakit.</string>
+    <string name="upload_icon_label">Upload icon</string>
+    <string name="image_not_found_label">Belum ada gambar</string>
+    <string name="choose_image_to_diagnose_disease_label">Pilih gambar untuk memulai deteksi penyakit</string>
+    <string name="predict_disease_tips_label">Tips Foto yang Baik</string>
+    <string name="predict_disease_tips_subtitle_label">• Pastikan pencahayaan cukup\n• Fokus pada daun yang terserang\n• Foto dari jarak dekat\n• Hindari gambar blur atau buram\n• Gunakan background yang kontras</string>
+    <string name="predict_disease_label">Deteksi Penyakit</string>
+    <string name="description_result_disease_label">Deskripsi</string>
+    <string name="capture_photo_label">Capture photo</string>
+    <string name="camera_x_instruction_label">Fokuskan kamera pada daun yang terserang penyakit</string>
+    <string name="disease_detected_label">Penyakit Terdeteksi</string>
+    <string name="result_disease_title_label">Deteksi Berhasil!</string>
+    <string name="success_icon_label">Success icon</string>
+    <string name="result_screen_label">Hasil Deteksi</string>
+    <string name="home_quick_actions_label">Menu Utama</string>
+    <string name="see_all_label">Lihat Semua</string>
+    <string name="new_detected_disease_label">Deteksi Terbaru</string>
+    <string name="image_plant_label">Gambar Tanaman</string>
+    <string name="history_screen_label">Riwayat</string>
+    <string name="not_found_prediction_history_label">Belum ada riwayat deteksi</string>
 
 </resources>

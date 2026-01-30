@@ -7,58 +7,58 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import com.example.sipaddy.data.model.response.UserData
 import com.example.sipaddy.data.model.response.UserResponse
 import com.example.sipaddy.utils.Constants
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-val Context.daaStore: DataStore<Preferences> by preferencesDataStore(name = Constants.DATASTORE_NAME)
+val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = Constants.DATASTORE_NAME)
 
 class TokenPreferences private constructor(private val dataStore: DataStore<Preferences>) {
 
-    suspend fun saveLoginSession(
-        accessToken: String,
-        refreshToken: String,
-        userId: Int,
-        username: String,
-        namaLengkap: String,
-        role: String
-    ) {
-        dataStore.edit { preferences ->
-            preferences[KEY_ACCESS_TOKEN] = accessToken
-            preferences[KEY_REFRESH_TOKEN] = refreshToken
-            preferences[KEY_USER_ID] = userId
-            preferences[KEY_USERNAME] = username
-            preferences[KEY_NAMA_LENGKAP] = namaLengkap
-            preferences[KEY_ROLE] = role
-        }
-    }
-
     fun getAccessToken(): Flow<String?> {
         return dataStore.data.map { preferences ->
-            preferences[KEY_ACCESS_TOKEN]
+            preferences[ACCESS_TOKEN_KEY]
         }
     }
 
     fun getRefreshToken(): Flow<String?> {
         return dataStore.data.map { preferences ->
-            preferences[KEY_REFRESH_TOKEN]
+            preferences[REFRESH_TOKEN_KEY]
         }
     }
 
-    fun getUserData(): Flow<UserResponse?> {
-        return dataStore.data.map { preferences ->
-            val userId = preferences[KEY_USER_ID]
-            val username = preferences[KEY_USERNAME]
-            val namaLengkap = preferences[KEY_NAMA_LENGKAP]
-            val role = preferences[KEY_ROLE]
+    suspend fun saveLoginSession(
+        accessToken: String,
+        refreshToken: String,
+        user: UserData
+    ) {
+        dataStore.edit { preferences ->
+            preferences[ACCESS_TOKEN_KEY] = accessToken
+            preferences[REFRESH_TOKEN_KEY] = refreshToken
+            preferences[USER_ID_KEY] = user.id.toString()
+            preferences[USERNAME_KEY] = user.username
+            user.namaLengkap?.let { preferences[NAMA_LENGKAP_KEY] = it }
+            user.nomorHp?.let { preferences[NOMOR_HP_KEY] = it }
+            user.role?.let { preferences[ROLE_KEY] = it }
+            user.kelompokTani?.let { preferences[KELOMPOK_TANI_KEY] = it }
+        }
+    }
 
-            if (userId != null && username != null && role != null) {
-                UserResponse(
-                    id = userId,
+    fun getUserData(): Flow<UserData?> {
+        return dataStore.data.map { preferences ->
+            val id = preferences[USER_ID_KEY]?.toIntOrNull()
+            val username = preferences[USERNAME_KEY]
+
+            if (id != null && username != null) {
+                UserData(
+                    id = id,
                     username = username,
-                    namaLengkap = namaLengkap,
-                    role = role
+                    namaLengkap = preferences[NAMA_LENGKAP_KEY],
+                    nomorHp = preferences[NOMOR_HP_KEY],
+                    roles = preferences[ROLE_KEY]?.let { listOf(it) },
+                    kelompokTani = preferences[KELOMPOK_TANI_KEY]
                 )
             } else {
                 null
@@ -68,7 +68,7 @@ class TokenPreferences private constructor(private val dataStore: DataStore<Pref
 
     fun isLoggedIn(): Flow<Boolean> {
         return dataStore.data.map { preferences ->
-            preferences[KEY_ACCESS_TOKEN] != null
+            preferences[ACCESS_TOKEN_KEY] != null
         }
     }
 
@@ -83,12 +83,14 @@ class TokenPreferences private constructor(private val dataStore: DataStore<Pref
         @Volatile
         private var INSTANCE: TokenPreferences? = null
 
-        private val KEY_ACCESS_TOKEN = stringPreferencesKey(Constants.KEY_ACCESS_TOKEN)
-        private val KEY_REFRESH_TOKEN = stringPreferencesKey(Constants.KEY_REFRESH_TOKEN)
-        private val KEY_USER_ID = intPreferencesKey(Constants.KEY_USER_ID)
-        private val KEY_USERNAME = stringPreferencesKey(Constants.KEY_USERNAME)
-        private val KEY_NAMA_LENGKAP = stringPreferencesKey(Constants.KEY_NAMA_LENGKAP)
-        private val KEY_ROLE = stringPreferencesKey(Constants.KEY_ROLE)
+        private val ACCESS_TOKEN_KEY = stringPreferencesKey(Constants.ACCESS_TOKEN_KEY)
+        private val REFRESH_TOKEN_KEY = stringPreferencesKey(Constants.REFRESH_TOKEN_KEY)
+        private val USER_ID_KEY = stringPreferencesKey(Constants.USER_ID_KEY)
+        private val USERNAME_KEY = stringPreferencesKey(Constants.USERNAME_KEY)
+        private val NAMA_LENGKAP_KEY = stringPreferencesKey(Constants.NAMA_LENGKAP_KEY)
+        private val NOMOR_HP_KEY = stringPreferencesKey(Constants.NOMOR_HP_KEY)
+        private val KELOMPOK_TANI_KEY = stringPreferencesKey(Constants.KELOMPOK_TANI_KEY)
+        private val ROLE_KEY = stringPreferencesKey(Constants.ROLE_KEY)
 
 
         fun getInstance(dataStore: DataStore<Preferences>): TokenPreferences {

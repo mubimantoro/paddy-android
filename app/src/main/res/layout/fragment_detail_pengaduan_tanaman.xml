@@ -65,7 +65,7 @@
                     android:id="@+id/pengaduanImageIv"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:contentDescription="@string/image_pengaduan_tanaman_label"
+                    android:contentDescription="@string/image_plant_label"
                     android:scaleType="centerCrop"
                     tools:src="@tools:sample/backgrounds/scenic" />
 

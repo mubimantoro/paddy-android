@@ -3,13 +3,15 @@ package com.example.sipaddy.utils
 object Constants {
     const val BASE_URL = "http://192.168.1.10/api/"
     const val TIMEOUT_DURATION = 30L
-    const val DATASTORE_NAME = "app_preferences"
-    const val KEY_ACCESS_TOKEN = "access_token"
-    const val KEY_REFRESH_TOKEN = "refresh_token"
-    const val KEY_USER_ID = "user_id"
-    const val KEY_USERNAME = "username"
-    const val KEY_NAMA_LENGKAP = "nama_lengkap"
-    const val KEY_ROLE = "role"
+    const val DATASTORE_NAME = "token_preferences"
+    const val ACCESS_TOKEN_KEY = "access_token"
+    const val REFRESH_TOKEN_KEY = "refresh_token"
+    const val USER_ID_KEY = "user_id"
+    const val USERNAME_KEY = "username"
+    const val NAMA_LENGKAP_KEY = "nama_lengkap"
+    const val NOMOR_HP_KEY = "nomor_hp"
+    const val KELOMPOK_TANI_KEY = "kelompok_tani"
+    const val ROLE_KEY = "role"
     const val ROLE_USER = "user"
     const val ROLE_POPT = "popt"
 }

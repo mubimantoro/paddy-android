@@ -16,7 +16,7 @@ class ResultViewModel(
     private val _predictionResult = MutableLiveData<ResultState<PredictResponse>>()
     val predictionResult: LiveData<ResultState<PredictResponse>> = _predictionResult
 
-    fun loadPredictionResult(predictionId: String) {
+    fun getPredictionDetail(predictionId: String) {
         viewModelScope.launch {
             repository.getPredictionById(predictionId).collect {
                 _predictionResult.value = it

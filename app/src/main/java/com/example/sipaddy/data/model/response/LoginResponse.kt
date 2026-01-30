@@ -22,16 +22,19 @@ data class UserData(
     val username: String,
 
     @field:SerializedName("nama_lengkap")
-    val namaLengkap: String,
+    val namaLengkap: String?,
 
 
     @field:SerializedName("nomor_hp")
-    val nomorHp: String,
+    val nomorHp: String?,
 
     @field:SerializedName("kelompok_tani")
-    val kelompokTani: String,
+    val kelompokTani: String?,
 
 
     @field:SerializedName("roles")
-    val roles: List<String>
-)
+    val roles: List<String>?
+) {
+    val role: String?
+        get() = roles?.firstOrNull()
+}

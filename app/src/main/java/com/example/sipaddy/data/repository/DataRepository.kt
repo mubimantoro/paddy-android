@@ -94,6 +94,21 @@ class DataRepository private constructor(
         }
     }.flowOn(Dispatchers.IO)
 
+    fun getMyPengaduanTanaman(): Flow<ResultState<List<PengaduanTanamanResponse>>> = flow {
+        try {
+            emit(ResultState.Loading)
+            val response = apiService.getMyPengaduanTanaman()
+
+            if (response.code in 200..299 && response.data != null) {
+                emit(ResultState.Success(response.data))
+            } else {
+                emit(ResultState.Error(response.message, response.code))
+            }
+        } catch (e: Exception) {
+            emit(ResultState.Error(e.message ?: "Terjadi kesalahan"))
+        }
+    }
+
     fun getDetailPengaduanTanaman(id: Int): Flow<ResultState<DetailPengaduanTanamanResponse>> =
         flow {
             try {

@@ -4,77 +4,82 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
+    android:background="?attr/colorSurface"
     tools:context=".presentation.auth.register.RegisterFragment">
 
-    <!-- Toolbar -->
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/green_500"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:navigationIcon="@drawable/ic_arrow_left_alt"
-        app:navigationIconTint="@color/white"
-        app:title="@string/register_label"
-        app:titleTextColor="@color/white" />
+        app:navigationIcon="@drawable/ic_back"
+        app:title="Daftar Akun"
+        app:titleTextColor="?attr/colorOnPrimary" />
 
-    <ScrollView
-        android:layout_width="match_parent"
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/dp_24">
+            android:padding="24dp">
+
 
             <!-- Title -->
             <TextView
                 android:id="@+id/titleTv"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/noto_sans_bold"
-                android:text="@string/create_account_label"
-                android:textColor="@color/text_primary"
-                android:textSize="24sp"
+                android:layout_marginTop="24dp"
+                android:gravity="center"
+                android:text="@string/register_title_label"
+                android:textAppearance="?attr/textAppearanceHeadlineSmall"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <!-- Subtitle -->
             <TextView
                 android:id="@+id/subtitleTv"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:fontFamily="@font/noto_sans"
+                android:gravity="center"
                 android:text="@string/register_subtitle_label"
-                android:textColor="@color/text_secondary"
-                android:textSize="14sp"
+                android:textAppearance="?attr/textAppearanceBodyMedium"
+                android:textColor="?attr/colorOnSurfaceVariant"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/titleTv" />
 
             <!-- Username Input -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/usernameTil"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_24"
+                android:layout_marginTop="32dp"
                 android:hint="@string/username_label"
-                app:boxStrokeColor="@color/green_500"
-                app:hintTextColor="@color/green_500"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/subtitleTv">
+                app:layout_constraintTop_toBottomOf="@id/subtitleTv"
+             >
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/usernameEt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/noto_sans"
                     android:inputType="text"
                     android:maxLines="1" />
 
@@ -82,14 +87,12 @@
 
             <!-- Nama Lengkap Input -->
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/NamaLengkapTil"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:id="@+id/namaLengkapTil"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_16"
-                android:hint="@string/fullname_label"
-                app:boxStrokeColor="@color/green_500"
-                app:hintTextColor="@color/green_500"
+                android:layout_marginTop="16dp"
+                android:hint="@string/nama_lengkap_label"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/usernameTil">
@@ -98,8 +101,7 @@
                     android:id="@+id/namaLengkapEt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/noto_sans"
-                    android:inputType="textPersonName"
+                    android:inputType="textCapWords"
                     android:maxLines="1" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -107,22 +109,20 @@
             <!-- Nomor HP Input -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/nomorHpTil"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_16"
-                android:hint="@string/phone_number_label"
-                app:boxStrokeColor="@color/green_500"
-                app:hintTextColor="@color/green_500"
+                android:layout_marginTop="16dp"
+                android:hint="@string/nomor_hp_label"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/NamaLengkapTil">
+                app:layout_constraintTop_toBottomOf="@id/namaLengkapTil"
+                app:prefixText="+62 ">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/nomorHpEt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/noto_sans"
                     android:inputType="phone"
                     android:maxLines="1" />
 
@@ -131,13 +131,11 @@
             <!-- Kelompok Tani Dropdown -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/kelompokTaniTil"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_16"
+                android:layout_marginTop="16dp"
                 android:hint="@string/kelompok_tani_label"
-                app:boxStrokeColor="@color/green_500"
-                app:hintTextColor="@color/green_500"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/nomorHpTil">
@@ -146,7 +144,6 @@
                     android:id="@+id/kelompokTaniActv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/noto_sans"
                     android:inputType="none"
                     android:maxLines="1" />
 
@@ -155,14 +152,12 @@
             <!-- Password Input -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/passwordTil"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_16"
+                android:layout_marginTop="16dp"
                 android:hint="@string/password_label"
-                app:boxStrokeColor="@color/green_500"
                 app:endIconMode="password_toggle"
-                app:hintTextColor="@color/green_500"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/kelompokTaniTil">
@@ -171,7 +166,6 @@
                     android:id="@+id/passwordEt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/noto_sans"
                     android:inputType="textPassword"
                     android:maxLines="1" />
 
@@ -180,64 +174,64 @@
             <!-- Register Button -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/registerBtn"
-                style="@style/PrimaryButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_24"
-                android:minHeight="48dp"
+                android:layout_marginTop="32dp"
+                android:paddingVertical="16dp"
                 android:text="@string/register_label"
-                android:textAllCaps="false"
+                android:textSize="16sp"
+                app:cornerRadius="12dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/passwordTil" />
 
-            <!-- Progress Bar -->
-            <ProgressBar
-                android:id="@+id/progressBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_16"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/registerBtn"
-                tools:visibility="visible" />
-
             <!-- Login Link -->
             <LinearLayout
-                android:id="@+id/layoutLogin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_24"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="24dp"
                 android:gravity="center"
                 android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/progressBar">
+                app:layout_constraintTop_toBottomOf="@id/registerBtn">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/noto_sans"
                     android:text="@string/already_have_account"
-                    android:textColor="@color/text_secondary"
-                    android:textSize="14sp" />
+                    android:textAppearance="?attr/textAppearanceBodyMedium" />
 
                 <TextView
-                    android:id="@+id/loginTv"
+                    android:id="@+id/loginLinkTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:fontFamily="@font/noto_sans_bold"
                     android:text="@string/login_label"
-                    android:textColor="@color/green_500"
-                    android:textSize="14sp" />
+                    android:textAppearance="?attr/textAppearanceBodyMedium"
+                    android:textColor="?attr/colorPrimary"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- Progress Bar -->
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="8dp"
+        android:indeterminate="true"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

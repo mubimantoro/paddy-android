@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.camera.core.Camera
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
@@ -18,13 +17,9 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.example.sipaddy.R
 import com.example.sipaddy.databinding.FragmentCameraXBinding
+import com.example.sipaddy.utils.ImageUtils
 import com.example.sipaddy.utils.showToast
-import java.io.File
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -35,23 +30,19 @@ class CameraXFragment : Fragment() {
     private val binding get() = _binding!!
 
     private var imageCapture: ImageCapture? = null
-    private var camera: Camera? = null
     private var cameraProvider: ProcessCameraProvider? = null
     private lateinit var cameraExecutor: ExecutorService
-
     private var lensFacing = CameraSelector.LENS_FACING_BACK
-    private var flashMode = ImageCapture.FLASH_MODE_OFF
 
-    private val requestCameraPermission = registerForActivityResult(
+    private val cameraPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted ->
         if (isGranted) {
             startCamera()
         } else {
-            requireContext().showToast("Izin kamera diperlukan")
+            requireContext().showToast("Permission kamera ditolak")
             findNavController().navigateUp()
         }
-
     }
 
     override fun onCreateView(
@@ -69,20 +60,13 @@ class CameraXFragment : Fragment() {
 
         cameraExecutor = Executors.newSingleThreadExecutor()
 
-        if (checkCameraPermission()) {
+        if (allPermissionGranted()) {
             startCamera()
         } else {
-            requestCameraPermission.launch(Manifest.permission.CAMERA)
+            cameraPermissionLauncher.launch(Manifest.permission.CAMERA)
         }
 
         setupListener()
-    }
-
-    private fun checkCameraPermission(): Boolean {
-        return ContextCompat.checkSelfPermission(
-            requireContext(),
-            Manifest.permission.CAMERA
-        ) == PackageManager.PERMISSION_GRANTED
     }
 
     private fun setupListener() {
@@ -90,8 +74,13 @@ class CameraXFragment : Fragment() {
             takePhoto()
         }
 
-        binding.flashBtn.setOnClickListener {
-            toggleFlash()
+        binding.switchCameraBtn.setOnClickListener {
+            lensFacing = if (lensFacing == CameraSelector.LENS_FACING_BACK) {
+                CameraSelector.LENS_FACING_FRONT
+            } else {
+                CameraSelector.LENS_FACING_BACK
+            }
+            startCamera()
         }
 
         binding.closeBtn.setOnClickListener {
@@ -107,17 +96,28 @@ class CameraXFragment : Fragment() {
                 cameraProvider = cameraProviderFuture.get()
                 bindCameraUseCases()
             } catch (e: Exception) {
-                Log.e(TAG, "Camera initialization failed", e)
-                requireContext().showToast("Gagal menginisialisasi kamera")
+                Log.e(TAG, "Camera provider initialization failed.", e)
+                requireContext().showToast("Gagal memulai kamera: ${e.message}")
             }
         }, ContextCompat.getMainExecutor(requireContext()))
     }
 
+    private fun checkCameraPermission(): Boolean {
+        return ContextCompat.checkSelfPermission(
+            requireContext(),
+            Manifest.permission.CAMERA
+        ) == PackageManager.PERMISSION_GRANTED
+    }
+
 
     private fun bindCameraUseCases() {
-        val cameraProvider = cameraProvider ?: return
+        val cameraProvider =
+            cameraProvider ?: throw IllegalStateException("Camera initialization failed.")
+
+        val rotation = binding.previewView.display.rotation
 
         val preview = Preview.Builder()
+            .setTargetRotation(rotation)
             .build()
             .also {
                 it.setSurfaceProvider(binding.previewView.surfaceProvider)
@@ -125,7 +125,7 @@ class CameraXFragment : Fragment() {
 
         imageCapture = ImageCapture.Builder()
             .setCaptureMode(ImageCapture.CAPTURE_MODE_MAXIMIZE_QUALITY)
-            .setFlashMode(flashMode)
+            .setTargetRotation(rotation)
             .build()
 
         val cameraSelector = CameraSelector.Builder()
@@ -135,98 +135,66 @@ class CameraXFragment : Fragment() {
         try {
             cameraProvider.unbindAll()
 
-            camera = cameraProvider.bindToLifecycle(
+            cameraProvider.bindToLifecycle(
                 viewLifecycleOwner,
                 cameraSelector,
                 preview,
                 imageCapture
             )
 
-            updateFlashButtonVisibility()
         } catch (e: Exception) {
             Log.e(TAG, "Use case binding failed", e)
-            requireContext().showToast("Gagal menjalankan kamera")
+            requireContext().showToast("Gagal mengikat kamera: ${e.message}")
         }
     }
 
     private fun takePhoto() {
         val imageCapture = imageCapture ?: return
 
-        binding.captureBtn.isEnabled = false
-        binding.captureOverlay.animate()
-            .alpha(1f)
-            .setDuration(100)
-            .withEndAction {
-                binding.captureOverlay.animate()
-                    .alpha(0f)
-                    .setDuration(100)
-                    .start()
-            }
-            .start()
-        val photoFile = createFile()
+        // Create output file
+        val photoFile = ImageUtils.createImageFile(requireContext())
+
         val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
+
+        binding.captureOverlay.visibility = View.VISIBLE
+        binding.captureOverlay.animate()
+            .alpha(0f)
+            .setDuration(200)
+            .withEndAction {
+                binding.captureOverlay.alpha = 1f
+                binding.captureOverlay.visibility = View.GONE
+            }
 
         imageCapture.takePicture(
             outputOptions,
             ContextCompat.getMainExecutor(requireContext()),
             object : ImageCapture.OnImageSavedCallback {
-                override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
+                override fun onError(exc: ImageCaptureException) {
+                    Log.e(TAG, "Photo capture failed: ${exc.message}", exc)
+                    requireContext().showToast("Gagal mengambil foto: ${exc.message}")
+                }
+
+                override fun onImageSaved(output: ImageCapture.OutputFileResults) {
                     val savedUri = Uri.fromFile(photoFile)
-                    Log.d(TAG, "Photo saved: $savedUri")
-                    navigateBackWithResult(savedUri)
-                }
+                    Log.d(TAG, "Photo capture succeeded: $savedUri")
 
-                override fun onError(exception: ImageCaptureException) {
-                    Log.e(TAG, "Photo capture failed: ${exception.message}", exception)
-                    binding.captureBtn.isEnabled = true
-                    requireContext().showToast("Gagal mengambil foto")
-                }
+                    // Pass result back to previous fragment
+                    findNavController().previousBackStackEntry?.savedStateHandle?.set(
+                        "imageUri",
+                        savedUri.toString()
+                    )
 
+                    // Navigate back
+                    findNavController().navigateUp()
+                }
             }
         )
-
     }
 
-    private fun navigateBackWithResult(imageUri: Uri) {
-        findNavController().previousBackStackEntry?.savedStateHandle?.set(
-            KEY_CAMERA_RESULT,
-            imageUri.toString()
-        )
-        findNavController().navigateUp()
-    }
-
-    private fun createFile(): File {
-        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
-        val fileName = "IMG_$timeStamp.jpg"
-        return File(requireContext().cacheDir, fileName)
-    }
-
-    private fun toggleFlash() {
-        flashMode = when (flashMode) {
-            ImageCapture.FLASH_MODE_OFF -> {
-                binding.flashBtn.setImageResource(R.drawable.ic_flash_on)
-                ImageCapture.FLASH_MODE_ON
-            }
-
-            ImageCapture.FLASH_MODE_ON -> {
-                binding.flashBtn.setImageResource(R.drawable.ic_flash_auto)
-                ImageCapture.FLASH_MODE_AUTO
-            }
-
-            else -> {
-                binding.flashBtn.setImageResource(R.drawable.ic_flash_off)
-                ImageCapture.FLASH_MODE_OFF
-            }
-        }
-    }
-
-
-    private fun updateFlashButtonVisibility() {
-        binding.flashBtn.visibility = if (lensFacing == CameraSelector.LENS_FACING_BACK) {
-            View.VISIBLE
-        } else {
-            View.GONE
-        }
+    private fun allPermissionGranted() = REQUIRED_PERMISSIONS.all {
+        ContextCompat.checkSelfPermission(
+            requireContext(), it
+        ) == PackageManager.PERMISSION_GRANTED
     }
 
 
@@ -239,6 +207,6 @@ class CameraXFragment : Fragment() {
 
     companion object {
         private const val TAG = "CameraXFragment"
-        const val KEY_CAMERA_RESULT = "camera_result"
+        private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
     }
 }
