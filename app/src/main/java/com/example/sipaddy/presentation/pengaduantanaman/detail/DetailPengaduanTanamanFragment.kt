@@ -58,7 +58,7 @@ class DetailPengaduanTanamanFragment : Fragment() {
     }
 
     private fun loadDetailPengaduan() {
-        viewModel.getDetailPengaduanTanaman(args.id)
+        viewModel.getDetailPengaduanTanaman(args.pengadunId)
     }
 
     private fun setupObserver() {

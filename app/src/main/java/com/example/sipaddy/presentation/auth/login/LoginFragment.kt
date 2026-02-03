@@ -7,12 +7,16 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.sipaddy.R
 import com.example.sipaddy.databinding.FragmentLoginBinding
+import com.example.sipaddy.di.Injection
 import com.example.sipaddy.presentation.ViewModelFactory
 import com.example.sipaddy.utils.ResultState
 import com.example.sipaddy.utils.showToast
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 
 
 class LoginFragment : Fragment() {
@@ -37,9 +41,28 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+        checkLoginStatus()
         setupObserver()
         setupListener()
 
+    }
+
+    private fun checkLoginStatus() {
+        binding.loginFormLayout.isVisible = false
+
+        lifecycleScope.launch {
+            val authRepository = Injection.provideAuthRepository(requireContext())
+            val token = authRepository.getAccessToken().first()
+
+            if (!token.isNullOrEmpty()) {
+                // User already logged in, go to home
+                findNavController().navigate(R.id.action_navigation_login_to_navigation_home)
+            } else {
+                binding.loginFormLayout.isVisible = true
+
+            }
+        }
     }
 
 
@@ -75,7 +98,7 @@ class LoginFragment : Fragment() {
 
     private fun login() {
         val username = binding.usernameEt.text.toString().trim()
-        val password = binding.usernameEt.text.toString().trim()
+        val password = binding.passwordEt.text.toString().trim()
 
         viewModel.login(username, password)
     }

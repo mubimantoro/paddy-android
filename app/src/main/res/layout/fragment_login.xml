@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="?attr/colorSurface"
     android:padding="@dimen/dp_24"
+    android:id="@+id/loginFormLayout"
     tools:context=".presentation.auth.login.LoginFragment">
 
     <!-- Title -->

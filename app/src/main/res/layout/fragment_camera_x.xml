@@ -53,16 +53,17 @@
 
     </LinearLayout>
 
-    <View
+    <ImageView
         android:id="@+id/gridOverlay"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/ic_camera_grid"
+        android:scaleType="fitXY"
         android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@id/bottomControls"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/topControls" />
+        app:layout_constraintBottom_toBottomOf="@id/previewView"
+        app:layout_constraintEnd_toEndOf="@id/previewView"
+        app:layout_constraintStart_toStartOf="@id/previewView"
+        app:layout_constraintTop_toTopOf="@id/previewView" />
 
     <!-- Bottom Controls Container -->
     <LinearLayout

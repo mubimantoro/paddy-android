@@ -1,6 +1,5 @@
 package com.example.sipaddy.data.model.request
 
-import com.example.sipaddy.data.model.KelompokTaniModel
 import com.google.gson.annotations.SerializedName
 
 data class LoginRequest(

@@ -167,7 +167,7 @@
                                 android:maxLines="2"
                                 android:textAppearance="?attr/textAppearanceBodyMedium"
                                 app:layout_constraintBottom_toBottomOf="@id/ivPreview"
-                                app:layout_constraintEnd_toStartOf="@id/btnRemoveImage"
+                                app:layout_constraintEnd_toStartOf="@id/removeImageBtn"
                                 app:layout_constraintStart_toEndOf="@id/ivPreview"
                                 app:layout_constraintTop_toTopOf="@id/ivPreview"
                                 tools:text="IMG_20240129_123456.jpg" />

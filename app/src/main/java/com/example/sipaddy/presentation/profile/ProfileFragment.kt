@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.sipaddy.R
 import com.example.sipaddy.databinding.FragmentProfileBinding
@@ -19,7 +18,7 @@ class ProfileFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: ProfilViewModel by viewModels {
-        ViewModelFactory(requireContext())
+        ViewModelFactory.getInstance(requireContext())
     }
 
 
@@ -36,42 +35,110 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        with(binding) {
+        setupObserver()
+        setupListener()
+    }
 
-            viewModel.getNamaLengkap().observe(viewLifecycleOwner) { namaLengkap ->
-                if (namaLengkap != null) {
-                    namaLengkapTv.text = namaLengkap
+    private fun setupObserver() {
+        viewModel.userData.observe(viewLifecycleOwner) { result ->
+            result?.let {
+                // Personal Info
+                binding.nameHeaderTv.text = it.namaLengkap ?: it.username
+                binding.usernameHeaderTv.text = "@${it.username}"
+
+                // Role Badge
+                val roleText = when (it.role?.uppercase()) {
+                    "USER" -> "Petani"
+                    "POPT" -> "Petugas POPT"
+                    else -> "Pengguna"
                 }
-            }
+                binding.roleChip.text = roleText
 
-            viewModel.getUsername().observe(viewLifecycleOwner) { username ->
-                if (username != null) {
-                    usernameTv.text = username
-                }
-            }
+                // Profile Details
+                binding.usernameTv.text = it.username
+                binding.namaLengkapTv.text = it.namaLengkap ?: "-"
+                binding.nomorHpTv.text = it.nomorHp ?: "-"
+                binding.kelompokTaniTv.text = it.kelompokTani ?: "-"
+                binding.roleTv.text = roleText
 
-            btnLogout.setOnClickListener {
-                showLogoutDialog()
-            }
-
-            btnSettings.setOnClickListener {
-                view.findNavController().navigate(R.id.action_navigation_profile_to_settingAkunFragment)
+                // Get initials for avatar
+                val initials = getInitials(it.namaLengkap ?: it.username)
+                binding.tvAvatarInitials.text = initials
             }
         }
     }
 
-    private fun showLogoutDialog() {
+    private fun getInitials(name: String): String {
+        val parts = name.trim().split(" ")
+        return when {
+            parts.size >= 2 -> {
+                "${parts[0].first().uppercase()}${parts[1].first().uppercase()}"
+            }
+
+            parts.size == 1 && parts[0].length >= 2 -> {
+                parts[0].substring(0, 2).uppercase()
+            }
+
+            else -> {
+                parts[0].first().uppercase()
+            }
+        }
+    }
+
+    private fun setupListener() {
+        binding.logoutBtn.setOnClickListener {
+            confirmLogout()
+        }
+
+        binding.editProfileCard.setOnClickListener {
+            showComingSoonDialog("Edit Profil")
+        }
+
+        binding.changePasswordCard.setOnClickListener {
+            showComingSoonDialog("Ubah Password")
+        }
+
+        binding.aboutCard.setOnClickListener {
+            showAboutDialog()
+        }
+
+    }
+
+    private fun confirmLogout() {
         MaterialAlertDialogBuilder(requireContext())
-            .setTitle("Keluar")
+            .setTitle("Logout")
             .setMessage("Apakah Anda yakin ingin keluar?")
             .setPositiveButton("Ya") { _, _ ->
-                viewModel.logout() {
-                    findNavController().navigate(R.id.action_to_navigation_login)
-                }
+                viewModel.logout()
+                // Navigate to login
+                findNavController().navigate(R.id.action_navigation_profile_to_navigation_login)
             }
-            .setNegativeButton("Tidak") { dialog, _ ->
-                dialog.dismiss()
-            }
+            .setNegativeButton("Batal", null)
+            .show()
+    }
+
+    private fun showAboutDialog() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("Tentang Aplikasi")
+            .setMessage(
+                """
+                Balintan
+                Version 1.0.0
+                
+                Aplikasi monitoring dan deteksi penyakit pada tanaman padi menggunakan teknologi AI.
+                
+                © 2026 Balai Perlindungan Tanaman Pertanian Provinsi Gorontalo
+            """.trimIndent()
+            )
+            .setPositiveButton("Tutup", null)
+            .show()
+    }
+
+    private fun showComingSoonDialog(feature: String) {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("Segera Hadir")
+            .setMessage("Fitur $feature akan segera tersedia!")
+            .setPositiveButton("OK", null)
             .show()
     }
 

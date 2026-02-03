@@ -2,15 +2,15 @@ package com.example.sipaddy.data.api
 
 import com.example.sipaddy.data.model.request.LoginRequest
 import com.example.sipaddy.data.model.request.RegisterRequest
+import com.example.sipaddy.data.model.response.AssignedPengaduanTanamanResponse
+import com.example.sipaddy.data.model.response.BaseResponse
 import com.example.sipaddy.data.model.response.DetailPengaduanTanamanResponse
 import com.example.sipaddy.data.model.response.KecamatanResponse
 import com.example.sipaddy.data.model.response.KelompokTaniResponse
 import com.example.sipaddy.data.model.response.LoginResponse
-import com.example.sipaddy.data.model.response.PengaduanTanamanDetail
 import com.example.sipaddy.data.model.response.PengaduanTanamanResponse
 import com.example.sipaddy.data.model.response.PredictResponse
 import com.example.sipaddy.data.model.response.RegisterResponse
-import com.example.sipaddy.data.network.response.BaseResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.Body
@@ -72,5 +72,9 @@ interface ApiService {
     suspend fun getPredictionById(
         @Path("id") predictionId: String
     ): BaseResponse<PredictResponse>
+
+
+    @GET("pengaduan-tanaman/assigned")
+    suspend fun getAssignedPengaduanTanaman(): BaseResponse<List<AssignedPengaduanTanamanResponse>>
 
 }

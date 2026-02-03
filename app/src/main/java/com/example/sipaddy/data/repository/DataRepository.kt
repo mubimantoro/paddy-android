@@ -1,6 +1,7 @@
 package com.example.sipaddy.data.repository
 
 import com.example.sipaddy.data.api.ApiService
+import com.example.sipaddy.data.model.response.AssignedPengaduanTanamanResponse
 import com.example.sipaddy.data.model.response.DetailPengaduanTanamanResponse
 import com.example.sipaddy.data.model.response.KecamatanResponse
 import com.example.sipaddy.data.model.response.KelompokTaniResponse
@@ -170,6 +171,23 @@ class DataRepository private constructor(
             }
 
         } catch (e: Exception) {
+            emit(ResultState.Error(e.message ?: "Terjadi kesalahan"))
+        }
+    }
+
+
+    fun getAssignedPengaduanTanaman(): Flow<ResultState<List<AssignedPengaduanTanamanResponse>>> = flow {
+        try {
+            emit(ResultState.Loading)
+            val response = apiService.getAssignedPengaduanTanaman()
+
+            if (response.code in 200..299 && response.data != null) {
+                emit(ResultState.Success(response.data))
+            } else {
+                emit(ResultState.Error(response.message, response.code))
+            }
+
+        }catch (e: Exception) {
             emit(ResultState.Error(e.message ?: "Terjadi kesalahan"))
         }
     }

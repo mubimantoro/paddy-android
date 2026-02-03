@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/colorSurface"
-    tools:context=".presentation.HomeFragment">
+    tools:context=".presentation.home.HomeFragment">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
@@ -201,64 +201,6 @@
 
                 </LinearLayout>
 
-                <!-- Row 2 -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
-
-                    <!-- History Card -->
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/historyPredictDiseaseCard"
-                        android:layout_width="0dp"
-                        android:layout_height="160dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_weight="1"
-                        app:cardCornerRadius="16dp"
-                        app:cardElevation="2dp"
-                        app:strokeColor="?attr/colorTertiary"
-                        app:strokeWidth="1dp">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:orientation="vertical"
-                            android:padding="16dp">
-
-                            <ImageView
-                                android:layout_width="64dp"
-                                android:layout_height="64dp"
-                                android:contentDescription="History"
-                                android:src="@drawable/ic_history"
-                                app:tint="?attr/colorTertiary" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="12dp"
-                                android:gravity="center"
-                                android:text="Riwayat\nDeteksi"
-                                android:textAppearance="?attr/textAppearanceTitleMedium"
-                                android:textColor="?attr/colorTertiary"
-                                android:textStyle="bold" />
-
-                        </LinearLayout>
-
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <!-- Placeholder for future feature -->
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="160dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_weight="1"
-                        android:visibility="invisible" />
-
-                </LinearLayout>
-
             </LinearLayout>
 
             <!-- Recent Predictions Section -->
@@ -310,19 +252,11 @@
                 app:layout_constraintTop_toBottomOf="@id/recentHeaderLayout"
                 tools:visibility="visible">
 
-                <ImageView
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
-                    android:alpha="0.3"
-                    android:contentDescription="Empty"
-                    android:src="@drawable/ic_empty_data"
-                    app:tint="?attr/colorOnSurfaceVariant" />
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="Belum ada deteksi"
+                    android:text="@string/not_found_detection_label"
                     android:textAppearance="?attr/textAppearanceTitleMedium"
                     android:textColor="?attr/colorOnSurfaceVariant" />
 

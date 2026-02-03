@@ -93,7 +93,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dp_4"
-                            android:background="@drawable/status_pending_bg"
                             android:fontFamily="@font/noto_sans_bold"
                             android:paddingHorizontal="@dimen/dp_12"
                             android:paddingVertical="@dimen/dp_6"
@@ -159,7 +158,6 @@
                         <ImageView
                             android:layout_width="48dp"
                             android:layout_height="48dp"
-                            android:background="@drawable/status_completed_bg"
                             android:contentDescription="@string/icon_label"
                             android:padding="@dimen/dp_12"
                             android:src="@drawable/ic_check"
@@ -473,7 +471,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/noto_sans_bold"
-                        android:text="@string/deskripsi_masalah_label"
+                        android:text="@string/description_label"
                         android:textColor="@color/black"
                         android:textSize="@dimen/sp_16" />
 

@@ -123,6 +123,10 @@ class PredictDiseaseFragment : Fragment() {
         binding.predictBtn.setOnClickListener {
             predictDisease()
         }
+
+        binding.toolbar.setNavigationOnClickListener {
+            findNavController().navigateUp()
+        }
     }
 
     private fun setupObserver() {

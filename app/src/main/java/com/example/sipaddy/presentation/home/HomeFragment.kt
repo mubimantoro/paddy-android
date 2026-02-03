@@ -1,4 +1,4 @@
-package com.example.sipaddy.presentation
+package com.example.sipaddy.presentation.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,7 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.sipaddy.R
 import com.example.sipaddy.databinding.FragmentHomeBinding
-import com.example.sipaddy.presentation.auth.AuthViewModel
+import com.example.sipaddy.presentation.ViewModelFactory
 
 class HomeFragment : Fragment() {
 
@@ -36,7 +36,6 @@ class HomeFragment : Fragment() {
 
         setupObserver()
         setupListener()
-        observerLoginStatus()
 
     }
 
@@ -50,31 +49,23 @@ class HomeFragment : Fragment() {
             findNavController().navigate(R.id.action_navigation_home_to_pengaduanTanamanFragment)
         }
 
-        binding.historyPredictDiseaseCard.setOnClickListener {
-            findNavController().navigate(R.id.action_navigation_home_to_navigation_history_prediction_disease)
-        }
-
-        binding.tvSeeAllRecent.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_historyFragment)
+        binding.seeAllRecentTv.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_home_to_navigation_history)
         }
     }
 
-    private fun setupObservers() {
-        TODO("Not yet implemented")
-    }
-
-    private fun observerLoginStatus() {
-        viewModel.isLoggedIn.observe(viewLifecycleOwner) { isLoggedIn ->
-            if (!isLoggedIn) {
-                navigateToLogin()
+    private fun setupObserver() {
+        viewModel.userData.observe(viewLifecycleOwner) { result ->
+            result?.let {
+                binding.tvGreeting.text = "Halo, ${it.namaLengkap ?: it.username}!"
+                binding.tvUserRole.text = when (it.role?.uppercase()) {
+                    "USER" -> "Petani"
+                    "POPT" -> "Petugas POPT"
+                    else -> "Pengguna"
+                }
             }
         }
     }
-
-    private fun navigateToLogin() {
-        findNavController().navigate(R.id.action_navigation_home_to_navigation_login)
-    }
-
 
     override fun onDestroyView() {
         super.onDestroyView()

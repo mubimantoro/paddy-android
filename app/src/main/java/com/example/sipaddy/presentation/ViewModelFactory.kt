@@ -6,14 +6,16 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.sipaddy.data.repository.AuthRepository
 import com.example.sipaddy.data.repository.DataRepository
 import com.example.sipaddy.di.Injection
-import com.example.sipaddy.presentation.auth.AuthViewModel
 import com.example.sipaddy.presentation.auth.login.LoginViewModel
 import com.example.sipaddy.presentation.auth.register.RegisterViewModel
 import com.example.sipaddy.presentation.history.HistoryPredictionViewModel
+import com.example.sipaddy.presentation.home.HomeViewModel
 import com.example.sipaddy.presentation.home.diagnose.result.ResultViewModel
 import com.example.sipaddy.presentation.home.predict.PredictDiseaseViewModel
 import com.example.sipaddy.presentation.pengaduantanaman.PengaduanTanamanViewModel
 import com.example.sipaddy.presentation.pengaduantanaman.history.HistoryPengaduanTanamanViewModel
+import com.example.sipaddy.presentation.popt.AssignedPengaduanTanamanViewModel
+import com.example.sipaddy.presentation.profile.ProfilViewModel
 
 class ViewModelFactory(
     private val authRepository: AuthRepository,
@@ -24,10 +26,6 @@ class ViewModelFactory(
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
 
         return when {
-            modelClass.isAssignableFrom(AuthViewModel::class.java) -> {
-                AuthViewModel(authRepository, dataRepository) as T
-            }
-
             modelClass.isAssignableFrom(PengaduanTanamanViewModel::class.java) -> {
                 PengaduanTanamanViewModel(dataRepository) as T
             }
@@ -58,6 +56,14 @@ class ViewModelFactory(
 
             modelClass.isAssignableFrom(LoginViewModel::class.java) -> {
                 LoginViewModel(authRepository) as T
+            }
+
+            modelClass.isAssignableFrom(ProfilViewModel::class.java) -> {
+                ProfilViewModel(authRepository) as T
+            }
+
+            modelClass.isAssignableFrom(AssignedPengaduanTanamanViewModel::class.java) -> {
+                AssignedPengaduanTanamanViewModel(dataRepository) as T
             }
 
             else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
