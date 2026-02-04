@@ -33,8 +33,8 @@ data class UserData(
 
 
     @field:SerializedName("roles")
-    val roles: List<String>?
+    val roles: List<String>
 ) {
-    val role: String?
-        get() = roles?.firstOrNull()
+    val role: String
+        get() = roles.first()
 }

@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sipaddy.databinding.FragmentAssignedPengaduanTanamanBinding
 import com.example.sipaddy.presentation.ViewModelFactory
 import com.example.sipaddy.utils.ResultState
-import com.example.sipaddy.utils.showToast
 
 
 class AssignedPengaduanTanamanFragment : Fragment() {
@@ -42,10 +42,18 @@ class AssignedPengaduanTanamanFragment : Fragment() {
         setupListener()
     }
 
-    private fun setupListener() {
-        binding.swipeRefresh.setOnRefreshListener {
-            viewModel.refreshPengaduanTanaman()
-            binding.swipeRefresh.isRefreshing = false
+    private fun setupRecyclerView() {
+        adapter = AssignedPengaduanTanamanAdapter { item ->
+            val action =
+                AssignedPengaduanTanamanFragmentDirections.actionNavigationAssignedPengaduanTanamanToHandlePengaduanTanamanFragment(
+                    item.id
+                )
+            findNavController().navigate(action)
+        }
+
+        binding.assignedRv.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = this@AssignedPengaduanTanamanFragment.adapter
         }
     }
 
@@ -55,9 +63,11 @@ class AssignedPengaduanTanamanFragment : Fragment() {
                 is ResultState.Loading -> {
                     showLoading(true)
                 }
+
                 is ResultState.Error -> {
                     showLoading(false)
                 }
+
                 is ResultState.Success -> {
                     showLoading(false)
                     if (result.data.isEmpty()) {
@@ -71,6 +81,14 @@ class AssignedPengaduanTanamanFragment : Fragment() {
         }
     }
 
+    private fun setupListener() {
+        binding.swipeRefresh.setOnRefreshListener {
+            viewModel.refreshPengaduanTanaman()
+            binding.swipeRefresh.isRefreshing = false
+        }
+    }
+
+
     private fun showLoading(isLoading: Boolean) {
         binding.progressBar.isVisible = isLoading
         binding.assignedRv.isVisible = !isLoading
@@ -81,14 +99,8 @@ class AssignedPengaduanTanamanFragment : Fragment() {
         binding.assignedRv.isVisible = !isEmpty
     }
 
-    private fun setupRecyclerView() {
-        adapter = AssignedPengaduanTanamanAdapter {item ->
-            val action =
-        }
-
-        binding.assignedRv.apply {
-            layoutManager = LinearLayoutManager(requireContext())
-            adapter = this@AssignedPengaduanTanamanFragment.adapter
-        }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

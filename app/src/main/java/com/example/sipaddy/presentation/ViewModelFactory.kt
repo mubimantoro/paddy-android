@@ -15,6 +15,8 @@ import com.example.sipaddy.presentation.home.predict.PredictDiseaseViewModel
 import com.example.sipaddy.presentation.pengaduantanaman.PengaduanTanamanViewModel
 import com.example.sipaddy.presentation.pengaduantanaman.history.HistoryPengaduanTanamanViewModel
 import com.example.sipaddy.presentation.popt.AssignedPengaduanTanamanViewModel
+import com.example.sipaddy.presentation.popt.handle.HandlePengaduanTanamanViewModel
+import com.example.sipaddy.presentation.popt.verifikasi.VerifikasiPengaduanTanamanViewModel
 import com.example.sipaddy.presentation.profile.ProfilViewModel
 
 class ViewModelFactory(
@@ -64,6 +66,14 @@ class ViewModelFactory(
 
             modelClass.isAssignableFrom(AssignedPengaduanTanamanViewModel::class.java) -> {
                 AssignedPengaduanTanamanViewModel(dataRepository) as T
+            }
+
+            modelClass.isAssignableFrom(HandlePengaduanTanamanViewModel::class.java) -> {
+                HandlePengaduanTanamanViewModel(dataRepository) as T
+            }
+
+            modelClass.isAssignableFrom(VerifikasiPengaduanTanamanViewModel::class.java) -> {
+                VerifikasiPengaduanTanamanViewModel(dataRepository) as T
             }
 
             else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")

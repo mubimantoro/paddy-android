@@ -44,6 +44,9 @@
         <action
             android:id="@+id/action_navigation_home_to_navigation_history"
             app:destination="@id/navigation_history" />
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_assigned_pengaduan_tanaman"
+            app:destination="@id/navigation_assigned_pengaduan_tanaman" />
 
 
     </fragment>
@@ -130,7 +133,7 @@
         android:id="@+id/navigation_history"
         android:name="com.example.sipaddy.presentation.history.HistoryFragment"
         android:label="fragment_history"
-        tools:layout="@layout/fragment_history" >
+        tools:layout="@layout/fragment_history">
         <action
             android:id="@+id/action_navigation_history_to_navigation_result"
             app:destination="@id/navigation_result" />
@@ -142,10 +145,40 @@
         android:id="@+id/historyPengaduanTanamanFragment"
         android:name="com.example.sipaddy.presentation.pengaduantanaman.history.HistoryPengaduanTanamanFragment"
         android:label="fragment_history_pengaduan_tanaman"
-        tools:layout="@layout/fragment_history_pengaduan_tanaman" >
+        tools:layout="@layout/fragment_history_pengaduan_tanaman">
         <action
             android:id="@+id/action_historyPengaduanTanamanFragment_to_detailPengaduanTanamanFragment"
             app:destination="@id/detailPengaduanTanamanFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_assigned_pengaduan_tanaman"
+        android:name="com.example.sipaddy.presentation.popt.AssignedPengaduanTanamanFragment"
+        android:label="fragment_assigned_pengaduan_tanaman"
+        tools:layout="@layout/fragment_assigned_pengaduan_tanaman" >
+        <action
+            android:id="@+id/action_navigation_assigned_pengaduan_tanaman_to_handlePengaduanTanamanFragment"
+            app:destination="@id/handlePengaduanTanamanFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/handlePengaduanTanamanFragment"
+        android:name="com.example.sipaddy.presentation.popt.handle.HandlePengaduanTanamanFragment"
+        android:label="fragment_handle_pengaduan_tanaman"
+        tools:layout="@layout/fragment_handle_pengaduan_tanaman" >
+        <argument
+            android:name="pengaduanId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_handlePengaduanTanamanFragment_to_verifikasiPengaduanTanamanFragment"
+            app:destination="@id/verifikasiPengaduanTanamanFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/verifikasiPengaduanTanamanFragment"
+        android:name="com.example.sipaddy.presentation.popt.verifikasi.VerifikasiPengaduanTanamanFragment"
+        android:label="fragment_verifikasi_pengaduan_tanaman"
+        tools:layout="@layout/fragment_verifikasi_pengaduan_tanaman" >
+        <argument
+            android:name="pengaduanId"
+            app:argType="integer" />
     </fragment>
 
 

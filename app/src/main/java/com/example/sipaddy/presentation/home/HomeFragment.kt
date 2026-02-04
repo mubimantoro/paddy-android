@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -49,27 +50,57 @@ class HomeFragment : Fragment() {
             findNavController().navigate(R.id.action_navigation_home_to_pengaduanTanamanFragment)
         }
 
+        binding.assignedPengaduanCard.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_home_to_navigation_assigned_pengaduan_tanaman)
+        }
+
         binding.seeAllRecentTv.setOnClickListener {
             findNavController().navigate(R.id.action_navigation_home_to_navigation_history)
         }
     }
 
     private fun setupObserver() {
-        viewModel.userData.observe(viewLifecycleOwner) { result ->
+        viewModel.userRole.observe(viewLifecycleOwner) { result ->
             result?.let {
-                binding.tvGreeting.text = "Halo, ${it.namaLengkap ?: it.username}!"
-                binding.tvUserRole.text = when (it.role?.uppercase()) {
-                    "USER" -> "Petani"
-                    "POPT" -> "Petugas POPT"
-                    else -> "Pengguna"
-                }
+                updateGreeting(it.username)
+                updateUserRole(it.role)
+                applyRoleLayout(it.role)
+            }
+        }
+
+    }
+
+    private fun updateGreeting(username: String) {
+        binding.greetingTv.text = "Halo, $username!"
+    }
+
+    private fun updateUserRole(role: String) {
+        binding.userRoleTv.text = when (role) {
+            "user" -> "Petani"
+            "popt" -> "POPT"
+            else -> role
+        }
+    }
+
+    private fun applyRoleLayout(role: String) {
+        when (role) {
+            "popt" -> {
+                binding.predictDiseaseCard.isVisible = true
+                binding.pengaduanTanamanCard.isVisible = false
+                binding.assignedPengaduanCard.isVisible = true
+            }
+
+            else -> {
+                binding.predictDiseaseCard.isVisible = true
+                binding.pengaduanTanamanCard.isVisible = true
+                binding.assignedPengaduanCard.isVisible = false
             }
         }
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
 }

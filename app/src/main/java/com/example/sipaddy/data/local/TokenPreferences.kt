@@ -39,7 +39,7 @@ class TokenPreferences private constructor(private val dataStore: DataStore<Pref
             preferences[USERNAME_KEY] = user.username
             user.namaLengkap?.let { preferences[NAMA_LENGKAP_KEY] = it }
             user.nomorHp?.let { preferences[NOMOR_HP_KEY] = it }
-            user.role?.let { preferences[ROLE_KEY] = it }
+            user.role.let { preferences[ROLE_KEY] = it }
             user.kelompokTani?.let { preferences[KELOMPOK_TANI_KEY] = it }
         }
     }
@@ -48,14 +48,15 @@ class TokenPreferences private constructor(private val dataStore: DataStore<Pref
         return dataStore.data.map { preferences ->
             val id = preferences[USER_ID_KEY]?.toIntOrNull()
             val username = preferences[USERNAME_KEY]
+            val role = preferences[ROLE_KEY]
 
-            if (id != null && username != null) {
+            if (id != null && username != null && role != null) {
                 UserData(
                     id = id,
                     username = username,
                     namaLengkap = preferences[NAMA_LENGKAP_KEY],
                     nomorHp = preferences[NOMOR_HP_KEY],
-                    roles = preferences[ROLE_KEY]?.let { listOf(it) },
+                    roles =  listOf(role) ,
                     kelompokTani = preferences[KELOMPOK_TANI_KEY]
                 )
             } else {

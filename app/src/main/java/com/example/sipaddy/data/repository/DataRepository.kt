@@ -3,6 +3,7 @@ package com.example.sipaddy.data.repository
 import com.example.sipaddy.data.api.ApiService
 import com.example.sipaddy.data.model.response.AssignedPengaduanTanamanResponse
 import com.example.sipaddy.data.model.response.DetailPengaduanTanamanResponse
+import com.example.sipaddy.data.model.response.HandlePengaduanTanamanResponse
 import com.example.sipaddy.data.model.response.KecamatanResponse
 import com.example.sipaddy.data.model.response.KelompokTaniResponse
 import com.example.sipaddy.data.model.response.PengaduanTanamanResponse
@@ -126,6 +127,7 @@ class DataRepository private constructor(
             }
         }
 
+
     fun predictDisease(imageFile: File): Flow<ResultState<PredictResponse>> = flow {
         try {
             emit(ResultState.Loading)
@@ -176,21 +178,89 @@ class DataRepository private constructor(
     }
 
 
-    fun getAssignedPengaduanTanaman(): Flow<ResultState<List<AssignedPengaduanTanamanResponse>>> = flow {
+    fun getAssignedPengaduanTanaman(): Flow<ResultState<List<AssignedPengaduanTanamanResponse>>> =
+        flow {
+            try {
+                emit(ResultState.Loading)
+                val response = apiService.getAssignedPengaduanTanaman()
+
+                if (response.code in 200..299 && response.data != null) {
+                    emit(ResultState.Success(response.data))
+                } else {
+                    emit(ResultState.Error(response.message, response.code))
+                }
+
+            } catch (e: Exception) {
+                emit(ResultState.Error(e.message ?: "Terjadi kesalahan"))
+            }
+        }
+
+    fun getPengaduanTanamanById(id: Int): Flow<ResultState<PengaduanTanamanResponse>> = flow {
         try {
             emit(ResultState.Loading)
-            val response = apiService.getAssignedPengaduanTanaman()
+            val response = apiService.getPengaduanTanamanById(id)
+
+            if (response.code in 200..299 && response.data != null) {
+                emit(ResultState.Success(response.data))
+            } else {
+                emit(ResultState.Error(response.message))
+            }
+        } catch (e: Exception) {
+            emit(ResultState.Error(e.message ?: "Terjadi kesalahan"))
+        }
+    }.flowOn(Dispatchers.IO)
+
+    fun handlePengaduanTanaman(id: Int): Flow<ResultState<HandlePengaduanTanamanResponse>> = flow {
+        try {
+            emit(ResultState.Loading)
+            val response = apiService.handlePengaduanTanaman(id)
 
             if (response.code in 200..299 && response.data != null) {
                 emit(ResultState.Success(response.data))
             } else {
                 emit(ResultState.Error(response.message, response.code))
             }
-
-        }catch (e: Exception) {
+        } catch (e: Exception) {
             emit(ResultState.Error(e.message ?: "Terjadi kesalahan"))
         }
-    }
+    }.flowOn(Dispatchers.IO)
+
+    fun submitVerifikasi(
+        pengaduanId: Int,
+        latitude: String,
+        longitude: String,
+        catatan: String,
+        fotoFile: File?,
+    ): Flow<ResultState<PengaduanTanamanResponse>> = flow {
+        try {
+            emit(ResultState.Loading)
+
+            val fotoPart: MultipartBody.Part? = fotoFile?.let {
+                val requestFile = it.asRequestBody("image/*".toMediaType())
+                MultipartBody.Part.createFormData("foto_verifikasi", it.name, requestFile)
+            }
+
+            val latitudeBody = latitude.toRequestBody("text/plain".toMediaType())
+            val longitudeBody = longitude.toRequestBody("text/plain".toMediaType())
+            val catatanBody = catatan.toRequestBody("text/plain".toMediaType())
+
+            val response = apiService.submitVerifikasi(
+                pengaduanId,
+                fotoPart,
+                latitudeBody,
+                longitudeBody,
+                catatanBody
+            )
+
+            if (response.code in 200..299 && response.data != null) {
+                emit(ResultState.Success(response.data))
+            } else {
+                emit(ResultState.Error(response.message, response.code))
+            }
+        } catch (e: Exception) {
+            emit(ResultState.Error(e.message ?: "Terjadi kesalahan"))
+        }
+    }.flowOn(Dispatchers.IO)
 
 
     companion object {

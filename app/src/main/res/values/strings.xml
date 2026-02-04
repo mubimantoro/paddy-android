@@ -209,6 +209,25 @@
     <string name="info_account_label">Informasi Akun</string>
     <string name="empty_assigned_pengaduan_tanaman_label">Belum ada pengaduan ditugaskan</string>
     <string name="pengaduan_tanaman_assigned_appear_here_label">Pengaduan yang ditugaskan kepada Anda akan muncul di sini</string>
-    <string name="not_found_detection_label">Belum ada deteksi</string>
+    <string name="home_recent_empty_title_label">Belum ada deteksi</string>
+    <string name="home_recent_empty_subtitle_label">Mulai deteksi penyakit pada tanaman padi Anda</string>
+    <string name="home_predict_disease_card_subtitle_label">Foto tanaman untuk deteksi penyakit menggunakan AI</string>
+    <string name="home_predict_disease_card_title_label">Deteksi Penyakit Tanaman</string>
+    <string name="home_pengaduan_tanaman_card_title_label">Pengaduan Tanaman</string>
+    <string name="home_pengaduan_tanaman_card_subtitle_label">Laporkan masalah tanaman Padi Anda</string>
+    <string name="home_welcome_card_label">Selamat datang di Balintan Mobile</string>
+    <string name="start_penangangan_label">Mulai Penangangan</string>
+    <string name="send_verifikasi_label">Kirim Verifikasi</string>
+    <string name="catatan_hint_label">Tuliskan hasil pemeriksaan di lapangan…</string>
+    <string name="catatan_pemeriksaan_label">Catatan Pemeriksaan</string>
+    <string name="perbarui_lokasi_label">Perbarui Lokasi</string>
+    <string name="mendapatkan_lokasi_label">Mendapatkan lokasi GPS…</string>
+    <string name="lokasi_saat_ini_label">Lokasi Saat Ini</string>
+    <string name="pilih_galeri_label">Dari Galeri</string>
+    <string name="ambil_foto_label">Ambil Foto</string>
+    <string name="foto_verifikasi_label">Foto Verifikasi</string>
+    <string name="foto_placeholder_label">Belum ada foto</string>
+    <string name="hapus_foto_label">Hapus foto</string>
+    <string name="verifikasi_pengaduan_tanaman_screen_label">Verifikasi Lapangan</string>
 
 </resources>

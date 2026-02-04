@@ -22,6 +22,7 @@
 
     </com.google.android.material.appbar.MaterialToolbar>
 
+    <!-- ScrollView wrapping semua cards -->
     <androidx.core.widget.NestedScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -56,21 +57,19 @@
                     android:padding="20dp">
 
                     <TextView
-                        android:id="@+id/tvGreeting"
+                        android:id="@+id/greetingTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Halo, Petani!"
                         android:textAppearance="?attr/textAppearanceHeadlineSmall"
                         android:textColor="@android:color/white"
                         android:textStyle="bold"
                         tools:text="Halo, Bimantoro!" />
 
                     <TextView
-                        android:id="@+id/tvUserRole"
+                        android:id="@+id/userRoleTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="Petani"
                         android:textAppearance="?attr/textAppearanceBodyLarge"
                         android:textColor="#E0FFFFFF"
                         tools:text="Petani" />
@@ -79,7 +78,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
-                        android:text="Selamat datang di sistem monitoring penyakit padi"
+                        android:text="@string/home_welcome_card_label"
                         android:textAppearance="?attr/textAppearanceBodyMedium"
                         android:textColor="#C0FFFFFF" />
 
@@ -100,108 +99,228 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/welcomeCard" />
 
-            <!-- Quick Actions Grid -->
-            <LinearLayout
-                android:id="@+id/quickActionsLayout"
+            <!-- ============================================================ -->
+            <!-- CARD 1: Deteksi Penyakit — terlihat untuk SEMUA role         -->
+            <!-- ============================================================ -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/predictDiseaseCard"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="16dp"
-                android:orientation="vertical"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvQuickActions">
+                app:layout_constraintTop_toBottomOf="@id/tvQuickActions"
+                app:strokeColor="?attr/colorPrimary"
+                app:strokeWidth="1dp">
 
-                <!-- Row 1 -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:weightSum="2">
+                    android:padding="20dp">
 
-                    <!-- Predict Disease Card -->
+                    <!-- Icon Circle -->
                     <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/predictDiseaseCard"
-                        android:layout_width="0dp"
-                        android:layout_height="160dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_weight="1"
-                        app:cardCornerRadius="16dp"
-                        app:cardElevation="2dp"
-                        app:strokeColor="?attr/colorPrimary"
-                        app:strokeWidth="1dp">
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        app:cardBackgroundColor="?attr/colorPrimaryContainer"
+                        app:cardCornerRadius="16dp">
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:orientation="vertical"
-                            android:padding="16dp">
-
-                            <ImageView
-                                android:layout_width="64dp"
-                                android:layout_height="64dp"
-                                android:contentDescription="Detect disease"
-                                android:src="@drawable/ic_detect_disease"
-                                app:tint="?attr/colorPrimary" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="12dp"
-                                android:gravity="center"
-                                android:text="Deteksi\nPenyakit\nTanaman"
-                                android:textAppearance="?attr/textAppearanceTitleMedium"
-                                android:textColor="?attr/colorPrimary"
-                                android:textStyle="bold" />
-
-                        </LinearLayout>
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:layout_gravity="center"
+                            android:contentDescription="@string/icon_label"
+                            android:src="@drawable/ic_psychiatry"
+                            app:tint="?attr/colorPrimary" />
 
                     </com.google.android.material.card.MaterialCardView>
 
-                    <!-- Report Complaint Card -->
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/pengaduanTanamanCard"
+                    <!-- Text -->
+                    <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_height="160dp"
-                        android:layout_marginStart="8dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
                         android:layout_weight="1"
-                        app:cardCornerRadius="16dp"
-                        app:cardElevation="2dp"
-                        app:strokeColor="?attr/colorSecondary"
-                        app:strokeWidth="1dp">
+                        android:orientation="vertical">
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:orientation="vertical"
-                            android:padding="16dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/home_predict_disease_card_title_label"
+                            android:textAppearance="?attr/textAppearanceTitleMedium"
+                            android:textStyle="bold" />
 
-                            <ImageView
-                                android:layout_width="64dp"
-                                android:layout_height="64dp"
-                                android:contentDescription="Report complaint"
-                                android:src="@drawable/ic_report"
-                                app:tint="?attr/colorSecondary" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="@string/home_predict_disease_card_subtitle_label"
+                            android:textAppearance="?attr/textAppearanceBodySmall"
+                            android:textColor="?attr/colorOnSurfaceVariant" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="12dp"
-                                android:gravity="center"
-                                android:text="Pengaduan\nTanaman"
-                                android:textAppearance="?attr/textAppearanceTitleMedium"
-                                android:textColor="?attr/colorSecondary"
-                                android:textStyle="bold" />
+                    </LinearLayout>
 
-                        </LinearLayout>
-
-                    </com.google.android.material.card.MaterialCardView>
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:contentDescription="@string/icon_label"
+                        android:src="@drawable/ic_chevron_right"
+                        app:tint="?attr/colorOnSurfaceVariant" />
 
                 </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
-            </LinearLayout>
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/pengaduanTanamanCard"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/predictDiseaseCard"
+                app:strokeColor="?attr/colorSecondary"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="20dp">
+
+                    <!-- Icon Circle -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        app:cardBackgroundColor="?attr/colorSecondaryContainer"
+                        app:cardCornerRadius="16dp">
+
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:layout_gravity="center"
+                            android:contentDescription="@string/icon_label"
+                            android:src="@drawable/ic_assignment"
+                            app:tint="?attr/colorSecondary" />
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- Text -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/home_pengaduan_tanaman_card_title_label"
+                            android:textAppearance="?attr/textAppearanceTitleMedium"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="@string/home_pengaduan_tanaman_card_subtitle_label"
+                            android:textAppearance="?attr/textAppearanceBodySmall"
+                            android:textColor="?attr/colorOnSurfaceVariant" />
+
+                    </LinearLayout>
+
+                    <!-- Arrow -->
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:contentDescription="@string/icon_label"
+                        android:src="@drawable/ic_chevron_right"
+                        app:tint="?attr/colorOnSurfaceVariant" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/assignedPengaduanCard"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:visibility="gone"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/pengaduanTanamanCard">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="20dp">
+
+                    <!-- Icon Circle -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        app:cardBackgroundColor="#E8EAF6"
+                        app:cardCornerRadius="16dp">
+
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:layout_gravity="center"
+                            android:contentDescription="@string/icon_label"
+                            android:src="@drawable/ic_assignment" />
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- Text -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Pengaduan Ditugaskan"
+                            android:textAppearance="?attr/textAppearanceTitleMedium"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="Lihat pengaduan yang ditugaskan kepada Anda"
+                            android:textAppearance="?attr/textAppearanceBodySmall"
+                            android:textColor="?attr/colorOnSurfaceVariant" />
+
+                    </LinearLayout>
+
+                    <!-- Arrow -->
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:contentDescription="@string/icon_label"
+                        android:src="@drawable/ic_chevron_right"
+                        app:tint="?attr/colorOnSurfaceVariant" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
             <!-- Recent Predictions Section -->
             <LinearLayout
@@ -214,7 +333,7 @@
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/quickActionsLayout">
+                app:layout_constraintTop_toBottomOf="@id/assignedPengaduanCard">
 
                 <TextView
                     android:layout_width="0dp"
@@ -238,7 +357,7 @@
 
             <!-- Empty State -->
             <LinearLayout
-                android:id="@+id/tvRecentEmpty"
+                android:id="@+id/recentEmptyTv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
@@ -256,7 +375,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="@string/not_found_detection_label"
+                    android:text="@string/home_recent_empty_title_label"
                     android:textAppearance="?attr/textAppearanceTitleMedium"
                     android:textColor="?attr/colorOnSurfaceVariant" />
 
@@ -265,7 +384,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:gravity="center"
-                    android:text="Mulai deteksi penyakit pada tanaman padi Anda"
+                    android:text="@string/home_recent_empty_subtitle_label"
                     android:textAppearance="?attr/textAppearanceBodyMedium"
                     android:textColor="?attr/colorOnSurfaceVariant" />
 
@@ -273,7 +392,7 @@
 
             <!-- Recent Predictions RecyclerView -->
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvRecentPredictions"
+                android:id="@+id/recentPredictionsRv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -290,7 +409,7 @@
                 tools:visibility="gone" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </androidx.core.widget.NestedScrollView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
