@@ -495,22 +495,14 @@
                         android:textColor="?attr/colorPrimary"
                         android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/verifikasiStatusTv"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:textAppearance="?attr/textAppearanceBodyMedium"
-                        android:textStyle="bold"
-                        tools:text="Status: Diverifikasi" />
 
                     <TextView
                         android:id="@+id/verifikasiCatatanTv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
+                        android:layout_marginTop="8dp"
                         android:textAppearance="?attr/textAppearanceBodyMedium"
-                        tools:text="Catatan: Pengaduan valid, akan segera ditindaklanjuti" />
+                        tools:text="Catatan: Sudah dilakukan penyemprotan pestisida organik" />
 
                     <TextView
                         android:id="@+id/verifikasiPoptTv"
@@ -519,7 +511,7 @@
                         android:layout_marginTop="8dp"
                         android:textAppearance="?attr/textAppearanceBodySmall"
                         android:textColor="?attr/colorOnSurfaceVariant"
-                        tools:text="Oleh: POPT Bandung" />
+                        tools:text="Oleh: Mu Mukmin" />
 
                     <TextView
                         android:id="@+id/verifikasiDateTv"
@@ -528,7 +520,7 @@
                         android:layout_marginTop="2dp"
                         android:textAppearance="?attr/textAppearanceBodySmall"
                         android:textColor="?attr/colorOnSurfaceVariant"
-                        tools:text="29 Jan 2026, 11:30" />
+                        tools:text="6 Feb 2026, 15:16" />
 
                 </LinearLayout>
 
@@ -565,6 +557,15 @@
                         android:textAppearance="?attr/textAppearanceTitleMedium"
                         android:textColor="?attr/colorSecondary"
                         android:textStyle="bold" />
+
+                    <!-- Hasil Pemeriksaan -->
+                    <TextView
+                        android:id="@+id/pemeriksaanHasilTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        tools:text="Terverifikasi kena penyakit" />
 
                     <!-- PDF File Card -->
                     <com.google.android.material.card.MaterialCardView
@@ -629,14 +630,15 @@
 
                     </com.google.android.material.card.MaterialCardView>
 
+                    <!-- Pemeriksa Info -->
                     <TextView
-                        android:id="@+id/PemeriksaanTv"
+                        android:id="@+id/pemeriksaanPemeriksaTv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
                         android:textAppearance="?attr/textAppearanceBodySmall"
                         android:textColor="?attr/colorOnSurfaceVariant"
-                        tools:text="Oleh: POPT Bandung" />
+                        tools:text="Oleh: Administrator" />
 
                     <TextView
                         android:id="@+id/pemeriksaanDateTv"
@@ -645,7 +647,7 @@
                         android:layout_marginTop="2dp"
                         android:textAppearance="?attr/textAppearanceBodySmall"
                         android:textColor="?attr/colorOnSurfaceVariant"
-                        tools:text="29 Jan 2026, 14:00" />
+                        tools:text="6 Feb 2026, 15:21" />
 
                 </LinearLayout>
 

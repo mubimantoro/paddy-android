@@ -1,4 +1,4 @@
-package com.example.sipaddy.presentation.home.diagnose.result
+package com.example.sipaddy.presentation.home.result
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

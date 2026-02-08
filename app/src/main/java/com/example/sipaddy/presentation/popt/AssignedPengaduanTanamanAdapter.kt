@@ -2,7 +2,6 @@ package com.example.sipaddy.presentation.popt
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -10,9 +9,10 @@ import com.bumptech.glide.Glide
 import com.example.sipaddy.R
 import com.example.sipaddy.data.model.response.AssignedPengaduanTanamanResponse
 import com.example.sipaddy.databinding.ItemAssignedPengaduanTanamanBinding
-import java.text.SimpleDateFormat
-import java.util.Locale
-import java.util.TimeZone
+import com.example.sipaddy.utils.Constants
+import com.example.sipaddy.utils.formatDateTime
+import com.example.sipaddy.utils.toStatusChipColors
+import com.example.sipaddy.utils.toStatusText
 
 class AssignedPengaduanTanamanAdapter(
     private val onItemClick: (AssignedPengaduanTanamanResponse) -> Unit
@@ -51,7 +51,7 @@ class AssignedPengaduanTanamanAdapter(
                 deskripsiTv.text = item.deskripsi
 
                 // Pelapor
-                pelaporTv.text = "Pelapor: ${item.pelaporNama}"
+                pelaporTv.text = "Pelapor: ${item.pelaporNama ?: "-"}"
 
                 // Kelompok Tani
                 kelompokTaniTv.text = item.kelompokTaniNama
@@ -60,16 +60,19 @@ class AssignedPengaduanTanamanAdapter(
                 tvKecamatan.text = item.kecamatanNama
 
                 // Status
-                statusChip.text = item.status
-                setupStatusColor(item.status)
+                statusChip.text = item.status.toStatusText()
+                val (bgColor, textColor) = item.status.toStatusChipColors(itemView.context)
+                statusChip.chipBackgroundColor = android.content.res.ColorStateList.valueOf(bgColor)
+                statusChip.setTextColor(textColor)
 
                 // Date
-                dateTv.text = formatDate(item.createdAt)
+                dateTv.text = item.createdAt.formatDateTime()
 
                 // Image
                 if (item.image.isNotEmpty()) {
+                    val imageUrl = "${Constants.BASE_URL}${item.image}"
                     Glide.with(itemView.context)
-                        .load(item.image)
+                        .load(imageUrl)
                         .placeholder(R.drawable.ic_image_placeholder)
                         .error(R.drawable.ic_image_placeholder)
                         .into(pengaduanIv)
@@ -83,49 +86,6 @@ class AssignedPengaduanTanamanAdapter(
                 }
             }
 
-        }
-
-        private fun setupStatusColor(status: String) {
-            val context = binding.root.context
-            val (backgroundColor, textColor) = when (status.uppercase()) {
-                "DITUGASKAN" -> Pair(
-                    ContextCompat.getColor(context, R.color.status_assigned_bg),
-                    ContextCompat.getColor(context, R.color.status_assigned_text)
-                )
-
-                "DALAM PROSES" -> Pair(
-                    ContextCompat.getColor(context, R.color.status_in_progress_bg),
-                    ContextCompat.getColor(context, R.color.status_in_progress_text)
-                )
-
-                "SELESAI" -> Pair(
-                    ContextCompat.getColor(context, R.color.status_completed_bg),
-                    ContextCompat.getColor(context, R.color.status_completed_text)
-                )
-
-                else -> Pair(
-                    ContextCompat.getColor(context, R.color.status_pending_bg),
-                    ContextCompat.getColor(context, R.color.status_pending_text)
-                )
-            }
-
-            binding.statusChip.setChipBackgroundColorResource(android.R.color.transparent)
-            binding.statusChip.chipBackgroundColor =
-                android.content.res.ColorStateList.valueOf(backgroundColor)
-            binding.statusChip.setTextColor(textColor)
-        }
-
-        private fun formatDate(dateString: String): String {
-            return try {
-                val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US)
-                inputFormat.timeZone = TimeZone.getTimeZone("UTC")
-                val date = inputFormat.parse(dateString)
-
-                val outputFormat = SimpleDateFormat("dd MMM yyyy, HH:mm", Locale("id", "ID"))
-                date?.let { outputFormat.format(it) } ?: dateString
-            } catch (e: Exception) {
-                dateString
-            }
         }
 
     }

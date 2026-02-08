@@ -41,6 +41,8 @@ class HistoryPengaduanTanamanFragment : Fragment() {
         setupRecyclerView()
         setupListner()
         setupObserver()
+
+        viewModel.loadPengaduanTanamanHistory()
     }
 
     private fun setupRecyclerView() {

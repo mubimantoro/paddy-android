@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.example.sipaddy.R
 import com.example.sipaddy.databinding.FragmentProfileBinding
@@ -47,9 +48,9 @@ class ProfileFragment : Fragment() {
                 binding.usernameHeaderTv.text = "@${it.username}"
 
                 // Role Badge
-                val roleText = when (it.role?.uppercase()) {
-                    "USER" -> "Petani"
-                    "POPT" -> "Petugas POPT"
+                val roleText = when (it.role) {
+                    "user" -> "Petani"
+                    "popt" -> "Petugas POPT"
                     else -> "Pengguna"
                 }
                 binding.roleChip.text = roleText
@@ -66,21 +67,10 @@ class ProfileFragment : Fragment() {
                 binding.tvAvatarInitials.text = initials
             }
         }
-    }
 
-    private fun getInitials(name: String): String {
-        val parts = name.trim().split(" ")
-        return when {
-            parts.size >= 2 -> {
-                "${parts[0].first().uppercase()}${parts[1].first().uppercase()}"
-            }
-
-            parts.size == 1 && parts[0].length >= 2 -> {
-                parts[0].substring(0, 2).uppercase()
-            }
-
-            else -> {
-                parts[0].first().uppercase()
+        viewModel.logoutResult.observe(viewLifecycleOwner) { isLoggedOut ->
+            if (isLoggedOut) {
+                navigateToLogin()
             }
         }
     }
@@ -110,11 +100,23 @@ class ProfileFragment : Fragment() {
             .setMessage("Apakah Anda yakin ingin keluar?")
             .setPositiveButton("Ya") { _, _ ->
                 viewModel.logout()
-                // Navigate to login
-                findNavController().navigate(R.id.action_navigation_profile_to_navigation_login)
             }
             .setNegativeButton("Batal", null)
             .show()
+    }
+
+    private fun navigateToLogin() {
+        // Navigate to login
+        val navOptions = NavOptions.Builder()
+            .setPopUpTo(R.id.main_navigation, true)
+            .setLaunchSingleTop(true)
+            .build()
+
+        findNavController().navigate(
+            R.id.navigation_login,
+            null,
+            navOptions
+        )
     }
 
     private fun showAboutDialog() {
@@ -122,7 +124,7 @@ class ProfileFragment : Fragment() {
             .setTitle("Tentang Aplikasi")
             .setMessage(
                 """
-                Balintan
+                Balintan Smart Mobile
                 Version 1.0.0
                 
                 Aplikasi monitoring dan deteksi penyakit pada tanaman padi menggunakan teknologi AI.
@@ -140,6 +142,23 @@ class ProfileFragment : Fragment() {
             .setMessage("Fitur $feature akan segera tersedia!")
             .setPositiveButton("OK", null)
             .show()
+    }
+
+    private fun getInitials(name: String): String {
+        val parts = name.trim().split(" ")
+        return when {
+            parts.size >= 2 -> {
+                "${parts[0].first().uppercase()}${parts[1].first().uppercase()}"
+            }
+
+            parts.size == 1 && parts[0].length >= 2 -> {
+                parts[0].substring(0, 2).uppercase()
+            }
+
+            else -> {
+                parts[0].first().uppercase()
+            }
+        }
     }
 
     override fun onDestroyView() {

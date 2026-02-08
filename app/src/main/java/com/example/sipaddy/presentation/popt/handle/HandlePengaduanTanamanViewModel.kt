@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.sipaddy.data.model.response.DetailPengaduanTanamanResponse
 import com.example.sipaddy.data.model.response.HandlePengaduanTanamanResponse
 import com.example.sipaddy.data.model.response.PengaduanTanamanResponse
 import com.example.sipaddy.data.repository.DataRepository
@@ -14,11 +15,11 @@ class HandlePengaduanTanamanViewModel(
     private val repository: DataRepository
 ) : ViewModel() {
 
-    private val _handleResult = MutableLiveData<ResultState<HandlePengaduanTanamanResponse>>()
-    val handleResult: LiveData<ResultState<HandlePengaduanTanamanResponse>> = _handleResult
+    private val _handleResult = MutableLiveData<ResultState<PengaduanTanamanResponse>>()
+    val handleResult: LiveData<ResultState<PengaduanTanamanResponse>> = _handleResult
 
-    private val _detailResult = MutableLiveData<ResultState<PengaduanTanamanResponse>>()
-    val detailResult: LiveData<ResultState<PengaduanTanamanResponse>> = _detailResult
+    private val _detailResult = MutableLiveData<ResultState<DetailPengaduanTanamanResponse>>()
+    val detailResult: LiveData<ResultState<DetailPengaduanTanamanResponse>> = _detailResult
 
 
     fun handlePengaduan(id: Int) {

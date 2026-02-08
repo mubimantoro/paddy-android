@@ -8,6 +8,7 @@ import com.example.sipaddy.data.model.response.KecamatanResponse
 import com.example.sipaddy.data.model.response.KelompokTaniResponse
 import com.example.sipaddy.data.model.response.PengaduanTanamanResponse
 import com.example.sipaddy.data.model.response.PredictResponse
+import com.example.sipaddy.data.model.response.VerifikasiPengaduanTanaman
 import com.example.sipaddy.utils.ResultState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -195,7 +196,7 @@ class DataRepository private constructor(
             }
         }
 
-    fun getPengaduanTanamanById(id: Int): Flow<ResultState<PengaduanTanamanResponse>> = flow {
+    fun getPengaduanTanamanById(id: Int): Flow<ResultState<DetailPengaduanTanamanResponse>> = flow {
         try {
             emit(ResultState.Loading)
             val response = apiService.getPengaduanTanamanById(id)
@@ -210,7 +211,7 @@ class DataRepository private constructor(
         }
     }.flowOn(Dispatchers.IO)
 
-    fun handlePengaduanTanaman(id: Int): Flow<ResultState<HandlePengaduanTanamanResponse>> = flow {
+    fun handlePengaduanTanaman(id: Int): Flow<ResultState<PengaduanTanamanResponse>> = flow {
         try {
             emit(ResultState.Loading)
             val response = apiService.handlePengaduanTanaman(id)
@@ -231,13 +232,13 @@ class DataRepository private constructor(
         longitude: String,
         catatan: String,
         fotoFile: File?,
-    ): Flow<ResultState<PengaduanTanamanResponse>> = flow {
+    ): Flow<ResultState<VerifikasiPengaduanTanaman>> = flow {
         try {
             emit(ResultState.Loading)
 
             val fotoPart: MultipartBody.Part? = fotoFile?.let {
                 val requestFile = it.asRequestBody("image/*".toMediaType())
-                MultipartBody.Part.createFormData("foto_verifikasi", it.name, requestFile)
+                MultipartBody.Part.createFormData("foto_visit", it.name, requestFile)
             }
 
             val latitudeBody = latitude.toRequestBody("text/plain".toMediaType())

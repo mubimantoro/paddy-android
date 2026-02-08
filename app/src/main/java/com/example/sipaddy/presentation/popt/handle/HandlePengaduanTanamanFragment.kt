@@ -13,11 +13,15 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.sipaddy.R
-import com.example.sipaddy.data.model.response.PengaduanTanamanResponse
+import com.example.sipaddy.data.model.response.DetailPengaduanTanamanResponse
+import com.example.sipaddy.data.model.response.VerifikasiPengaduanTanaman
 import com.example.sipaddy.databinding.FragmentHandlePengaduanTanamanBinding
 import com.example.sipaddy.presentation.ViewModelFactory
+import com.example.sipaddy.utils.PengaduanTanamanStatus
 import com.example.sipaddy.utils.ResultState
+import com.example.sipaddy.utils.formatDateTime
 import com.example.sipaddy.utils.showToast
+import com.example.sipaddy.utils.toStatusText
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -69,6 +73,7 @@ class HandlePengaduanTanamanFragment : Fragment() {
                 is ResultState.Success -> {
                     showLoading(false)
                     populateDetail(result.data)
+                    updateUIBasedOnStatus(result.data)
                 }
             }
         }
@@ -92,15 +97,86 @@ class HandlePengaduanTanamanFragment : Fragment() {
         }
     }
 
-    private fun populateDetail(item: PengaduanTanamanResponse) {
+    private fun updateUIBasedOnStatus(detail: DetailPengaduanTanamanResponse) {
+        val pengaduan = detail.pengaduanTanaman
+        val verifikasiList = detail.verifikasiPengaduanTanaman
+
+        when (pengaduan.status.lowercase()) {
+            PengaduanTanamanStatus.ASSIGNED -> {
+                showMulaiPenangananButton()
+                hideVerifikasiCard()
+            }
+
+            PengaduanTanamanStatus.IN_PROGRESS -> {
+                if (verifikasiList.isEmpty()) {
+                    showLanjutVerifikasiButton()
+                    hideVerifikasiCard()
+                } else {
+                    hideBottomActionBar()
+                    showVerifikasiCard(verifikasiList.first())
+                }
+            }
+
+            PengaduanTanamanStatus.VERIFIED,
+            PengaduanTanamanStatus.COMPLETED -> {
+                if (verifikasiList.isNotEmpty()) {
+                    hideBottomActionBar()
+                    showVerifikasiCard(verifikasiList.first())
+                } else {
+                    hideBottomActionBar()
+                    hideVerifikasiCard()
+                }
+            }
+
+            else -> {
+                hideBottomActionBar()
+                hideVerifikasiCard()
+            }
+        }
+    }
+
+    private fun showMulaiPenangananButton() {
+        binding.bottomActionBar.isVisible = true
+        binding.mulaiPenangananBtn.text = "Mulai Penanganan"
+        binding.mulaiPenangananBtn.setOnClickListener {
+            showConfirmationDialog()
+        }
+    }
+
+    private fun showLanjutVerifikasiButton() {
+        binding.bottomActionBar.isVisible = true
+        binding.mulaiPenangananBtn.text = "Lanjut Verifikasi"
+        binding.mulaiPenangananBtn.setOnClickListener {
+            navigateToVerifikasi()
+        }
+    }
+
+    private fun navigateToVerifikasi() {
+        val action = HandlePengaduanTanamanFragmentDirections
+            .actionNavigationHandlePengaduanTanamanToNavigationVerifikasiPengaduanTanaman(args.pengaduanId)
+        findNavController().navigate(action)
+    }
+
+    private fun hideVerifikasiCard() {
+        binding.verifikasiCard.isVisible = false
+    }
+
+    private fun hideBottomActionBar() {
+        binding.bottomActionBar.isVisible = false
+    }
+
+    private fun populateDetail(detail: DetailPengaduanTanamanResponse) {
+        val pengaduan = detail.pengaduanTanaman
+
+
         binding.apply {
-            statusChip.text = item.status
+            statusChip.text = pengaduan.status.toStatusText()
 
 
-            if (item.image.isNotEmpty()) {
+            if (pengaduan.image.isNotEmpty()) {
                 imageCard.isVisible = true
                 Glide.with(this@HandlePengaduanTanamanFragment)
-                    .load(item.image)
+                    .load(pengaduan.image)
                     .centerCrop()
                     .placeholder(R.drawable.ic_image_placeholder)
                     .error(R.drawable.ic_image_placeholder)
@@ -109,43 +185,21 @@ class HandlePengaduanTanamanFragment : Fragment() {
                 imageCard.isVisible = false
             }
 
-            pelaporTv.text = item.pelaporNama
-            kelompokTaniTv.text = item.kelompokTaniNama
-            kecamatanTv.text = item.kecamatanNama
+            pelaporTv.text = pengaduan.pelaporNama
+            kelompokTaniTv.text = pengaduan.kelompokTaniNama
+            kecamatanTv.text = pengaduan.kecamatanNama
 
             // Deskripsi
-            deskripsiTv.text = item.deskripsi
+            deskripsiTv.text = pengaduan.deskripsi
 
             // Lokasi
-            latitudeTv.text = item.latitude
-            longitudeTv.text = item.longitude
+            latitudeTv.text = pengaduan.latitude
+            longitudeTv.text = pengaduan.longitude
 
-            // Status & Tanggal
-            statusTv.text = item.status
-            createdAtTv.text = formatDateTime(item.createdAt)
+            // Tanggal
+            createdAtTv.text = pengaduan.createdAt.formatDateTime()
 
-        }
-    }
 
-    fun formatDateTime(isoString: String): String {
-        return try {
-            val inputFormat = SimpleDateFormat(
-                "yyyy-MM-dd'T'HH:mm:ss'Z'",
-                Locale.getDefault()
-            ).apply {
-                timeZone = TimeZone.getTimeZone("UTC")
-            }
-
-            val outputFormat = SimpleDateFormat(
-                "d MMM yyyy, HH:mm",
-                Locale("id", "ID")
-            )
-
-            val date = inputFormat.parse(isoString)
-            date?.let { outputFormat.format(it) } ?: isoString
-        } catch (e: Exception) {
-            e.printStackTrace()
-            isoString
         }
     }
 
@@ -198,8 +252,11 @@ class HandlePengaduanTanamanFragment : Fragment() {
         binding.statusTv.text = "Dalam Proses"
 
 
-
-        findNavController().navigateUp()
+        val action =
+            HandlePengaduanTanamanFragmentDirections.actionNavigationHandlePengaduanTanamanToNavigationVerifikasiPengaduanTanaman(
+                args.pengaduanId
+            )
+        findNavController().navigate(action)
     }
 
     private fun showConfirmationDialog() {
@@ -218,6 +275,28 @@ class HandlePengaduanTanamanFragment : Fragment() {
             }
             .setCancelable(true)
             .show()
+    }
+
+    private fun showVerifikasiCard(verifikasi: VerifikasiPengaduanTanaman) {
+        binding.verifikasiCard.isVisible = true
+
+        binding.verifikasiCatatanTv.text = verifikasi.catatan ?: "-"
+        binding.verifikasiLatitudeTv.text = verifikasi.latitude
+        binding.verifikasiLongitudeTv.text = verifikasi.longitude
+        binding.verifikasiPoptTv.text = "Oleh: ${verifikasi.poptNama ?: "Unknown"}"
+        binding.verifikasiDateTv.text = verifikasi.createdAt.formatDateTime()
+
+        if (verifikasi.fotoVisit.isNotEmpty()) {
+            binding.fotoVisitCard.isVisible = true
+            Glide.with(this@HandlePengaduanTanamanFragment)
+                .load(verifikasi.fotoVisit)
+                .centerCrop()
+                .placeholder(R.drawable.ic_image_placeholder)
+                .error(R.drawable.ic_image_placeholder)
+                .into(binding.fotoVisitIv)
+        } else {
+            binding.fotoVisitCard.isVisible = false
+        }
     }
 
     private fun showLoading(isLoading: Boolean) {

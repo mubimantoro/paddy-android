@@ -12,6 +12,7 @@ import com.example.sipaddy.data.model.response.LoginResponse
 import com.example.sipaddy.data.model.response.PengaduanTanamanResponse
 import com.example.sipaddy.data.model.response.PredictResponse
 import com.example.sipaddy.data.model.response.RegisterResponse
+import com.example.sipaddy.data.model.response.VerifikasiPengaduanTanaman
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.Body
@@ -60,6 +61,24 @@ interface ApiService {
         @Path("id") id: Int
     ): BaseResponse<DetailPengaduanTanamanResponse>
 
+    @GET("pengaduan-tanaman/assigned")
+    suspend fun getAssignedPengaduanTanaman(): BaseResponse<List<AssignedPengaduanTanamanResponse>>
+
+    @PUT("pengaduan-tanaman/{id}")
+    suspend fun handlePengaduanTanaman(
+        @Path("id") id: Int
+    ): BaseResponse<PengaduanTanamanResponse>
+
+    @Multipart
+    @POST("pengaduan-tanaman/{id}/verifikasi")
+    suspend fun submitVerifikasi(
+        @Path("id") id: Int,
+        @Part fotoVisit: MultipartBody.Part?,
+        @Part("latitude") latitude: RequestBody,
+        @Part("longitude") longitude: RequestBody,
+        @Part("catatan") catatan: RequestBody
+    ): BaseResponse<VerifikasiPengaduanTanaman>
+
     @Multipart
     @POST("predict")
     suspend fun predictDisease(
@@ -75,28 +94,14 @@ interface ApiService {
         @Path("id") predictionId: String
     ): BaseResponse<PredictResponse>
 
-    @GET("pengaduan-tanaman/assigned")
-    suspend fun getAssignedPengaduanTanaman(): BaseResponse<List<AssignedPengaduanTanamanResponse>>
+
 
     @GET("pengaduan-tanaman/{id}")
     suspend fun getPengaduanTanamanById(
         @Path("id") id: Int
-    ): BaseResponse<PengaduanTanamanResponse>
+    ): BaseResponse<DetailPengaduanTanamanResponse>
 
-    @PUT("pengaduan-tanaman/{id}")
-    suspend fun handlePengaduanTanaman(
-        @Path("id") id: Int
-    ): BaseResponse<HandlePengaduanTanamanResponse>
 
-    @Multipart
-    @PUT("pengaduan-tanaman/{id}/verifikasi")
-    suspend fun submitVerifikasi(
-        @Path("id") id: Int,
-        @Part("foto_verifikasi") fotoVerifikasi: MultipartBody.Part?,
-        @Part("latitude") latitude: RequestBody,
-        @Part("longitude") longitude: RequestBody,
-        @Part("catatan") catatan: RequestBody
-    ): BaseResponse<PengaduanTanamanResponse>
 
 
 }

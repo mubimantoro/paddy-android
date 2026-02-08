@@ -79,7 +79,7 @@
             app:layout_constraintTop_toBottomOf="@id/deskripsiTv"
             tools:text="Pelapor: Bimantoro" />
 
-        <!-- Divider -->
+        <!-- Divider - FIX: constraint ke pelaporTv, bukan imageCard -->
         <com.google.android.material.divider.MaterialDivider
             android:id="@+id/divider"
             android:layout_width="0dp"
@@ -87,7 +87,7 @@
             android:layout_marginTop="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/imageCard" />
+            app:layout_constraintTop_toBottomOf="@id/pelaporTv" />
 
         <!-- Kelompok Tani -->
         <LinearLayout

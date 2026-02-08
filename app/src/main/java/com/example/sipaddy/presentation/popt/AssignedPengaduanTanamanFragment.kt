@@ -45,7 +45,7 @@ class AssignedPengaduanTanamanFragment : Fragment() {
     private fun setupRecyclerView() {
         adapter = AssignedPengaduanTanamanAdapter { item ->
             val action =
-                AssignedPengaduanTanamanFragmentDirections.actionNavigationAssignedPengaduanTanamanToHandlePengaduanTanamanFragment(
+                AssignedPengaduanTanamanFragmentDirections.actionNavigationAssignedPengaduanTanamanToNavigationHandlePengaduanTanaman(
                     item.id
                 )
             findNavController().navigate(action)

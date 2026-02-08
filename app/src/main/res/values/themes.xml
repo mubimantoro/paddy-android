@@ -1,76 +1,121 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.SIPaddy" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Primary brand color. -->
+        <!-- Primary Brand Colors -->
         <item name="colorPrimary">@color/green_500</item>
+        <item name="colorPrimaryVariant">@color/green_700</item>
         <item name="colorOnPrimary">@color/white</item>
+        <item name="colorPrimaryContainer">@color/green_100</item>
+        <item name="colorOnPrimaryContainer">@color/green_900</item>
 
+        <!-- Secondary Colors -->
+        <item name="colorSecondary">@color/blue_500</item>
+        <item name="colorSecondaryVariant">@color/blue_700</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorSecondaryContainer">@color/blue_100</item>
+        <item name="colorOnSecondaryContainer">@color/blue_900</item>
+
+        <!-- Surface Colors -->
         <item name="colorSurface">@color/white</item>
-        <item name="colorOnSurface">@color/neutral_900</item>
+        <item name="colorOnSurface">@color/text_primary</item>
+        <item name="colorSurfaceVariant">@color/neutral_100</item>
+        <item name="colorOnSurfaceVariant">@color/text_secondary</item>
         <item name="colorSurfaceContainer">@color/green_50</item>
-        <item name="colorSecondaryContainer">@color/green_200</item>
+
+        <!-- Background Colors -->
+        <item name="android:colorBackground">@color/background</item>
+        <item name="colorOnBackground">@color/text_primary</item>
         <item name="android:windowBackground">@color/background</item>
 
-        <!-- Status bar color. -->
+        <!-- Error Colors -->
+        <item name="colorError">@color/error</item>
+        <item name="colorOnError">@color/white</item>
+        <item name="colorErrorContainer">@color/error_bg</item>
+        <item name="colorOnErrorContainer">@color/error_dark</item>
+
+        <!-- Outline Colors -->
+        <item name="colorOutline">@color/divider</item>
+        <item name="colorOutlineVariant">@color/border</item>
+
+        <!-- Status Bar -->
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
 
-        <!-- Customize your theme here. -->
+        <!-- Navigation Bar -->
+        <item name="android:navigationBarColor">@color/white</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="27">true</item>
+
+        <!-- Custom Attributes -->
         <item name="edit_text_background">@color/edit_text_bg</item>
-        <item name="item_foreground">@color/neutral_600</item>
+        <item name="item_foreground">@color/text_secondary</item>
         <item name="header_container_background">@color/green_500</item>
         <item name="sheet_container_background">@color/white</item>
-
-        <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
         <item name="window_background">@color/background</item>
+
+        <!-- Component Themes -->
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
+        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.App.BottomSheet</item>
+        <item name="textInputStyle">@style/Widget.App.TextInputLayout</item>
     </style>
 
 
+    <!-- ========================================
+        COMPONENT STYLES
+        ======================================== -->
+
+    <!-- Back Button -->
     <style name="BackButton" parent="Widget.AppCompat.ImageButton">
         <item name="tint">@color/green_500</item>
-        <item name="android:background">#00000000</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:contentDescription">@string/back_button_label</item>
     </style>
 
+    <!-- Text Styles -->
     <style name="TextSubHeading" parent="Widget.AppCompat.TextView">
-        <item name="android:textColor">@color/neutral_500</item>
+        <item name="android:textColor">@color/text_secondary</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
+    <style name="TextHeading" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:fontFamily">@font/noto_sans_bold</item>
+    </style>
+
+    <style name="TextBody" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/noto_sans</item>
+    </style>
+
+    <!-- Edit Text -->
     <style name="EditText">
         <item name="android:background">@drawable/bg_edit_text</item>
         <item name="android:paddingStart">@dimen/dp_16</item>
         <item name="android:paddingEnd">@dimen/dp_16</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textColorHint">@color/text_secondary</item>
     </style>
 
+    <!-- Text Input Layout -->
+    <style name="Widget.App.TextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/green_500</item>
+        <item name="boxStrokeErrorColor">@color/error</item>
+        <item name="hintTextColor">@color/green_500</item>
+        <item name="helperTextTextColor">@color/text_secondary</item>
+        <item name="errorTextColor">@color/error</item>
+    </style>
+
+    <!-- Primary Button -->
     <style name="PrimaryButton" parent="Widget.Material3.Button">
         <item name="cornerRadius">@dimen/dp_15</item>
         <item name="fontFamily">@font/noto_sans_semibold</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="backgroundTint">@color/green_500</item>
+        <item name="android:minHeight">48dp</item>
     </style>
 
-    <style name="BottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
-        <item name="bottomSheetStyle">@style/BottomSheetStyle</item>
-    </style>
-
-    <style name="BottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
-        <item name="android:background">@android:color/transparent</item>
-    </style>
-
-    <style name="ThemeOverlay.App.MaterialAlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
-        <item name="colorOnPrimary">
-            @color/neutral_900
-        </item>
-        <item name="android:background">@color/white</item>
-        <item name="colorSurfaceContainerHigh">@color/green_50</item>
-        <item name="colorOnSurface">@color/neutral_900</item>
-        <item name="materialAlertDialogTitleTextStyle">@style/MaterialAlertDialog.App.Title.Text
-        </item>
-        <item name="buttonBarPositiveButtonStyle">@style/Widget.App.Button</item>
-        <item name="buttonBarNegativeButtonStyle">@style/Widget.App.Button</item>
-    </style>
-
-    <style name="MaterialAlertDialog.App.Title.Text" parent="MaterialAlertDialog.Material3.Title.Text">
-        <item name="android:textColor">@color/neutral_900</item>
-    </style>
-
+    <!-- Secondary Button -->
     <style name="SecondaryButton" parent="Widget.Material3.Button.OutlinedButton">
         <item name="cornerRadius">@dimen/dp_15</item>
         <item name="fontFamily">@font/noto_sans_semibold</item>
@@ -79,14 +124,81 @@
         <item name="android:minHeight">48dp</item>
     </style>
 
+    <!-- Text Button -->
     <style name="TextButton" parent="Widget.Material3.Button.TextButton">
         <item name="fontFamily">@font/noto_sans_semibold</item>
         <item name="android:textColor">@color/green_500</item>
     </style>
 
-    <style name="Widget.App.Button" parent="Widget.Material3.Button.TextButton.Dialog">
-        <item name="android:textColor">@color/neutral_900</item>
+    <!-- ========================================
+         BOTTOM SHEET THEME
+         ======================================== -->
+    <style name="ThemeOverlay.App.BottomSheet" parent="ThemeOverlay.Material3.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/Widget.App.BottomSheet</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:navigationBarColor">@color/white</item>
     </style>
+
+    <style name="Widget.App.BottomSheet" parent="Widget.Material3.BottomSheet">
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.App.BottomSheet</item>
+        <item name="backgroundTint">@color/white</item>
+    </style>
+
+    <style name="ShapeAppearance.App.BottomSheet" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopLeft">16dp</item>
+        <item name="cornerSizeTopRight">16dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+    </style>
+
+    <!-- Deprecated - use ThemeOverlay.App.BottomSheet -->
+    <style name="BottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/BottomSheetStyle</item>
+    </style>
+
+    <style name="BottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <!-- ========================================
+         MATERIAL ALERT DIALOG THEME
+         ======================================== -->
+    <style name="ThemeOverlay.App.MaterialAlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="colorPrimary">@color/green_500</item>
+        <item name="colorOnPrimary">@color/text_primary</item>
+        <item name="android:background">@color/white</item>
+        <item name="colorSurface">@color/white</item>
+        <item name="colorOnSurface">@color/text_primary</item>
+        <item name="colorSurfaceContainerHigh">@color/green_50</item>
+        <item name="materialAlertDialogTitleTextStyle">@style/MaterialAlertDialog.App.Title.Text
+        </item>
+        <item name="materialAlertDialogBodyTextStyle">@style/MaterialAlertDialog.App.Body.Text
+        </item>
+        <item name="buttonBarPositiveButtonStyle">@style/Widget.App.Button.Positive</item>
+        <item name="buttonBarNegativeButtonStyle">@style/Widget.App.Button.Negative</item>
+    </style>
+
+    <style name="MaterialAlertDialog.App.Title.Text" parent="MaterialAlertDialog.Material3.Title.Text">
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="fontFamily">@font/noto_sans_bold</item>
+    </style>
+
+    <style name="MaterialAlertDialog.App.Body.Text" parent="MaterialAlertDialog.Material3.Body.Text">
+        <item name="android:textColor">@color/text_secondary</item>
+        <item name="fontFamily">@font/noto_sans</item>
+    </style>
+
+    <style name="Widget.App.Button.Positive" parent="Widget.Material3.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/green_500</item>
+        <item name="fontFamily">@font/noto_sans_semibold</item>
+    </style>
+
+    <style name="Widget.App.Button.Negative" parent="Widget.Material3.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/text_secondary</item>
+        <item name="fontFamily">@font/noto_sans</item>
+    </style>
+
 
     <style name="Theme.SIPaddy" parent="Base.Theme.SIPaddy" />
 

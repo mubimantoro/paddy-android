@@ -93,19 +93,29 @@
     <!-- ========================================
       STATUS COLORS
       ======================================== -->
-    <color name="status_pending">#FF9800</color>
-    <color name="status_verified">#2196F3</color>
-    <color name="status_in_progress">#9C27B0</color>
-    <color name="status_completed">#4CAF50</color>
-    <color name="status_rejected">#F44336</color>
-    <color name="status_assigned_bg">#E1BEE7</color>
-    <color name="status_assigned_text">#6A1B9A</color>
-    <color name="status_in_progress_bg">#BBDEFB</color>
-    <color name="status_in_progress_text">#1565C0</color>
-    <color name="status_completed_bg">#C8E6C9</color>
-    <color name="status_completed_text">#2E7D32</color>
-    <color name="status_pending_bg">#FFE0B2</color>
+    <color name="status_pending">#FFA726</color>
+    <color name="status_pending_bg">#FFF3E0</color>
     <color name="status_pending_text">#E65100</color>
+
+    <color name="status_assigned">#42A5F5</color>
+    <color name="status_assigned_bg">#E3F2FD</color>
+    <color name="status_assigned_text">#0D47A1</color>
+
+    <color name="status_in_progress">#FFB300</color>
+    <color name="status_in_progress_bg">#FFF8E1</color>
+    <color name="status_in_progress_text">#FF6F00</color>
+
+    <color name="status_verified">#66BB6A</color>
+    <color name="status_verified_bg">#E8F5E9</color>
+    <color name="status_verified_text">#2E7D32</color>
+
+    <color name="status_completed">#4CAF50</color>
+    <color name="status_completed_bg">#C8E6C9</color>
+    <color name="status_completed_text">#1B5E20</color>
+
+    <color name="status_rejected">#EF5350</color>
+    <color name="status_rejected_bg">#FFEBEE</color>
+    <color name="status_rejected_text">#C62828</color>
 
 
     <!-- ========================================

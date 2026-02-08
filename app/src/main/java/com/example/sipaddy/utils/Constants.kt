@@ -1,8 +1,8 @@
 package com.example.sipaddy.utils
 
 object Constants {
-    const val BASE_URL = "http://192.168.1.10:3000/api/"
-    const val TIMEOUT_DURATION = 30L
+    const val BASE_URL = "http://192.168.1.10:3000"
+
     const val DATASTORE_NAME = "token_preferences"
     const val ACCESS_TOKEN_KEY = "access_token"
     const val REFRESH_TOKEN_KEY = "refresh_token"

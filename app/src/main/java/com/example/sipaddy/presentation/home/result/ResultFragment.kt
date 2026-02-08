@@ -1,4 +1,4 @@
-package com.example.sipaddy.presentation.home.diagnose.result
+package com.example.sipaddy.presentation.home.result
 
 import android.content.Intent
 import android.os.Bundle
@@ -126,11 +126,9 @@ class ResultFragment : Fragment() {
                 watchVideoBtn.visibility = View.VISIBLE
             }
 
-            // Load image if available
             if (data.image.isNotEmpty()) {
-                val imageUrl = "YOUR_BASE_URL${data.image}"
                 Glide.with(this@ResultFragment)
-                    .load(imageUrl)
+                    .load(data.image)
                     .placeholder(R.drawable.ic_image_placeholder)
                     .error(R.drawable.ic_image_placeholder)
                     .centerCrop()

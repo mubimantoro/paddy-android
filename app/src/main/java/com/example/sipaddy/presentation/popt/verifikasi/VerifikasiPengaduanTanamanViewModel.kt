@@ -4,7 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.sipaddy.data.model.response.DetailPengaduanTanamanResponse
 import com.example.sipaddy.data.model.response.PengaduanTanamanResponse
+import com.example.sipaddy.data.model.response.VerifikasiPengaduanTanaman
 import com.example.sipaddy.data.repository.DataRepository
 import com.example.sipaddy.utils.ResultState
 import kotlinx.coroutines.launch
@@ -14,11 +16,11 @@ class VerifikasiPengaduanTanamanViewModel(
     private val repository: DataRepository
 ) : ViewModel() {
 
-    private val _verifikasiResult = MutableLiveData<ResultState<PengaduanTanamanResponse>>()
-    val verifikasiresult: LiveData<ResultState<PengaduanTanamanResponse>> = _verifikasiResult
+    private val _verifikasiResult = MutableLiveData<ResultState<VerifikasiPengaduanTanaman>>()
+    val verifikasiresult: LiveData<ResultState<VerifikasiPengaduanTanaman>> = _verifikasiResult
 
-    private val _detailResult = MutableLiveData<ResultState<PengaduanTanamanResponse>>()
-    val detailResult: LiveData<ResultState<PengaduanTanamanResponse>> = _detailResult
+    private val _detailResult = MutableLiveData<ResultState<DetailPengaduanTanamanResponse>>()
+    val detailResult: LiveData<ResultState<DetailPengaduanTanamanResponse>> = _detailResult
 
     fun fetchPengaduanDetail(id: Int) {
         viewModelScope.launch {

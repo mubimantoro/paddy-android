@@ -10,7 +10,7 @@ import com.example.sipaddy.presentation.auth.login.LoginViewModel
 import com.example.sipaddy.presentation.auth.register.RegisterViewModel
 import com.example.sipaddy.presentation.history.HistoryPredictionViewModel
 import com.example.sipaddy.presentation.home.HomeViewModel
-import com.example.sipaddy.presentation.home.diagnose.result.ResultViewModel
+import com.example.sipaddy.presentation.home.result.ResultViewModel
 import com.example.sipaddy.presentation.home.predict.PredictDiseaseViewModel
 import com.example.sipaddy.presentation.pengaduantanaman.PengaduanTanamanViewModel
 import com.example.sipaddy.presentation.pengaduantanaman.history.HistoryPengaduanTanamanViewModel

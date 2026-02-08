@@ -54,7 +54,7 @@ class HistoryPredictionAdapter(
 
                 // Image
                 if (item.image.isNotEmpty()) {
-                    val imageUrl = "${Constants.BASE_URL} ${item.image}"
+                    val imageUrl = "${Constants.BASE_URL}${item.image}"
                     Glide.with(itemView.context)
                         .load(imageUrl)
                         .placeholder(R.drawable.ic_image_placeholder)

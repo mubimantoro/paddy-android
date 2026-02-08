@@ -9,9 +9,10 @@ import com.bumptech.glide.Glide
 import com.example.sipaddy.R
 import com.example.sipaddy.data.model.response.PengaduanTanamanResponse
 import com.example.sipaddy.databinding.ItemPengaduanTanamanHistoryBinding
-import java.text.SimpleDateFormat
-import java.util.Locale
-import java.util.TimeZone
+import com.example.sipaddy.utils.Constants
+import com.example.sipaddy.utils.formatDateTime
+import com.example.sipaddy.utils.toStatusColor
+import com.example.sipaddy.utils.toStatusText
 
 class HistoryPengaduanTanamanAdapter(
     private val onItemClick: (PengaduanTanamanResponse) -> Unit
@@ -42,16 +43,16 @@ class HistoryPengaduanTanamanAdapter(
                 deskripsiTv.text = item.deskripsi
 
                 // Date
-                dateTv.text = formatDate(item.createdAt)
+                dateTv.text = item.createdAt.formatDateTime()
 
                 // Status chip
-                statusChip.text = item.status
-                val statusColor = getStatusColor(item.status)
-                statusChip.setChipBackgroundColorResource(statusColor)
+                statusChip.text = item.status.toStatusText()
+                statusChip.setChipBackgroundColorResource(item.status.toStatusColor())
 
                 if (item.image.isNotEmpty()) {
+                    val imageUrl = "${Constants.BASE_URL}${item.image}"
                     Glide.with(itemView.context)
-                        .load(item.image)
+                        .load(imageUrl)
                         .placeholder(R.drawable.ic_image_placeholder)
                         .error(R.drawable.ic_image_placeholder)
                         .into(pengaduanIv)
@@ -66,31 +67,6 @@ class HistoryPengaduanTanamanAdapter(
 
             }
         }
-
-        fun formatDate(dateString: String): String {
-            return try {
-                val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US)
-                inputFormat.timeZone = TimeZone.getTimeZone("UTC")
-                val date = inputFormat.parse(dateString)
-
-                val outputFormat = SimpleDateFormat("dd MMM yyyy, HH:mm", Locale("id", "ID"))
-                date?.let { outputFormat.format(it) } ?: dateString
-            } catch (e: Exception) {
-                dateString
-            }
-        }
-
-        fun getStatusColor(status: String): Int {
-            return when (status.lowercase()) {
-                "pending" -> R.color.status_pending
-                "verified" -> R.color.status_verified
-                "in_progress" -> R.color.status_in_progress
-                "completed" -> R.color.status_completed
-                "rejected" -> R.color.status_rejected
-                else -> R.color.status_pending
-            }
-        }
-
     }
 
 

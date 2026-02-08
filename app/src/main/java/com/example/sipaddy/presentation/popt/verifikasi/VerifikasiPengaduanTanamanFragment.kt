@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.sipaddy.data.model.response.PengaduanTanamanResponse
+import com.example.sipaddy.data.model.response.DetailPengaduanTanamanResponse
 import com.example.sipaddy.databinding.FragmentVerifikasiPengaduanTanamanBinding
 import com.example.sipaddy.presentation.ViewModelFactory
 import com.example.sipaddy.utils.ImageUtils
@@ -22,6 +23,7 @@ import com.example.sipaddy.utils.ImageUtils.reduceFileImage
 import com.example.sipaddy.utils.ResultState
 import com.example.sipaddy.utils.showToast
 import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.yalantis.ucrop.UCrop
 import java.io.File
@@ -111,9 +113,15 @@ class VerifikasiPengaduanTanamanFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
+
+
         setupListener()
         setupObserver()
         loadPengaduanDetail()
+
+        checkLocationPermission()
+
 
     }
 
@@ -128,6 +136,7 @@ class VerifikasiPengaduanTanamanFragment : Fragment() {
                 }
 
                 is ResultState.Error -> {
+                    Log.d("ERROR", result.message)
                     requireContext().showToast("Gagal memuat detail: ${result.message}")
                 }
 
@@ -145,6 +154,7 @@ class VerifikasiPengaduanTanamanFragment : Fragment() {
 
                 is ResultState.Error -> {
                     showLoading(false)
+                    Log.d("ERROR", result.message)
                     requireContext().showToast("Gagal mengirim verifikasi: ${result.message}")
                 }
 
@@ -157,9 +167,11 @@ class VerifikasiPengaduanTanamanFragment : Fragment() {
         }
     }
 
-    private fun populateHeader(item: PengaduanTanamanResponse) {
-        binding.pelaporTv.text = item.pelaporNama
-        binding.statusChip.text = item.status
+    private fun populateHeader(detail: DetailPengaduanTanamanResponse) {
+        val pengaduan = detail.pengaduanTanaman
+
+        binding.pelaporTv.text = pengaduan.pelaporNama
+        binding.statusChip.text = pengaduan.status
     }
 
     private fun setupListener() {

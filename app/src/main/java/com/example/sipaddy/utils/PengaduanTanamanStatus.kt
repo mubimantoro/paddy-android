@@ -1,9 +1,10 @@
 package com.example.sipaddy.utils
 
 object PengaduanTanamanStatus {
-    const val PENDING = "Pending"
-    const val ASSIGNED = "Ditugaskan"
-    const val VERIFIED = "Diverifikasi"
-    const val HANDLED = "Ditangani"
-    const val COMPLETED = "Selesai"
+    const val PENDING = "pending"
+    const val ASSIGNED = "ditugaskan"
+    const val IN_PROGRESS = "dalam proses"
+    const val VERIFIED = "diverifikasi"
+    const val COMPLETED = "selesai"
+    const val REJECTED = "ditolak"
 }
